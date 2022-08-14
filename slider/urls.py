@@ -5,3 +5,4 @@ urlpatterns = [
     path('', SliderView.as_view(), name='slider'),
     path('banner',BannerView.as_view(), name='banner'),
 ]
+#salam
