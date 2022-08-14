@@ -1,4 +1,3 @@
-from time import _TimeTuple
 from django.db import models
 
 # Create your models here.

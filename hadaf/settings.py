@@ -32,7 +32,7 @@ DEBUG = True
 # ACCOUNT_USERNAME_REQUIRED = False
 # ACCOUNT_AUTHENTICATION_METHOD = 'email'
 
-AUTH_USER_MODEL = 'authen.User'
+# AUTH_USER_MODEL = 'authen.User'
 SIMPLE_JWT = {
   'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=2),
@@ -78,7 +78,7 @@ INSTALLED_APPS = [
     'versatileimagefield',
     'django_filters',
     'authen',
-   'archive',
+    'archive',
     'slider',
     'quiz',
     'forum',

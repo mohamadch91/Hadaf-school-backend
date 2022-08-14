@@ -17,7 +17,7 @@ from django.shortcuts import render
 from .serializers import *
 from rest_framework.permissions import IsAuthenticated
 
-from authen.models import User
+# from authen.models import User
 from .models import *
 from .serializers import *
 from rest_framework import generics
