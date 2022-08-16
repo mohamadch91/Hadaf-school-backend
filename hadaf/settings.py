@@ -82,6 +82,7 @@ INSTALLED_APPS = [
     'slider',
     'quiz',
     'forum',
+    'courseDEP',
     'course',
     'corsheaders',
     'rest_framework_simplejwt.token_blacklist',
