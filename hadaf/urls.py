@@ -23,4 +23,10 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('slider/',include('slider.urls')),
+    # path('quiz/',include('quiz.urls')),
+    # path('forum/',include('forum.urls')),
+    # path('course/',include('course.urls')),
+    # path('archive/',include('archive.urls')),
+    path('authen/',include('authen.urls')),
+    
 ]
