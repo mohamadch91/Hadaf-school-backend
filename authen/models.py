@@ -3,7 +3,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser,BaseUserManager
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
-
+from courseDEP.models import *
 from django.core.validators import RegexValidator
 class CustomUserManager(BaseUserManager):
     """
@@ -69,6 +69,8 @@ class Student(User):
     peducation=models.CharField(max_length=20,blank=True,null=True)
     pjob=models.CharField(max_length=20,blank=True,null=True)
     address=models.CharField(max_length=20,blank=True,null=True)
+    grade=models.ForeignKey(grade,on_delete=models.CASCADE,null=True)
+    department=models.ForeignKey(department,on_delete=models.CASCADE,null=True)
     method='phone'
    
     def __str__(self):

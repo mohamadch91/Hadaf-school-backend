@@ -11,7 +11,7 @@ class gradeSerializer(serializers.ModelSerializer):
         model = grade
         fields = '__all__'
 
-class lessonsSerializer(serializers.ModelSerializer):
+class lessonSerializer(serializers.ModelSerializer):
     class Meta:
         model = lessons
         fields = '__all__'

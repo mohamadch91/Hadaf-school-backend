@@ -28,5 +28,7 @@ urlpatterns = [
     # path('course/',include('course.urls')),
     # path('archive/',include('archive.urls')),
     path('authen/',include('authen.urls')),
+    path('courseDEP/',include('courseDEP.urls'))
+    
     
 ]
