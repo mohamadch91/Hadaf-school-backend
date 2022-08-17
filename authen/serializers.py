@@ -34,7 +34,7 @@ class TeacherSerializer(serializers.ModelSerializer):
 class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
-        fields = ['pk','phone','birth','password','national_code','role','first_name','last_name','created_at','updated_at','picture','gpaverage','disipcline','school','parentName','parentNationalCode','pbirthday','peducation','pjob','address']
+        fields = ['pk','phone','grade','department','birth','password','national_code','role','first_name','last_name','created_at','updated_at','picture','gpaverage','disipcline','school','parentName','parentNationalCode','pbirthday','peducation','pjob','address']
         extra_kwargs = {'password': {'write_only': True}}
     def validate_password(self, value: str) -> str:
         """
@@ -75,13 +75,9 @@ class ChangePasswordSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('old_password', 'password', 'password2')
+        fields = ('old_password', 'password')
 
-    def validate(self, attrs):
-        if attrs['password'] != attrs['password2']:
-            raise serializers.ValidationError({"password": "Password fields didn't match."})
-
-        return attrs
+  
 
     def validate_old_password(self, value):
         user = self.context['request'].user
@@ -95,44 +91,17 @@ class ChangePasswordSerializer(serializers.ModelSerializer):
         instance.save()
 
         return instance        
-class UpdateUserSerializer(serializers.ModelSerializer):
-    email = serializers.EmailField(required=True)
-
-    class Meta:
+class updateUserSerilizer(serializers.ModelSerializer):
+     class Meta:
         model = User
-        fields = ('url','phone','username', 'email', 'first_name', 'last_name', 'password', 'title','birth','address','city','zip')
-        extra_kwargs = {
-            'first_name': {'required': True},
-            'last_name': {'required': True},
-        }
+        fields = ['pk','phone','birth','national_code','role','first_name','last_name','created_at','updated_at','picture']                
 
-    def validate_email(self, value):
-        user = self.context['request'].user
-        if User.objects.exclude(pk=user.pk).filter(email=value).exists():
-            raise serializers.ValidationError({"email": "This email is already in use."})
-        return value
+class updateTeacherSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Teacher
+        fields = ['pk','phone','birth','national_code','role','first_name','last_name','created_at','updated_at','picture']
 
-    def validate_username(self, value):
-        user = self.context['request'].user
-        if User.objects.exclude(pk=user.pk).filter(username=value).exists():
-            raise serializers.ValidationError({"username": "This phone is already in use."})
-        return value
-    def validate_phone(self, value):
-        user = self.context['request'].user
-        if User.objects.exclude(pk=user.pk).filter(phone=value).exists():
-            raise serializers.ValidationError({"username": "This username is already in use."})
-        return value
-    
-    def update(self, instance, validated_data):
-        instance.phone=validated_data['phone']
-        instance.birth=validated_data['birth']
-        instance.title=validated_data['title']
-        instance.city=validated_data['city']
-        instance.address=validated_data['address']
-        instance.zip=validated_data['zip']
-        instance.first_name = validated_data['first_name']
-        instance.last_name = validated_data['last_name']
-        instance.email = validated_data['email']
-        instance.username = validated_data['username']
-        instance.save()
-        return instance                
+class updateStudentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Student
+        fields = ['pk','phone','grade','department','birth','national_code','role','first_name','last_name','created_at','updated_at','picture','gpaverage','disipcline','school','parentName','parentNationalCode','pbirthday','peducation','pjob','address']
