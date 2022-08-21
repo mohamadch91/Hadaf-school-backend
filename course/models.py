@@ -8,16 +8,16 @@ from authen.models import *
 
 
 
-class Course(AbstractCourse):
+class Course(models.Model):
 
-    id = models.AutoField(primary_key=True,null=True)
+    id = models.AutoField(primary_key=True)
     code = models.IntegerField(blank=True, null=True)
     name = models.CharField(max_length=100,null=True)
     picture1 = models.ImageField(upload_to='course_pictures/',blank=True,null=True)
     picture2 = models.ImageField(upload_to='course_pictures/',blank=True,null=True)
     departmentID = models.ForeignKey(department,on_delete=models.CASCADE,null=True)
     gradeID = models.ForeignKey(grade,on_delete=models.CASCADE,null=True)
-    teacherID = models.ForeignKey(Teacher,on_delete=models.CASCADE,null=True)
+    teacherID = models.ForeignKey(Teacher,on_delete=models.CASCADE,null=True, related_name='Teacher')
     courseTypeID = models.ForeignKey(CourseType,on_delete=models.CASCADE,null=True)
     lessonID = models.ForeignKey(lessons,on_delete=models.CASCADE,null=True)
     yearID = models.ForeignKey(year,on_delete=models.CASCADE,null=True)
@@ -35,7 +35,7 @@ class Course(AbstractCourse):
     end = models.BooleanField(default=True,null=True)
     endDateTime = models.DateField(null=True)
     active = models.BooleanField(default=True,null=True)
-    userID = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
+    userID = models.ForeignKey(User,on_delete=models.CASCADE,null=True, related_name='User')
 
 
 
