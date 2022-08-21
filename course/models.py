@@ -1,3 +1,41 @@
+from operator import mod
+from re import T
+from statistics import mode
 from django.db import models
 
-# Create your models here.
+from courseDEP.models import *
+from authen.models import *
+
+
+
+class Course(AbstractCourse):
+
+    id = models.AutoField(primary_key=True,null=True)
+    code = models.IntegerField(blank=True, null=True)
+    name = models.CharField(max_length=100,null=True)
+    picture1 = models.ImageField(upload_to='course_pictures/',blank=True,null=True)
+    picture2 = models.ImageField(upload_to='course_pictures/',blank=True,null=True)
+    departmentID = models.ForeignKey(department,on_delete=models.CASCADE,null=True)
+    gradeID = models.ForeignKey(grade,on_delete=models.CASCADE,null=True)
+    teacherID = models.ForeignKey(Teacher,on_delete=models.CASCADE,null=True)
+    courseTypeID = models.ForeignKey(CourseType,on_delete=models.CASCADE,null=True)
+    lessonID = models.ForeignKey(lessons,on_delete=models.CASCADE,null=True)
+    yearID = models.ForeignKey(year,on_delete=models.CASCADE,null=True)
+    price1 = models.IntegerField(blank=True, null=True)
+    price2 = models.IntegerField(blank=True, null=True)
+    returnPercent = models.IntegerField(blank=True, null=True)
+    day = models.CharField(max_length=100,null=True)
+    description = models.CharField(max_length=500,null=True)
+    startTime = models.DateField(null=True)
+    showforstudents = models.BooleanField(default=True,null=True)
+    showforTeacher = models.BooleanField(default=True ,null=True)
+    enableforbuy = models.BooleanField(default=True,null=True)
+    created_at=models.DateTimeField(auto_now_add=True,null=True)
+    updated_at=models.DateTimeField(auto_now=True,null=True)
+    end = models.BooleanField(default=True,null=True)
+    endDateTime = models.DateField(null=True)
+    active = models.BooleanField(default=True,null=True)
+    userID = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
+
+
+

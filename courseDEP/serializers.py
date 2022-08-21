@@ -6,6 +6,7 @@ class departmentSerializer(serializers.ModelSerializer):
         model = department
         fields = '__all__'
 
+
 class gradeSerializer(serializers.ModelSerializer):
     class Meta:
         model = grade

@@ -30,6 +30,7 @@ class StudentRegisterView(generics.CreateAPIView):
             return Response(ser.data,status=status.HTTP_201_CREATED)
         return Response (ser.errors,status=status.HTTP_400_BAD_REQUEST)    
 
+
 class TeacherRegisterView(generics.CreateAPIView):
     serializer_class=TeacherSerializer
     permission_classes=(IsAuthenticated,)
