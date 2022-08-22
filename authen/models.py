@@ -116,7 +116,7 @@ class OTPManager(models.Manager):
 
 def generate_otp():
     rand = random.SystemRandom()
-    digits = rand.choices(string.digits, k=4)
+    digits = rand.choices(string.digits, k=7 )
     return  ''.join(digits)
 
 
@@ -124,7 +124,7 @@ class OTPRequest(models.Model):
 
     request_id = models.UUIDField(primary_key=True, editable=False, default=uuid4)
     receiver = models.IntegerField()
-    password = models.CharField(max_length=4, default=generate_otp)
+    password = models.CharField(max_length=7, default=generate_otp)
     created = models.DateTimeField(auto_now_add=True, editable=False)
 
     objects = OTPManager()
