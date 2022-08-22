@@ -110,8 +110,22 @@ class updateStudentSerializer(serializers.ModelSerializer):
 class requestOTPSerializer(serializers.Serializer):
     reciever=serializers.IntegerField(allow_null=False)
         
-class OTPResSerializer(serializers.ModelSerializer):
+class RequestOTPSerializer(serializers.Serializer):
+    receiver = serializers.CharField( allow_null=False)
 
+
+class RequestOTPResponseSerializer(serializers.ModelSerializer):
     class Meta:
-        model=OTPrequest        
-        fields=['request_id']
+        model = OTPRequest
+        fields =['request_id']
+
+class VerifyOtpRequestSerializer(serializers.Serializer):
+    request_id = serializers.UUIDField(allow_null=False)
+    password = serializers.CharField(allow_null=False)
+    receiver = serializers.CharField( allow_null=False)
+
+class ObtainTokenSerializer(serializers.Serializer):
+    token = serializers.CharField( allow_null=False)
+    refresh = serializers.CharField( allow_null=False)
+    created = serializers.BooleanField()
+

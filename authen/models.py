@@ -1,12 +1,20 @@
 from urllib import request
 from uuid import uuid4
 from django.db import models
-
+import random
+import string
 from django.contrib.auth.models import AbstractUser,BaseUserManager
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 from courseDEP.models import *
 from django.core.validators import RegexValidator
+from datetime import timedelta
+from django.utils import timezone
+
+def send_otp(otp):
+    print("otp password")
+    print(otp.password)
+
 class CustomUserManager(BaseUserManager):
     """
     Custom user model manager
@@ -77,9 +85,46 @@ class Student(User):
    
     def __str__(self):
         return "{}".format(self.user.phone)
+class OtpRequestQuerySet(models.QuerySet):
+    def is_valid(self, receiver, request, password):
+        current_time = timezone.now()
+        return self.filter(
+            receiver=receiver,
+            request_id=request,
+            password=password,
+            created__lt=current_time,
+            created__gt=current_time-timedelta(seconds=120),
 
-class OTPrequest(models.model):
-    request_id=models.UUIDField(primary_key=True,editable=False,default=uuid4)
-    reciever=models.IntegerField()
-    password=models.IntegerField()
-    created_at=models.DateField(auto_now_add=True )
+        ).exists()
+
+class OTPManager(models.Manager):
+
+    def get_queryset(self):
+        return OtpRequestQuerySet(self.model, self._db)
+
+    def is_valid(self, receiver, request, password):
+        return self.get_queryset().is_valid(receiver, request, password)
+
+
+    def generate(self, data):
+        otp = self.model(channel=data['channel'], receiver=data['receiver'])
+        otp.save(using=self._db)
+        send_otp(otp)
+        return otp
+
+
+
+def generate_otp():
+    rand = random.SystemRandom()
+    digits = rand.choices(string.digits, k=4)
+    return  ''.join(digits)
+
+
+class OTPRequest(models.Model):
+
+    request_id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
+    receiver = models.IntegerField()
+    password = models.CharField(max_length=4, default=generate_otp)
+    created = models.DateTimeField(auto_now_add=True, editable=False)
+
+    objects = OTPManager()

@@ -136,12 +136,47 @@ class UserListView(generics.ListAPIView):
             ser=TeacherSerializer(users,many=True)
             return Response(ser.data,status=status.HTTP_200_OK)
 
+
 class OTPView(APIView):
-    
-    def get(self,request):
-        ser=requestOTPSerializer(data=request.query_params)
-        if(ser.is_valid()):
-            pass
-        return Response(ser.errors,status=status.HTTP_400_BAD_REQUEST) 
-    def post(self,requets):
-        pass
+    def get(self, request):
+        serializer = RequestOTPSerializer(data=request.query_params)
+        if serializer.is_valid():
+            data = serializer.validated_data
+            try:
+                otp = OTPRequest.objects.generate(data)
+                return Response(data=RequestOTPResponseSerializer(otp).data)
+            except Exception as e:
+                print(e)
+                return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST, data = serializer.errors)
+    def post(self, request):
+        serializer = VerifyOtpRequestSerializer(data=request.data)
+        if serializer.is_valid():
+            data = serializer.validated_data
+            if OTPRequest.objects.is_valid(data['receiver'], data['request_id'], data['password']):
+                return Response(self._handle_login(data))
+            else:
+                return Response(status=status.HTTP_401_UNAUTHORIZED)
+
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST, data = serializer.errors)
+
+    def _handle_login(self, otp):
+        
+        query = User.objects.filter(username=otp['receiver'])
+        if query.exists():
+            created = False
+            user = query.first()
+        else:
+            user = User.objects.create(username=otp['receiver'] )
+            created = True
+
+        refresh = RefreshToken.for_user(user)
+
+        return ObtainTokenSerializer({
+            'refresh': str(refresh),
+            'token': str(refresh.access_token),
+            'created':created
+        }).data
