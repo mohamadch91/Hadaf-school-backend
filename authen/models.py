@@ -107,7 +107,7 @@ class OTPManager(models.Manager):
 
 
     def generate(self, data):
-        otp = self.model(channel=data['channel'], receiver=data['receiver'])
+        otp = self.model(receiver=data['receiver'])
         otp.save(using=self._db)
         send_otp(otp)
         return otp
@@ -122,7 +122,7 @@ def generate_otp():
 
 class OTPRequest(models.Model):
 
-    request_id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
+    request_id = models.UUIDField(primary_key=True, editable=False, default=uuid4)
     receiver = models.IntegerField()
     password = models.CharField(max_length=4, default=generate_otp)
     created = models.DateTimeField(auto_now_add=True, editable=False)

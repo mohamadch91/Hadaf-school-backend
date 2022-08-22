@@ -6,3 +6,4 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
  
 admin.site.register(Student)
 admin.site.register(User)
+admin.site.register(OTPRequest)
