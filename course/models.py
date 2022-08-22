@@ -37,7 +37,6 @@ class Course(models.Model):
     userID = models.ForeignKey(User,on_delete=models.CASCADE,null=True, related_name='User')
 
 
-
 class StudetCourse(models.Model):
     id = models.AutoField(primary_key=True)
     studentID = models.ForeignKey(Student, on_delete=models.CASCADE, null=True)
@@ -47,4 +46,15 @@ class StudetCourse(models.Model):
     enable = models.BooleanField(default=True,null=True)
     created_at=models.DateTimeField(auto_now_add=True,null=True)
     updated_at=models.DateTimeField(auto_now=True,null=True)
+
+class CourseHomeWork(models.Model):
+    id = models.AutoField(primary_key=True)
+    courseID = models.ForeignKey(Course, on_delete=models.CASCADE, null=True)
+    title = models.CharField(max_length=100, null=True)
+    description = models.CharField(max_length=500, null=True)
+    fileCourse = models.CharField(max_length=100, null=True) ##################
+    endDateTime = models.DateField(null=True)
+    created_at=models.DateTimeField(auto_now_add=True,null=True)
+    updated_at=models.DateTimeField(auto_now=True,null=True)
+    active = models.BooleanField(default=True, null=True)
     

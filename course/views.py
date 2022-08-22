@@ -92,3 +92,41 @@ class studentCourseView(APIView):
         studentCourse = get_object_or_404(StudetCourse, id=id)
         studentCourse.delete()
         return Response(status=status.HTTP_201_CREATED)
+
+class CourseHomeWorkView(APIView):
+
+    def post(self, request):
+        ser = courseHomeWorkSerializer(data=request.data)
+        if ser.is_valid():
+            ser.save()
+            return Response(ser.data, status=status.HTTP_201_CREATED)
+        return Response(ser.error(), status=status.HTTP_400_BAD_REQUEST)
+    
+    def put(self, request):
+        if 'id' not in request.data:
+            return Response('id required', status=status.HTTP_400_BAD_REQUEST)
+        id = request.data['id']
+        courseHomeWork = get_object_or_404(CourseHomeWork, id=id)
+        ser = courseHomeWorkSerializer(courseHomeWork, data=request.data)
+        if ser.is_valid():
+            ser.save()
+            return Response(ser.data, status=status.HTTP_201_CREATED)
+        return Response(ser.error(), status=status.HTTP_400_BAD_REQUEST)
+    
+    def get(self, request):
+        if 'id' in request.GET:
+            id = request.GET['id']
+            courseHomeWork = get_object_or_404(CourseHomeWork, id=id)
+            ser = courseHomeWorkSerializer(CourseHomeWork.objects.get(id=id))  
+        else:
+            ser = courseHomeWorkSerializer(CourseHomeWork.objects.all(), many=True)
+        return Response(ser.data)  
+
+    def delete(self, request):
+        if 'id' not in request.data:
+            return Response('id is required', status=status.HTTP_400_BAD_REQUEST)
+        id = request.data['id']
+        courseHomeWork = get_object_or_404(CourseHomeWork, id=id)
+        courseHomeWork.delete()
+        return Response(status=status.HTTP_201_CREATED)
+
