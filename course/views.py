@@ -1,3 +1,5 @@
+from queue import Empty
+from turtle import clear
 from urllib import request
 from django.shortcuts import render
 
@@ -29,7 +31,7 @@ class courseView(APIView):
         if 'id' not in request.data:
             return Response('id is required', status=status.HTTP_400_BAD_REQUEST)
         id = request.data['id']
-        course = get_object_or_404(course, id=id)
+        course = get_object_or_404(Course, id=id)
         ser = courseSerializer(course, data=request.data)
         if ser.is_valid():
             ser.save()
@@ -37,14 +39,19 @@ class courseView(APIView):
         return Response(ser.errors,status=status.HTTP_400_BAD_REQUEST)
 
     def get(self, request):
-        ser = courseSerializer(Course.object.all(), many=True)
-        return Response(ser.data)
+        if 'id' in request.GET :
+            id = request.GET['id']
+            course = get_object_or_404(Course, id=id)
+            ser = courseSerializer(Course.objects.get(id=id))
+        else:
+            ser = courseSerializer(Course.objects.all(), many=True)
+        return Response(ser.data)  
     
     def delete(self, request):
         if 'id' not in request.data:
             return Response('id is required', status=status.HTTP_400_BAD_REQUEST)
         id = request.data['id']
-        course = get_object_or_404(course, id=id)
+        course = get_object_or_404(Course, id=id)
         course.delete()
         return Response(status=status.HTTP_201_CREATED)
 
