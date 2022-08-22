@@ -52,9 +52,15 @@ class CourseHomeWork(models.Model):
     courseID = models.ForeignKey(Course, on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=100, null=True)
     description = models.CharField(max_length=500, null=True)
-    fileCourse = models.CharField(max_length=100, null=True) ##################
+    fileCourse = models.FileField(max_length=100, null=True) 
     endDateTime = models.DateField(null=True)
     created_at=models.DateTimeField(auto_now_add=True,null=True)
     updated_at=models.DateTimeField(auto_now=True,null=True)
     active = models.BooleanField(default=True, null=True)
     
+# class CourseDays(models.Model):
+#     id = models.AutoField(primary_key=True)
+#     courseID = models.ForeignKey(Course, on_delete=models.CASCADE, null=True)
+#     # dayID = 
+#     created_at=models.DateTimeField(auto_now_add=True,null=True)
+#     updated_at=models.DateTimeField(auto_now=True,null=True)
