@@ -106,3 +106,12 @@ class updateStudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
         fields = ['pk','phone','grade','department','birth','national_code','role','first_name','last_name','created_at','updated_at','picture','gpaverage','disipcline','school','parentName','parentNationalCode','pbirthday','peducation','pjob','address']
+
+class requestOTPSerializer(serializers.Serializer):
+    reciever=serializers.IntegerField(allow_null=False)
+        
+class OTPResSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model=OTPrequest        
+        fields=['request_id']

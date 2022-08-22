@@ -135,3 +135,13 @@ class UserListView(generics.ListAPIView):
             users=Teacher.objects.all()
             ser=TeacherSerializer(users,many=True)
             return Response(ser.data,status=status.HTTP_200_OK)
+
+class OTPView(APIView):
+    
+    def get(self,request):
+        ser=requestOTPSerializer(data=request.query_params)
+        if(ser.is_valid()):
+            pass
+        return Response(ser.errors,status=status.HTTP_400_BAD_REQUEST) 
+    def post(self,requets):
+        pass
