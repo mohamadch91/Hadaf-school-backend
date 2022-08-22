@@ -55,9 +55,11 @@ class courseView(APIView):
         course.delete()
         return Response(status=status.HTTP_201_CREATED)
 
+
 class studentCourseView(APIView):
+
     def post(self, request):
-        ser = studentCourseSerializer(request.data())
+        ser = studentCourseSerializer(data=request.data)
         if ser.is_valid():
             ser.save()
             return Response(ser.data, status=status.HTTP_201_CREATED)
@@ -66,7 +68,7 @@ class studentCourseView(APIView):
     def put(self, request):
         if 'id' not in request.data:
             return Response('id required', status=status.HTTP_400_BAD_REQUEST)
-        id = request.data([id])
+        id = request.data["id"]
         studentCourse = get_object_or_404(StudetCourse, id=id)
         ser = studentCourseSerializer(studentCourse, data=request.data)
         if ser.is_valid():
@@ -90,5 +92,3 @@ class studentCourseView(APIView):
         studentCourse = get_object_or_404(StudetCourse, id=id)
         studentCourse.delete()
         return Response(status=status.HTTP_201_CREATED)
-
-
