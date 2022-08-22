@@ -55,7 +55,40 @@ class courseView(APIView):
         course.delete()
         return Response(status=status.HTTP_201_CREATED)
 
+class studentCourseView(APIView):
+    def post(self, request):
+        ser = studentCourseSerializer(request.data())
+        if ser.is_valid():
+            ser.save()
+            return Response(ser.data, status=status.HTTP_201_CREATED)
+        return Response(ser.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    def put(self, request):
+        if 'id' not in request.data:
+            return Response('id required', status=status.HTTP_400_BAD_REQUEST)
+        id = request.data([id])
+        studentCourse = get_object_or_404(StudetCourse, id=id)
+        ser = studentCourseSerializer(studentCourse, data=request.data)
+        if ser.is_valid():
+            ser.save()
+            return Response(ser.data,status=status.HTTP_201_CREATED)
+        return Response(ser.errors,status=status.HTTP_400_BAD_REQUEST)
 
+    def get(self, request):
+        if 'id' in request.GET :
+            id = request.GET['id']
+            studentCourse = get_object_or_404(StudetCourse, id=id)
+            ser = studentCourseSerializer(StudetCourse.objects.get(id=id))
+        else:
+            ser = studentCourseSerializer(StudetCourse.objects.all(), many=True)
+        return Response(ser.data)  
+
+    def delete(self, request):
+        if 'id' not in request.data:
+            return Response('id is required', status=status.HTTP_400_BAD_REQUEST)
+        id = request.data['id']
+        studentCourse = get_object_or_404(StudetCourse, id=id)
+        studentCourse.delete()
+        return Response(status=status.HTTP_201_CREATED)
 
 
