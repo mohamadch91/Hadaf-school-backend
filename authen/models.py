@@ -47,8 +47,7 @@ class CustomUserManager(BaseUserManager):
 
 class User(AbstractUser):
     username = None
-    phoneNumberRegex = RegexValidator(regex = r"^\+?98?\d{8,10}$")
-    phone = models.CharField(validators = [phoneNumberRegex], max_length = 13, unique = True)
+    phone = models.CharField( max_length = 13, unique = True)
     birth = models.DateField(blank=True,null=True)
     national_code=models.IntegerField(blank=True,null=True)
     role=models.CharField(max_length=10,blank=True,null=True)
