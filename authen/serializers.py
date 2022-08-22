@@ -1,4 +1,5 @@
 from dataclasses import field, fields
+from os import access
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework import serializers
 from authen.models import *
@@ -125,7 +126,7 @@ class VerifyOtpRequestSerializer(serializers.Serializer):
     receiver = serializers.CharField( allow_null=False)
 
 class ObtainTokenSerializer(serializers.Serializer):
-    token = serializers.CharField( allow_null=False)
+    access = serializers.CharField( allow_null=False)
     refresh = serializers.CharField( allow_null=False)
     created = serializers.BooleanField()
 

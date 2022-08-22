@@ -161,18 +161,18 @@ class OTPView(APIView):
 
     def _handle_login(self, otp):
         
-        query = User.objects.filter(username=otp['receiver'])
+        query = User.objects.filter(phone=otp['receiver'])
         if query.exists():
             created = False
             user = query.first()
         else:
-            user = User.objects.create(username=otp['receiver'] )
+            user = User.objects.create(phone=otp['receiver'] )
             created = True
 
         refresh = RefreshToken.for_user(user)
 
         return ObtainTokenSerializer({
             'refresh': str(refresh),
-            'token': str(refresh.access_token),
+            'access': str(refresh.access_token),
             'created':created
         }).data

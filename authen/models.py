@@ -10,10 +10,7 @@ from courseDEP.models import *
 from django.core.validators import RegexValidator
 from datetime import timedelta
 from django.utils import timezone
-
-def send_otp(otp):
-    print("otp password")
-    print(otp.password)
+from .sender import send_otp
 
 class CustomUserManager(BaseUserManager):
     """
