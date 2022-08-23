@@ -58,9 +58,9 @@ class CourseHomeWork(models.Model):
     updated_at=models.DateTimeField(auto_now=True,null=True)
     active = models.BooleanField(default=True, null=True)
     
-# class CourseDays(models.Model):
-#     id = models.AutoField(primary_key=True)
-#     courseID = models.ForeignKey(Course, on_delete=models.CASCADE, null=True)
-#     # dayID = 
-#     created_at=models.DateTimeField(auto_now_add=True,null=True)
-#     updated_at=models.DateTimeField(auto_now=True,null=True)
+class CourseDays(models.Model):
+    id = models.AutoField(primary_key=True)
+    courseID = models.ForeignKey(Course, on_delete=models.CASCADE, null=True)
+    dayID = models.ForeignKey(days,on_delete=models.CASCADE, null=True)
+    created_at=models.DateTimeField(auto_now_add=True,null=True)
+    updated_at=models.DateTimeField(auto_now=True,null=True)
