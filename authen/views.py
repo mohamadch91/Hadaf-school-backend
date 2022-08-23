@@ -60,31 +60,31 @@ class ChangePasswordView(generics.UpdateAPIView):
     permission_classes = (IsAuthenticated,)
     serializer_class = ChangePasswordSerializer   
 class UpdateProfileView(APIView):
-    permission_classes=(IsAuthenticated,)
+    # permission_classes=(IsAuthenticated,)
    
     def put (self,request):
-        if('id' not in request.data):
-            return Response("neeed id ",status=status.HTTP_400_BAD_REQUEST)
+        if('phone' not in request.data):
+            return Response("neeed phone ",status=status.HTTP_400_BAD_REQUEST)
         if('type' not in request.data ):
             return Response("neeed type",status=status.HTTP_400_BAD_REQUEST)
         type=request.data["type"]
-        id=request.data["id"]
+        phone=request.data["phone"]
         if(type=="user"):
-            user=get_object_or_404(User,pk=id)
+            user=get_object_or_404(User,phone=phone)
             ser=updateUserSerilizer(user,data=request.data)
             if(ser.is_valid()):
                 ser.save()
                 return Response(ser.data,status=status.HTTP_202_ACCEPTED)
             return Response(ser.errors,status=status.HTTP_400_BAD_REQUEST)
         if(type=="student"):
-            user=get_object_or_404(Student,pk=id)
+            user=get_object_or_404(Student,phone=phone)
             ser=updateStudentSerializer(user,data=request.data)
             if(ser.is_valid()):
                 ser.save()
                 return Response(ser.data,status=status.HTTP_202_ACCEPTED)
             return Response(ser.errors,status=status.HTTP_400_BAD_REQUEST)
         if(type=="teacher"):
-            user=get_object_or_404(Teacher,pk=id)
+            user=get_object_or_404(Teacher,phone=phone)
             ser=updateTeacherSerializer(user,data=request.data)
             if(ser.is_valid()):
                 ser.save()
@@ -137,9 +137,11 @@ class UserListView(generics.ListAPIView):
             return Response(ser.data,status=status.HTTP_200_OK)
 
 
-class OTPView(APIView):
+class OTPViewLogin(APIView):
     def get(self, request):
+        
         serializer = RequestOTPSerializer(data=request.query_params)
+        user=get_object_or_404(User,phone=request.query_params.get('receiver'))
         if serializer.is_valid():
             data = serializer.validated_data
             otp = OTPRequest.objects.generate(data)
@@ -165,11 +167,54 @@ class OTPView(APIView):
         if query.exists():
             created = False
             user = query.first()
+
+        refresh = RefreshToken.for_user(user)
+
+        return ObtainTokenSerializer({
+            'refresh': str(refresh),
+            'access': str(refresh.access_token),
+            'created':created
+        }).data
+class OTPViewRegister(APIView):
+    def get(self, request):
+        
+        serializer = RequestOTPSerializer(data=request.query_params)
+        if serializer.is_valid():
+            data = serializer.validated_data
+            otp = OTPRequest.objects.generate(data)
+            return Response(data=RequestOTPResponseSerializer(otp).data,status=status.HTTP_200_OK)
+
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST, data = serializer.errors)
+    def post(self, request):
+        if('type' not in request.data ):
+            return Response("neeed type",status=status.HTTP_400_BAD_REQUEST)#
+        serializer = VerifyOtpRequestSerializer(data=request.data)
+        if serializer.is_valid():
+            data = serializer.validated_data
+            if OTPRequest.objects.is_valid(data['receiver'], data['request_id'], data['password']):
+                return Response(self._handle_login(data,request))
+            else:
+                return Response(status=status.HTTP_401_UNAUTHORIZED)
+
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST, data = serializer.errors)
+
+    def _handle_login(self, otp,request):
+        type=request.data["type"]
+        if(type=="student"):
+            user = Student.objects.create(phone=otp['receiver'] )
+            created = True
+            refresh = RefreshToken.for_user(user)
+        elif(type=="teacher"):
+            user = Teacher.objects.create(phone=otp['receiver'] )
+            created = True
+            refresh = RefreshToken.for_user(user)
+    
         else:
             user = User.objects.create(phone=otp['receiver'] )
             created = True
-
-        refresh = RefreshToken.for_user(user)
+            refresh = RefreshToken.for_user(user)
 
         return ObtainTokenSerializer({
             'refresh': str(refresh),

@@ -14,5 +14,7 @@ urlpatterns = [
     path('update_profile/', UpdateProfileView.as_view(), name='auth_update_profile'),
     path('logout/', LogoutView.as_view(), name='auth_logout'),
     path('logout_all/', LogoutAllView.as_view(), name='auth_logout_all'),
-    path('sms/',OTPView.as_view(),name="OTP view")
+    path('sms/login/',OTPViewLogin.as_view(),name="OTP view login"),
+    path('sms/register',OTPViewRegister.as_view(),name="OTP viewvregister "),
+
 ]
