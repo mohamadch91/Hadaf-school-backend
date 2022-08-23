@@ -1,4 +1,4 @@
 from django.db import models
 
-class archiveOfflineHeader(models.Model):
+# class archiveOfflineHeader(models.Model):
     

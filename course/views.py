@@ -130,3 +130,119 @@ class CourseHomeWorkView(APIView):
         courseHomeWork.delete()
         return Response(status=status.HTTP_201_CREATED)
 
+
+class CourseDaysView(APIView):
+
+    def post(self, request):
+        ser = courseDaysSerializer(data=request.data)
+        if ser.is_valid():
+            ser.save()
+            return Response(ser.data, status=status.HTTP_201_CREATED)
+        return Response(ser.error(), status=status.HTTP_400_BAD_REQUEST)
+    
+    def put(self, request):
+        if 'id' not in request.data:
+            return Response('id required', status=status.HTTP_400_BAD_REQUEST)
+        id = request.data['id']
+        courseDays = get_object_or_404(CourseDays, id=id)
+        ser = courseTypeSerializer(courseDays, data=request.data)
+        if ser.is_valid():
+            ser.save()
+            return Response(ser.data, status=status.HTTP_201_CREATED)
+        return Response(ser.error(), status=status.HTTP_400_BAD_REQUEST)
+    
+    def get(self, request):
+        if 'id' in request.GET:
+            id = request.GET['id']
+            courseDays = get_object_or_404(CourseDays, id=id)
+            ser = courseDaysSerializer(CourseDays.objects.get(id=id))  
+        else:
+            ser = courseDaysSerializer(CourseDays.objects.all(), many=True)
+        return Response(ser.data)  
+
+    def delete(self, request):
+        if 'id' not in request.data:
+            return Response('id is required', status=status.HTTP_400_BAD_REQUEST)
+        id = request.data['id']
+        courseDays = get_object_or_404(CourseDays, id=id)
+        CourseDays.delete()
+        return Response(status=status.HTTP_201_CREATED)
+
+
+
+class CourseTypeView(APIView):
+
+    def post(self, request):
+        ser = courseTypeSerializer(data=request.data)
+        if ser.is_valid():
+            ser.save()
+            return Response(ser.data, status=status.HTTP_201_CREATED)
+        return Response(ser.error(), status=status.HTTP_400_BAD_REQUEST)
+    
+    def put(self, request):
+        if 'id' not in request.data:
+            return Response('id required', status=status.HTTP_400_BAD_REQUEST)
+        id = request.data['id']
+        courseType = get_object_or_404(CourseType, id=id)
+        ser = courseTypeSerializer(courseType, data=request.data)
+        if ser.is_valid():
+            ser.save()
+            return Response(ser.data, status=status.HTTP_201_CREATED)
+        return Response(ser.error(), status=status.HTTP_400_BAD_REQUEST)
+    
+    def get(self, request):
+        if 'id' in request.GET:
+            id = request.GET['id']
+            courseType = get_object_or_404(CourseType, id=id)
+            ser = courseTypeSerializer(CourseType.objects.get(id=id))  
+        else:
+            ser = courseTypeSerializer(CourseType.objects.all(), many=True)
+        return Response(ser.data)  
+
+    def delete(self, request):
+        if 'id' not in request.data:
+            return Response('id is required', status=status.HTTP_400_BAD_REQUEST)
+        id = request.data['id']
+        courseType = get_object_or_404(CourseType, id=id)
+        CourseType.delete()
+        return Response(status=status.HTTP_201_CREATED)
+
+
+
+
+class ArchiveOfflineHeaderView(APIView):
+
+    def post(self, request):
+        ser = archiveOfflineHeaderSerializer(data=request.data)
+        if ser.is_valid():
+            ser.save()
+            return Response(ser.data, status=status.HTTP_201_CREATED)
+        return Response(ser.error(), status=status.HTTP_400_BAD_REQUEST)
+    
+    def put(self, request):
+        if 'id' not in request.data:
+            return Response('id required', status=status.HTTP_400_BAD_REQUEST)
+        id = request.data['id']
+        archiveOfflineHeader = get_object_or_404(ArchiveOfflineHeader, id=id)
+        ser = archiveOfflineHeaderSerializer(archiveOfflineHeader, data=request.data)
+        if ser.is_valid():
+            ser.save()
+            return Response(ser.data, status=status.HTTP_201_CREATED)
+        return Response(ser.error(), status=status.HTTP_400_BAD_REQUEST)
+    
+    def get(self, request):
+        if 'id' in request.GET:
+            id = request.GET['id']
+            archiveOfflineHeader = get_object_or_404(ArchiveOfflineHeader, id=id)
+            ser = archiveOfflineHeaderSerializer(ArchiveOfflineHeader.objects.get(id=id))  
+        else:
+            ser = archiveOfflineHeaderSerializer(ArchiveOfflineHeader.objects.all(), many=True)
+        return Response(ser.data)  
+
+    def delete(self, request):
+        if 'id' not in request.data:
+            return Response('id is required', status=status.HTTP_400_BAD_REQUEST)
+        id = request.data['id']
+        archiveOfflineHeader = get_object_or_404(ArchiveOfflineHeader, id=id)
+        ArchiveOfflineHeader.delete()
+        return Response(status=status.HTTP_201_CREATED)

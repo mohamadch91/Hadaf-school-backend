@@ -58,9 +58,24 @@ class CourseHomeWork(models.Model):
     updated_at=models.DateTimeField(auto_now=True,null=True)
     active = models.BooleanField(default=True, null=True)
     
-class CourseDays(models.Model):
+class CourseDays(models.Model):        #???????????
     id = models.AutoField(primary_key=True)
     courseID = models.ForeignKey(Course, on_delete=models.CASCADE, null=True)
-    dayID = models.ForeignKey(days,on_delete=models.CASCADE, null=True)
+    dayID = models.ForeignKey(days,on_delete=models.CASCADE, null=True)     #######
+    created_at=models.DateTimeField(auto_now_add=True,null=True)
+    updated_at=models.DateTimeField(auto_now=True,null=True)
+
+class CourseType(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100, null=True)
+    sortIndex = models.IntegerField(blank=True, null=True)    ########  
+    created_at=models.DateTimeField(auto_now_add=True,null=True)    ########
+    updated_at=models.DateTimeField(auto_now=True,null=True)    #######
+
+class ArchiveOfflineHeader(models.Model):
+    id = models.AutoField(primary_key=True)
+    courseID = models.ForeignKey(Course, on_delete=models.CASCADE, null=True)
+    title = models.CharField(max_length=100, null=True)
+    description = models.CharField(max_length=500, null=True)
     created_at=models.DateTimeField(auto_now_add=True,null=True)
     updated_at=models.DateTimeField(auto_now=True,null=True)
