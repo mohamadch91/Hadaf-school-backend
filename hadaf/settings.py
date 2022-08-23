@@ -85,6 +85,7 @@ INSTALLED_APPS = [
     'courseDEP',
     'course',
     'discount',
+    'package',
     'corsheaders',
     'rest_framework_simplejwt.token_blacklist',
     
