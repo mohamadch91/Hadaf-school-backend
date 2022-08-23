@@ -84,6 +84,7 @@ INSTALLED_APPS = [
     'forum',
     'courseDEP',
     'course',
+    'discount',
     'corsheaders',
     'rest_framework_simplejwt.token_blacklist',
     
