@@ -1,6 +1,7 @@
 from operator import mod
 from re import T
 from statistics import mode
+from tkinter import CASCADE
 from django.db import models
 
 from courseDEP.models import *
@@ -40,7 +41,7 @@ class Course(models.Model):
 class StudetCourse(models.Model):
     id = models.AutoField(primary_key=True)
     studentID = models.ForeignKey(Student, on_delete=models.CASCADE, null=True)
-    courseID = models.ForeignKey(Course, on_delete=models.CASCADE, null=True)
+    courseID = models.ForeignKey(Course, on_delete=models.CASCADE, null=True)   #########
     price = models.IntegerField(blank=True, null=True)
     description = models.CharField(max_length=500,null=True)
     enable = models.BooleanField(default=True,null=True)
@@ -52,7 +53,7 @@ class CourseHomeWork(models.Model):
     courseID = models.ForeignKey(Course, on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=100, null=True)
     description = models.CharField(max_length=500, null=True)
-    fileCourse = models.FileField(max_length=100, null=True) 
+    fileCourse = models.FileField(upload_to ='upload_course/', max_length=100, null=True) 
     endDateTime = models.DateField(null=True)
     created_at=models.DateTimeField(auto_now_add=True,null=True)
     updated_at=models.DateTimeField(auto_now=True,null=True)
@@ -68,7 +69,7 @@ class CourseDays(models.Model):        #???????????
 class CourseType(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100, null=True)
-    sortIndex = models.IntegerField(blank=True, null=True)    ########  
+    sortIndex = models.IntegerField(blank=True, null=True)    ########  ????????
     created_at=models.DateTimeField(auto_now_add=True,null=True)    ########
     updated_at=models.DateTimeField(auto_now=True,null=True)    #######
 
@@ -79,3 +80,30 @@ class ArchiveOfflineHeader(models.Model):
     description = models.CharField(max_length=500, null=True)
     created_at=models.DateTimeField(auto_now_add=True,null=True)
     updated_at=models.DateTimeField(auto_now=True,null=True)
+
+class ArchiveFiles(models.Model):
+    id = models.AutoField(primary_key=True)
+    archiveHeaderID = models.ForeignKey(ArchiveOfflineHeader, on_delete=models.CASCADE, null=True)
+    title = models.CharField(max_length=100, null=True)
+    description = models.CharField(max_length=500, null=True)
+    fileArchibe = models.FileField(upload_to ='upload_course/', max_length=100, null=True)
+    reated_at=models.DateTimeField(auto_now_add=True,null=True)
+    updated_at=models.DateTimeField(auto_now=True,null=True)
+
+class Discount(models.Model):
+    id = id = models.AutoField(primary_key=True)
+    code = models.IntegerField(blank=True, null=True)
+    count = models.IntegerField(blank=True, null=True)
+    asDate = models.DateField(null=True)    #####
+    toDate = models.DateField(null=True)    ######
+    amount = models.IntegerField(blank=True, null=True)
+    isPercent = models.BooleanField(default=True,null=True)
+    active = models.BooleanField(default=True,null=True)
+    reated_at=models.DateTimeField(auto_now_add=True,null=True) #####
+    updated_at=models.DateTimeField(auto_now=True,null=True)    ####  
+
+
+class DiscountCourse(models.Model): #???????
+    id = models.AutoField(primary_key=True)
+    discountID = models.ForeignKey(Discount, on_delete=models.CASCADE, null=True)
+    courseID = models.ForeignKey(Course, on_delete=models.CASCADE, null=True)

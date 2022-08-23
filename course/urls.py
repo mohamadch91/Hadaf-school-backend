@@ -9,4 +9,7 @@ urlpatterns = [
     path('courseDays/',CourseDaysView.as_view(), name='courseDaysType'),
     path('courseType/',CourseTypeView.as_view(), name='courseType'),
     path('archiveOfflineHeader/',ArchiveOfflineHeaderView.as_view(), name='archiveOfflineHeader'),
+    path('archiveFiles/',ArchiveFilesView.as_view(), name='archiveFiles'),
+    path('discount/',DiscountView.as_view(), name='discount'),
+    path('discountCourse/',DiscountCourseView.as_view(), name='discountCourse'),
 ]

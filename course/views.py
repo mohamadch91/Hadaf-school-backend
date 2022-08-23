@@ -246,3 +246,154 @@ class ArchiveOfflineHeaderView(APIView):
         archiveOfflineHeader = get_object_or_404(ArchiveOfflineHeader, id=id)
         ArchiveOfflineHeader.delete()
         return Response(status=status.HTTP_201_CREATED)
+
+
+class ArchiveFilesView(APIView):
+
+    def post(self, request):
+        ser = archiveFilesSerializer(data=request.data)
+        if ser.is_valid():
+            ser.save()
+            return Response(ser.data, status=status.HTTP_201_CREATED)
+        return Response(ser.error(), status=status.HTTP_400_BAD_REQUEST)
+    
+    def put(self, request):
+        if 'id' not in request.data:
+            return Response('id required', status=status.HTTP_400_BAD_REQUEST)
+        id = request.data['id']
+        archiveFiles = get_object_or_404(ArchiveFiles, id=id)
+        ser = archiveFilesSerializer(archiveFiles, data=request.data)
+        if ser.is_valid():
+            ser.save()
+            return Response(ser.data, status=status.HTTP_201_CREATED)
+        return Response(ser.error(), status=status.HTTP_400_BAD_REQUEST)
+    
+    def get(self, request):
+        if 'id' in request.GET:
+            id = request.GET['id']
+            archiveFiles = get_object_or_404(ArchiveFiles, id=id)
+            ser = archiveFilesSerializer(ArchiveFiles.objects.get(id=id))  
+        else:
+            ser = archiveFilesSerializer(ArchiveFiles.objects.all(), many=True)
+        return Response(ser.data)  
+
+    def delete(self, request):
+        if 'id' not in request.data:
+            return Response('id is required', status=status.HTTP_400_BAD_REQUEST)
+        id = request.data['id']
+        archiveFiles= get_object_or_404(ArchiveFiles, id=id)
+        ArchiveFiles.delete()
+        return Response(status=status.HTTP_201_CREATED)
+
+class DiscountView(APIView):
+
+    def post(self, request):
+        ser = discountSerializer(data=request.data)
+        if ser.is_valid():
+            ser.save()
+            return Response(ser.data, status=status.HTTP_201_CREATED)
+        return Response(ser.error(), status=status.HTTP_400_BAD_REQUEST)
+    
+    def put(self, request):
+        if 'id' not in request.data:
+            return Response('id required', status=status.HTTP_400_BAD_REQUEST)
+        id = request.data['id']
+        discount = get_object_or_404(Discount, id=id)
+        ser = discountSerializer(discount, data=request.data)
+        if ser.is_valid():
+            ser.save()
+            return Response(ser.data, status=status.HTTP_201_CREATED)
+        return Response(ser.error(), status=status.HTTP_400_BAD_REQUEST)
+    
+    def get(self, request):
+        if 'id' in request.GET:
+            id = request.GET['id']
+            discount = get_object_or_404(Discount, id=id)
+            ser = discountSerializer(Discount.objects.get(id=id))  
+        else:
+            ser = discountSerializer(Discount.objects.all(), many=True)
+        return Response(ser.data)  
+
+    def delete(self, request):
+        if 'id' not in request.data:
+            return Response('id is required', status=status.HTTP_400_BAD_REQUEST)
+        id = request.data['id']
+        discount= get_object_or_404(Discount, id=id)
+        Discount.delete()
+        return Response(status=status.HTTP_201_CREATED)
+
+
+
+class DiscountCourseView(APIView):
+    def post(self, request):
+        ser = discountCourseSerializer(data=request.data)
+        if ser.is_valid():
+            ser.save()
+            return Response(ser.data, status=status.HTTP_201_CREATED)
+        return Response(ser.error(), status=status.HTTP_400_BAD_REQUEST)
+    
+    def put(self, request):
+        if 'id' not in request.data:
+            return Response('id required', status=status.HTTP_400_BAD_REQUEST)
+        id = request.data['id']
+        discountCourse = get_object_or_404(DiscountCourse, id=id)
+        ser = discountCourseSerializer(discountCourse, data=request.data)
+        if ser.is_valid():
+            ser.save()
+            return Response(ser.data, status=status.HTTP_201_CREATED)
+        return Response(ser.error(), status=status.HTTP_400_BAD_REQUEST)
+    
+    def get(self, request):
+        if 'id' in request.GET:
+            id = request.GET['id']
+            discount = get_object_or_404(DiscountCourse, id=id)
+            ser = discountCourseSerializer(DiscountCourse.objects.get(id=id))  
+        else:
+            ser = discountCourseSerializer(DiscountCourse.objects.all(), many=True)
+        return Response(ser.data)  
+
+    def delete(self, request):
+        if 'id' not in request.data:
+            return Response('id is required', status=status.HTTP_400_BAD_REQUEST)
+        id = request.data['id']
+        discountCourse= get_object_or_404(DiscountCourse, id=id)
+        DiscountCourse.delete()
+        return Response(status=status.HTTP_201_CREATED)
+
+
+
+# class DiscountCourse(APIView):
+#     def post(self, request):
+#         ser = discountCourseSerializer(data=request.data)
+#         if ser.is_valid():
+#             ser.save()
+#             return Response(ser.data, status=status.HTTP_201_CREATED)
+#         return Response(ser.error(), status=status.HTTP_400_BAD_REQUEST)
+    
+#     def put(self, request):
+#         if 'id' not in request.data:
+#             return Response('id required', status=status.HTTP_400_BAD_REQUEST)
+#         id = request.data['id']
+#         discountCourse = get_object_or_404(DiscountCourse, id=id)
+#         ser = discountCourseSerializer(discountCourse, data=request.data)
+#         if ser.is_valid():
+#             ser.save()
+#             return Response(ser.data, status=status.HTTP_201_CREATED)
+#         return Response(ser.error(), status=status.HTTP_400_BAD_REQUEST)
+    
+#     def get(self, request):
+#         if 'id' in request.GET:
+#             id = request.GET['id']
+#             discountCourse = get_object_or_404(DiscountCourse, id=id)
+#             ser = discountCourseSerializer(DiscountCourse.objects.get(id=id))  
+#         else:
+#             ser = discountCourseSerializer(DiscountCourse.objects.all(), many=True)
+#         return Response(ser.data)  
+
+#     def delete(self, request):
+#         if 'id' not in request.data:
+#             return Response('id is required', status=status.HTTP_400_BAD_REQUEST)
+#         id = request.data['id']
+#         discountCourse= get_object_or_404(DiscountCourse, id=id)
+#         DiscountCourse.delete()
+#         return Response(status=status.HTTP_201_CREATED)

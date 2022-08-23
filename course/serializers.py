@@ -31,3 +31,18 @@ class archiveOfflineHeaderSerializer(serializers.ModelSerializer):
     class Meta:
         model = ArchiveOfflineHeader
         fields = '__all__'  
+
+class archiveFilesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ArchiveFiles
+        fields = '__all__'  
+
+class discountSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Discount
+        fields = '__all__'  
+
+class discountCourseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DiscountCourse
+        fields = '__all__'  
