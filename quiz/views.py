@@ -39,7 +39,7 @@ class quizHeaderView(APIView):
         ser = quizHeaderSerializer(archiveOfflineHeader, data=request.data)
         if ser.is_valid():
             ser.save()
-            return Response(ser.data, status=status.HTTP_201_CREATED)
+            return Response(ser.data, status=status.HTTP_200_OK)
         return Response(ser.error(), status=status.HTTP_400_BAD_REQUEST)
     
     def get(self, request):
