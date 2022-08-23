@@ -73,37 +73,4 @@ class CourseType(models.Model):
     created_at=models.DateTimeField(auto_now_add=True,null=True)    ########
     updated_at=models.DateTimeField(auto_now=True,null=True)    #######
 
-class ArchiveOfflineHeader(models.Model):
-    id = models.AutoField(primary_key=True)
-    courseID = models.ForeignKey(Course, on_delete=models.CASCADE, null=True)
-    title = models.CharField(max_length=100, null=True)
-    description = models.CharField(max_length=500, null=True)
-    created_at=models.DateTimeField(auto_now_add=True,null=True)
-    updated_at=models.DateTimeField(auto_now=True,null=True)
 
-class ArchiveFiles(models.Model):
-    id = models.AutoField(primary_key=True)
-    archiveHeaderID = models.ForeignKey(ArchiveOfflineHeader, on_delete=models.CASCADE, null=True)
-    title = models.CharField(max_length=100, null=True)
-    description = models.CharField(max_length=500, null=True)
-    fileArchibe = models.FileField(upload_to ='upload_course/', max_length=100, null=True)
-    reated_at=models.DateTimeField(auto_now_add=True,null=True)
-    updated_at=models.DateTimeField(auto_now=True,null=True)
-
-class Discount(models.Model):
-    id = id = models.AutoField(primary_key=True)
-    code = models.IntegerField(blank=True, null=True)
-    count = models.IntegerField(blank=True, null=True)
-    asDate = models.DateField(null=True)    #####
-    toDate = models.DateField(null=True)    ######
-    amount = models.IntegerField(blank=True, null=True)
-    isPercent = models.BooleanField(default=True,null=True)
-    active = models.BooleanField(default=True,null=True)
-    reated_at=models.DateTimeField(auto_now_add=True,null=True) #####
-    updated_at=models.DateTimeField(auto_now=True,null=True)    ####  
-
-
-class DiscountCourse(models.Model): #???????
-    id = models.AutoField(primary_key=True)
-    discountID = models.ForeignKey(Discount, on_delete=models.CASCADE, null=True)
-    courseID = models.ForeignKey(Course, on_delete=models.CASCADE, null=True)

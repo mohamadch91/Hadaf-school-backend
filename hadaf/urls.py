@@ -26,9 +26,10 @@ urlpatterns = [
     # path('quiz/',include('quiz.urls')),
     # path('forum/',include('forum.urls')),
     path('course/',include('course.urls')),
-    # path('archive/',include('archive.urls')),
+    path('archive/',include('archive.urls')),
     path('authen/',include('authen.urls')),
-    path('courseDEP/',include('courseDEP.urls'))
+    path('courseDEP/',include('courseDEP.urls')),
+    path('discount',include('discount.urls'))
     
     
 ]
