@@ -43,7 +43,7 @@ class ArchiveOfflineHeaderView(APIView):
         if 'id' in request.GET:
             id = request.GET['id']
             archiveOfflineHeader = get_object_or_404(ArchiveOfflineHeader, id=id)
-            ser = archiveOfflineHeaderSerializer(ArchiveOfflineHeader.objects.get(id=id))  
+            ser = archiveOfflineHeaderSerializer(archiveOfflineHeader.objects.get(id=id))  
         else:
             ser = archiveOfflineHeaderSerializer(ArchiveOfflineHeader.objects.all(), many=True)
         return Response(ser.data)  
@@ -53,7 +53,7 @@ class ArchiveOfflineHeaderView(APIView):
             return Response('id is required', status=status.HTTP_400_BAD_REQUEST)
         id = request.data['id']
         archiveOfflineHeader = get_object_or_404(ArchiveOfflineHeader, id=id)
-        ArchiveOfflineHeader.delete()
+        archiveOfflineHeader.delete()
         return Response(status=status.HTTP_201_CREATED)
 
 
@@ -91,5 +91,5 @@ class ArchiveFilesView(APIView):
             return Response('id is required', status=status.HTTP_400_BAD_REQUEST)
         id = request.data['id']
         archiveFiles= get_object_or_404(ArchiveFiles, id=id)
-        ArchiveFiles.delete()
+        archiveFiles.delete()
         return Response(status=status.HTTP_201_CREATED)
