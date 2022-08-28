@@ -1,8 +1,4 @@
-from ast import For
-from copyreg import pickle
-from pydoc import describe
-from pyexpat import model
-from turtle import title
+
 from django.db import models
 from authen.models import Student, Teacher, User
 from course.models import Course
