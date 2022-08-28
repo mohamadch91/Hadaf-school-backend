@@ -1,8 +1,4 @@
-from pydoc import describe
-from pyexpat import model
-from tkinter.messagebox import QUESTION
-from turtle import title
-from unittest import result
+
 from django.db import models
 
 from authen.models import Teacher
