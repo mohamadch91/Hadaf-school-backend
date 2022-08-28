@@ -13,7 +13,6 @@ def send_otp(otp):
             'type': 'sms'
         }   
         response = api.verify_lookup(params)
-        print (response)
     except APIException as e: 
         print (str(e))
     except HTTPException as e: 
