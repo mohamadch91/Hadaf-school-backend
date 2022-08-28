@@ -1,7 +1,4 @@
-from operator import mod
-from re import T
-from statistics import mode
-from tkinter import CASCADE
+
 from django.db import models
 
 from courseDEP.models import *
