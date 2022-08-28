@@ -3,7 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 
 from queue import Empty
-from turtle import clear
+ 
 from urllib import request
 from django.shortcuts import render
 

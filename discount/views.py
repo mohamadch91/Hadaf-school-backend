@@ -5,7 +5,7 @@ from django.shortcuts import render
 
 
 from queue import Empty
-from turtle import clear
+ 
 from urllib import request
 from django.shortcuts import render
 
