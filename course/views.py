@@ -254,3 +254,13 @@ class teacherCourse(APIView):
         courses=Course.objects.filter(teacherID=id)
         ser=courseSerializer(courses,many=True)
         return Response(ser.data,status=status.HTTP_200_OK)
+
+class coursegetHomeVIew(APIView):
+    def get(self,request):
+        id=request.query_params.get('id',None)
+        if(id is  None):
+            return Response("need query params",status=status.HTTP_400_BAD_REQUEST)
+        hw=CourseHomeWork.objects.filter(courseID=id)
+        hw_Ser=courseHomeWorkSerializer(hw,many=True)
+        return Response(hw_Ser.data,status=status.HTTP_200_OK)
+        
