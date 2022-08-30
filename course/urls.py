@@ -8,5 +8,7 @@ urlpatterns = [
     path('courseHomeWork/', CourseHomeWorkView.as_view(), name='courseHomeWork'),
     path('courseDays/',CourseDaysView.as_view(), name='courseDaysType'),
     path('courseType/',CourseTypeView.as_view(), name='courseType'),
+    path('teacherCourse/',teacherCourse.as_view(), name='teacher courses'),
+
 
 ]

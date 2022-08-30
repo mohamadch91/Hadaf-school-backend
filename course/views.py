@@ -245,3 +245,12 @@ class CourseTypeView(APIView):
 #         discountCourse= get_object_or_404(DiscountCourse, id=id)
 #         DiscountCourse.delete()
 #         return Response(status=status.HTTP_201_CREATED)
+
+class teacherCourse(APIView):
+    def get(self,request):
+        id=request.query_params.get('id',None)
+        if(id is  None):
+            return Response("need query params",status=status.HTTP_400_BAD_REQUEST)
+        courses=Course.objects.filter(teacherID=id)
+        ser=courseSerializer(courses,many=True)
+        return Response(ser.data,status=status.HTTP_200_OK)
