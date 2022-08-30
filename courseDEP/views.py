@@ -46,7 +46,7 @@ class gradeView(APIView):
         else:
             id=request.data['id']
             grades=get_object_or_404(grade,id=id)
-            grade.delete()
+            grades.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
             
 class departmentView(APIView):
@@ -157,7 +157,7 @@ class yearView(APIView):
         else:
             id=request.data['id']
             years=get_object_or_404(year,id=id)
-            ser=yearSerializer(year,data=request.data)
+            ser=yearSerializer(years,data=request.data)
             if(ser.is_valid()):
                 ser.save()
                 return Response(ser.data,status=status.HTTP_200_OK)
