@@ -30,7 +30,8 @@ class gradeView(APIView):
         return Response(ser.data)
 
     def put(self,request):
-        if( 'id ' not in request.data):
+        print(request.data)
+        if( 'id' not in request.data):
             return Response("id is required",status=status.HTTP_400_BAD_REQUEST)
         else:
             id=request.data['id']
@@ -60,7 +61,7 @@ class departmentView(APIView):
         ser=departmentSerializer(department.objects.all(),many=True)
         return Response(ser.data)
     def put(self,request):
-        if( 'id ' not in request.data):
+        if( 'id' not in request.data):
             return Response("id is required",status=status.HTTP_400_BAD_REQUEST)
         else:
             id=request.data['id']
@@ -92,7 +93,7 @@ class lessonsView(APIView):
             return Response(ser.data,status=status.HTTP_201_CREATED)
         return Response(ser.errors,status=status.HTTP_400_BAD_REQUEST)
     def put(self,request):
-        if( 'id ' not in request.data):
+        if( 'id' not in request.data):
             return Response("id is required",status=status.HTTP_400_BAD_REQUEST)
         else:
             id=request.data['id']
@@ -122,7 +123,7 @@ class daysView(APIView):
             return Response(ser.data,status=status.HTTP_201_CREATED)
         return Response(ser.errors,status=status.HTTP_400_BAD_REQUEST)
     def put(self,request):
-        if( 'id ' not in request.data):
+        if( 'id' not in request.data):
             return Response("id is required",status=status.HTTP_400_BAD_REQUEST)
         else:
             id=request.data['id']
@@ -152,7 +153,7 @@ class yearView(APIView):
             return Response(ser.data,status=status.HTTP_201_CREATED)
         return Response(ser.errors,status=status.HTTP_400_BAD_REQUEST)
     def put(self,request):
-        if( 'id ' not in request.data):
+        if( 'id' not in request.data):
             return Response("id is required",status=status.HTTP_400_BAD_REQUEST)
         else:
             id=request.data['id']
@@ -183,7 +184,7 @@ class CourseTypeView(APIView):
             return Response(ser.data,status=status.HTTP_201_CREATED)
         return Response(ser.errors,status=status.HTTP_400_BAD_REQUEST)
     def put(self,request):
-        if( 'id ' not in request.data):
+        if( 'id' not in request.data):
             return Response("id is required",status=status.HTTP_400_BAD_REQUEST)
         else:
             id=request.data['id']
