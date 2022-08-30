@@ -45,7 +45,7 @@ class gradeView(APIView):
             return Response("id is required",status=status.HTTP_400_BAD_REQUEST)
         else:
             id=request.data['id']
-            grade=get_object_or_404(grade,id=id)
+            grades=get_object_or_404(grade,id=id)
             grade.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
             
