@@ -30,7 +30,6 @@ class gradeView(APIView):
         return Response(ser.data)
 
     def put(self,request):
-        print(request.data)
         if( 'id' not in request.data):
             return Response("id is required",status=status.HTTP_400_BAD_REQUEST)
         else:
