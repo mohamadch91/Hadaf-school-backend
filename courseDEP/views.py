@@ -34,8 +34,8 @@ class gradeView(APIView):
             return Response("id is required",status=status.HTTP_400_BAD_REQUEST)
         else:
             id=request.data['id']
-            grade=get_object_or_404(grade,id=id)
-            ser=gradeSerializer(grade,data=request.data)
+            grades=get_object_or_404(grade,id=id)
+            ser=gradeSerializer(grades,data=request.data)
             if(ser.is_valid()):
                 ser.save()
                 return Response(ser.data,status=status.HTTP_200_OK)
