@@ -123,16 +123,23 @@ class UserListView(generics.ListAPIView):
     # permission_classes = (IsAuthenticated,)
     def get(self, request):
         type=request.query_params.get('type',None)
+        id=request.query_params.get('id',None)
         if(type==None):
             users=User.objects.all()
+            if(id is not None):
+                users=users.filter(pk=id)
             ser=UserSerializer(users,many=True)
             return Response(ser.data,status=status.HTTP_200_OK)
         if(type=='student'):
             users=Student.objects.all()
+            if(id is not None):
+                users=users.filter(pk=id)
             ser=StudentSerializer(users,many=True)
             return Response(ser.data,status=status.HTTP_200_OK)
         if(type=='teacher'):
             users=Teacher.objects.all()
+            if(id is not None):
+                users=users.filter(pk=id)
             ser=TeacherSerializer(users,many=True)
             return Response(ser.data,status=status.HTTP_200_OK)
 
