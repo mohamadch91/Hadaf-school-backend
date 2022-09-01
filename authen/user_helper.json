@@ -88,4 +88,17 @@ natije :
         "picture": null
     }
 ]
+method post
 
+http://127.0.0.1:8000/authen/delete/
+{
+"id":13
+}
+
+****** in farqi nadare useremon danesh amoze harchii hast
+
+
+baraye admin ha yani noeshon masaln nazem ya harchi
+khodet 4,5 ta chize sabet bgiir chon az in var API i nadarim ke farq kone  maslan admin nazem modir ina qarare page hayii ke mibinan farq kone moqe login check kon bbin kodome masalan
+mitoni ba redux ya contex pass bedi check koni to side baret age maslan admin bood faqa felan page haro bbine
+""

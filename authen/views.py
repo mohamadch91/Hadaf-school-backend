@@ -1,3 +1,4 @@
+from re import L
 from django.shortcuts import render
 
 # Create your views here.
@@ -231,3 +232,11 @@ class OTPViewRegister(APIView):
             'access': str(refresh.access_token),
             'created':created
         }).data
+
+class deleteUser(APIView):
+    permission_classes=(IsAuthenticated,)
+
+    def post(self,request):
+        user=get_object_or_404(User,pk=request.data["id"])
+        user.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
