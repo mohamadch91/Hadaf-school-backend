@@ -10,7 +10,7 @@ class Discount(models.Model):
     amount = models.IntegerField(blank=True, null=True)
     isPercent = models.BooleanField(default=True,null=True)
     active = models.BooleanField(default=True,null=True)
-    reated_at=models.DateTimeField(auto_now_add=True,null=True) #####
+    created_at=models.DateTimeField(auto_now_add=True,null=True) #####
     updated_at=models.DateTimeField(auto_now=True,null=True)    ####  
 
 
