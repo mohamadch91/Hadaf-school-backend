@@ -264,3 +264,14 @@ class coursegetHomeVIew(APIView):
         hw_Ser=courseHomeWorkSerializer(hw,many=True)
         return Response(hw_Ser.data,status=status.HTTP_200_OK)
         
+class specifiecStudentcourse(APIView):
+    permission_classes=(IsAuthenticated,)
+    def get(self,request):
+        id=request.query_params.get('id',None)
+        if(id  is None):
+            return Response("need query params",status=status.HTTP_400_BAD_REQUEST)
+        student=get_object_or_404(Student,pk=id)
+        courses=StudetCourse.objects.filter(studentID=student.pk)
+        ser=studentCourseSerializer(courses,many=True)
+        return Response(ser.data,status=status.HTTP_200_OK)
+        
