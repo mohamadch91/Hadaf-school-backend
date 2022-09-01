@@ -14,6 +14,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken, OutstandingToken
 from django.shortcuts import get_object_or_404
+from itertools import chain
 class MyObtainTokenPairView(TokenObtainPairView):
     permission_classes = (AllowAny,)
     serializer_class = MyTokenObtainPairSerializer
@@ -45,7 +46,6 @@ class TeacherRegisterView(generics.CreateAPIView):
 class UserRegisterView(generics.CreateAPIView):
     serializer_class=UserSerializer
     permission_classes=(IsAuthenticated,)
-
     queryset =User.objects.all()
     def post(self,request):
         ser=UserSerializer(data=request.data)
@@ -125,7 +125,10 @@ class UserListView(generics.ListAPIView):
         type=request.query_params.get('type',None)
         id=request.query_params.get('id',None)
         if(type==None):
-            users=User.objects.all()
+            students=Student.objects.values_list('pk',flat=True)
+            teachers=Teacher.objects.values_list('pk',flat=True)
+            all=list(chain(students, teachers))
+            users=User.objects.exclude(pk__in=all)
             if(id is not None):
                 users=users.filter(pk=id)
             ser=UserSerializer(users,many=True)

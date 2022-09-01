@@ -1,0 +1,91 @@
+baraye ezafe kardan admin 
+method post
+http://127.0.0.1:8000/authen/uregister/
+
+{
+    "phone": "",
+    "password": "",
+    "birth": null,
+    "national_code": null,
+    "role": "",
+    "first_name": "",
+    "last_name": "",
+    "picture": null
+}
+agar ke page hashon ro qarare ke joda konim
+"url baraye login"
+http://127.0.0.1:8000/authen/login/
+method post 
+{
+    "phone": "",
+    "password": ""
+}
+
+baraye virayesh admin 
+method put
+http://127.0.0.1:8000/authen/update_profile/
+
+{
+
+        "type" :"user",
+        "phone": "989126196168",
+        "birth": null,
+        "national_code": null,
+        "role": null,
+        "first_name": "mohamadddddd",
+        "last_name": null,
+        "picture": null
+    }
+baraye gereftan list admin ha
+
+
+method get
+url : http://127.0.0.1:8000/authen/users/
+
+
+[
+    {
+        "pk": 1,
+        "phone": "989126196168",
+        "birth": null,
+        "national_code": null,
+        "role": null,
+        "first_name": "mohamadddddd",
+        "last_name": null,
+        "created_at": "2022-08-16T08:26:46.357868Z",
+        "updated_at": "2022-09-01T02:41:04.457589Z",
+        "picture": null
+    },
+    {
+        "pk": 2,
+        "phone": "+989121456277",
+        "birth": null,
+        "national_code": 3242,
+        "role": "Student",
+        "first_name": "taghe",
+        "last_name": "choupan",
+        "created_at": "2022-08-16T08:57:51.818524Z",
+        "updated_at": "2022-08-16T08:57:51.818546Z",
+        "picture": null
+    }]
+
+baraye gereftan yek karbar khas admin ha
+method get
+url : http://127.0.0.1:8000/authen/users/
+natije :
+
+[
+    {
+        "pk": 1,
+        "phone": "989126196168",
+        "birth": null,
+        "national_code": null,
+        "role": null,
+        "first_name": "mohamadddddd",
+        "last_name": null,
+        "created_at": "2022-08-16T08:26:46.357868Z",
+        "updated_at": "2022-09-01T02:41:04.457589Z",
+        "picture": null
+    }
+]
+
