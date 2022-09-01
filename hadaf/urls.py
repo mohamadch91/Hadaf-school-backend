@@ -29,7 +29,9 @@ urlpatterns = [
     path('archive/',include('archive.urls')),
     path('authen/',include('authen.urls')),
     path('courseDEP/',include('courseDEP.urls')),
-    path('discount/',include('discount.urls'))
+    path('discount/',include('discount.urls')),
+    path('sms/',include('sms.urls')),
+
     
     
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
