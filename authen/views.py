@@ -267,3 +267,11 @@ class adminLoginbyUserView(APIView):
             'created':False
         }).data
         return Response(ser,status=status.HTTP_202_ACCEPTED)
+
+class UserView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        user = request.user
+        serializer = UserSerializer(user)
+        return Response(data=serializer.data,status=status.HTTP_200_OK)
