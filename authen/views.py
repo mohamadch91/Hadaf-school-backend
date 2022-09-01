@@ -240,3 +240,17 @@ class deleteUser(APIView):
         user=get_object_or_404(User,pk=request.data["id"])
         user.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+class changePasswordViews(APIView):
+    permission_classes=(IsAuthenticated,)
+    def post(self,request):
+        id=request.data["id"]
+        user=get_object_or_404(User,pk=id)
+        if not user.check_password(request.data["old"]):
+            return Response("old password is incorrect",status=status.HTTP_400_BAD_REQUEST)
+        user.set_password(request.data["password"])
+        user.save()
+        return Response("password change succesfully",status=status.HTTP_202_ACCEPTED)
+
+            
+

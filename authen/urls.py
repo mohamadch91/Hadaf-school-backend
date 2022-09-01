@@ -16,6 +16,8 @@ urlpatterns = [
     path('logout_all/', LogoutAllView.as_view(), name='auth_logout_all'),
     path('sms/login/',OTPViewLogin.as_view(),name="OTP view login"),
     path('sms/register',OTPViewRegister.as_view(),name="OTP viewvregister "),
-    path('delete/',deleteUser.as_view(),name="delete user")
+    path('delete/',deleteUser.as_view(),name="delete user"),
+    path('change_password/', changePasswordViews.as_view(), name='auth_change_password'),
+
 
 ]
