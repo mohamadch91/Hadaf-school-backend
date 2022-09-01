@@ -1,0 +1,19 @@
+bbin farzan age man nbodam ya harchii
+2 ta kar mitoni bokoni 
+
+be in url beri
+http://212.33.202.49:8001/admin/
+
+phone :+989126196168
+password : 123
+
+joz user mitoni hame object haro bebini va dasti ezafe konio va ina
+
+image 1 
+
+hala khasti route haro bbini 
+
+ye request be in midi http://212.33.202.49:8001/
+ba chrome maslaan
+404 migiri payiin hame route haro neveshte
+image 2
