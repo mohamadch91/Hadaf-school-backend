@@ -2,8 +2,8 @@ from django.db import models
 from course.models import   Course
 # Create your models here.
 class Discount(models.Model):
-    id = id = models.AutoField(primary_key=True)
-    code = models.IntegerField(blank=True, null=True)
+    id  = models.AutoField(primary_key=True)
+    code = models.CharField(max_length=50, blank=True, null=True)
     count = models.IntegerField(blank=True, null=True)
     asDate = models.DateField(null=True)    #####
     toDate = models.DateField(null=True)    ######

@@ -1,0 +1,57 @@
+//  code takhfif
+url :http://127.0.0.1:8000/discount/
+// baraye ezafe kardan 
+
+//  METHOD POST
+{
+  "code": "eide ghadir",
+  "count": null,
+  "asDate": null,
+  "toDate": null,
+  "amount": null,
+  "isPercent": true,
+  "active": true
+}
+// formate qable qabol as date va to date "2022-09-01T02:19:56.502674Z" code react Date.now().IsoString()
+//  az tarikhe ta tarikhe felan amount yani cheqadr  
+// age is percent true bashe yani darsade age nabashe hezar tomane 200000 masaln
+// count ham agar adad bedi behesh yani mahdode maslan 20 ta code takhfif darim
+// baraye gereftesh  
+//  METHOD GET
+
+baraye avaz kardan 
+METHOD PUT
+{
+  "id": 1,
+  "code": "eide ghadir",
+  "count": null,
+  "asDate": null,
+  "toDate": null,
+  "amount": null,
+  "isPercent": true,
+  "active": true
+}
+
+hala farzan bekhan be ye dore code takhfif bedan 
+url :http://http://127.0.0.1:8000/discount/course
+// baraye ezafe kardan
+//  METHOD POST
+{
+    "discountID": (id takhfif),
+    "courseID": (id dore i ke mikhay behesh ezafe koni)
+}
+baraye gereftean get be hmin url
+put ham
+{
+    "id": 1,
+    "discountID": 1,
+    "courseID": null
+}
+
+baraye har do api hazfeshon
+delete
+{
+    "id":1
+}
+
+lotfaaan agar api dgei niaz hast behem bego ke be dastet sari beresonam
