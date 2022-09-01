@@ -18,6 +18,8 @@ urlpatterns = [
     path('sms/register',OTPViewRegister.as_view(),name="OTP viewvregister "),
     path('delete/',deleteUser.as_view(),name="delete user"),
     path('change_password/', changePasswordViews.as_view(), name='auth_change_password'),
+    path('admin_login/', adminLoginbyUserView.as_view(), name='admin_login'),
+
 
 
 ]

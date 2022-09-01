@@ -1,3 +1,4 @@
+import http
 from re import L
 from django.shortcuts import render
 
@@ -254,3 +255,15 @@ class changePasswordViews(APIView):
 
             
 
+class adminLoginbyUserView(APIView):
+    permission_classes=(IsAuthenticated,)
+    def post(self,request):
+        id=request.data["id"]
+        user=get_object_or_404(User,pk=id)
+        refresh = RefreshToken.for_user(user)
+        ser= ObtainTokenSerializer({
+            'refresh': str(refresh),
+            'access': str(refresh.access_token),
+            'created':False
+        }).data
+        return Response(ser,status=status.HTTP_202_ACCEPTED)
