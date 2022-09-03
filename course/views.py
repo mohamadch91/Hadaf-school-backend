@@ -60,16 +60,16 @@ class studentCourseView(APIView):
 
     def post(self, request):
         ans=[]
-        for item in request.data:
-            block=BlocedStudent.objects.filter(studentID=item['studentID'],courseID=item['courseID'])
-            if(block.count()!=0):
-                return Response('student is blocked', status=status.HTTP_400_BAD_REQUEST)
-            ser = studentCourseSerializer(data=item)
-            if ser.is_valid():
-                ser.save()
-                ans.append(ser.data)
-            else:
-                return Response(ser.errors,status=status.HTTP_400_BAD_REQUEST)
+        item=request.data
+        block=BlocedStudent.objects.filter(studentID=item['studentID'],courseID=item['courseID'])
+        if(block.count()!=0):
+            return Response('student is blocked', status=status.HTTP_400_BAD_REQUEST)
+        ser = studentCourseSerializer(data=item)
+        if ser.is_valid():
+            ser.save()
+            ans.append(ser.data)
+        else:
+            return Response(ser.errors,status=status.HTTP_400_BAD_REQUEST)
         return Response(ans,status=status.HTTP_201_CREATED)
     def put(self, request):
         if 'id' not in request.data:

@@ -38,7 +38,10 @@ class Course(models.Model):
 class StudetCourse(models.Model):
     id = models.AutoField(primary_key=True)
     studentID = models.ForeignKey(Student, on_delete=models.CASCADE, null=True)
-    courseID = models.ForeignKey(Course, on_delete=models.CASCADE, null=True)   #########
+    courseID = models.ForeignKey(Course, on_delete=models.CASCADE, null=True) 
+    price = models.IntegerField(blank=True, null=True)
+    description = models.CharField(max_length=500,null=True)
+    enable = models.BooleanField(default=True,null=True)  #########
     created_at=models.DateTimeField(auto_now_add=True,null=True)
     updated_at=models.DateTimeField(auto_now=True,null=True)
 
