@@ -1,0 +1,36 @@
+
+for meter 
+{
+    "isactive": false,
+    "regdate": null,
+    "meters": "",
+    "is_default": false
+}
+is_defult false when not default
+
+for furniture
+{
+    "isactive": false,
+    "regdate": null,
+    "furniture": "",
+    "is_default": false,
+    "roomtypesid": null
+}
+
+is_defult false when not default
+
+new apis
+http://5.182.47.38:8000/getprops/propertydetail/?p_id=3
+
+
+get query param p_id for property full detail
+
+
+*** change
+all apis need to authenthicate bearer token
+********
+
+remove confirm password
+auto insert regdate is active 
+media ok she
+forgot_pass

@@ -106,7 +106,7 @@ class CourseHomeWorkView(APIView):
         if ser.is_valid():
             ser.save()
             return Response(ser.data, status=status.HTTP_201_CREATED)
-        return Response(ser.error(), status=status.HTTP_400_BAD_REQUEST)
+        return Response(ser.errors, status=status.HTTP_400_BAD_REQUEST)
     
     def put(self, request):
         if 'id' not in request.data:
@@ -117,7 +117,7 @@ class CourseHomeWorkView(APIView):
         if ser.is_valid():
             ser.save()
             return Response(ser.data, status=status.HTTP_201_CREATED)
-        return Response(ser.error(), status=status.HTTP_400_BAD_REQUEST)
+        return Response(ser.errors, status=status.HTTP_400_BAD_REQUEST)
     
     def get(self, request):
         if 'id' in request.GET:
@@ -144,7 +144,7 @@ class CourseDaysView(APIView):
         if ser.is_valid():
             ser.save()
             return Response(ser.data, status=status.HTTP_201_CREATED)
-        return Response(ser.error(), status=status.HTTP_400_BAD_REQUEST)
+        return Response(ser.errors, status=status.HTTP_400_BAD_REQUEST)
     
     def put(self, request):
         if 'id' not in request.data:
@@ -155,7 +155,7 @@ class CourseDaysView(APIView):
         if ser.is_valid():
             ser.save()
             return Response(ser.data, status=status.HTTP_201_CREATED)
-        return Response(ser.error(), status=status.HTTP_400_BAD_REQUEST)
+        return Response(ser.errors, status=status.HTTP_400_BAD_REQUEST)
     
     def get(self, request):
         if 'id' in request.GET:
@@ -183,7 +183,7 @@ class CourseTypeView(APIView):
         if ser.is_valid():
             ser.save()
             return Response(ser.data, status=status.HTTP_201_CREATED)
-        return Response(ser.error(), status=status.HTTP_400_BAD_REQUEST)
+        return Response(ser.errors, status=status.HTTP_400_BAD_REQUEST)
     
     def put(self, request):
         if 'id' not in request.data:
@@ -194,7 +194,7 @@ class CourseTypeView(APIView):
         if ser.is_valid():
             ser.save()
             return Response(ser.data, status=status.HTTP_201_CREATED)
-        return Response(ser.error(), status=status.HTTP_400_BAD_REQUEST)
+        return Response(ser.errors, status=status.HTTP_400_BAD_REQUEST)
     
     def get(self, request):
         if 'id' in request.GET:
