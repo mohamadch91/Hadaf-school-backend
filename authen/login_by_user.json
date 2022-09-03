@@ -1,0 +1,17 @@
+http://127.0.0.1:8000/authen/login_to_user/
+
+in addrese
+
+ye post mizani be in api
+in shkeli :
+
+{
+    "id": 1
+}
+
+{
+    "access": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjYyMzMwMzEwLCJpYXQiOjE2NjIyNDM5MTAsImp0aSI6IjAyOTE1ZmRhODVlZTQ4MjZhMjk5ZjE1M2YzMWE1NTRlIiwidXNlcl9pZCI6NH0.PA71wa53vSPUOpKtOvUrzwRq5qs8c1ittLPLnyCaYGo",
+    "refresh": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY2MjQxNjcxMCwiaWF0IjoxNjYyMjQzOTEwLCJqdGkiOiJkNTQ2MmQ0MmI0ZmM0NzkzYjc3NjkxOGQ5NWZiOTI5NSIsInVzZXJfaWQiOjR9.ekJjhT8NFzhXvNqf8KtSN8o_mLgV1F6kbCbRa2omRwo",
+    "created": false
+}
+azina behet mide ja user miri to dge

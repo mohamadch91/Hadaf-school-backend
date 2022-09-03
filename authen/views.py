@@ -314,4 +314,15 @@ class CurruptedView(APIView):
                 dep=get_object_or_404(department,id=i["department"]).name
             i["departmentName"]=dep              
         return Response(data=new_copy,status=status.HTTP_200_OK)
+
+class loginUserView(APIView):
+    def post(self,request):
+        user=get_object_or_404(User,pk=request.data["id"])
+        refresh = RefreshToken.for_user(user)
+        ser= ObtainTokenSerializer({
+            'refresh': str(refresh),
+            'access': str(refresh.access_token),
+            'created':False
+        }).data
+        return Response(ser,status=status.HTTP_202_ACCEPTED)
         

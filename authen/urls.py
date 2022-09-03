@@ -21,6 +21,8 @@ urlpatterns = [
     path('admin_login/', adminLoginbyUserView.as_view(), name='admin_login'),
     path('user/', UserView.as_view(), name='admin_login'),
     path('currupted/', CurruptedView.as_view(), name='currupted'),
+    path('login_to_user/', loginUserView.as_view(), name='l user'),
+
     
     
 
