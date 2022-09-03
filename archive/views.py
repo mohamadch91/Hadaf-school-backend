@@ -1,4 +1,5 @@
 
+from copy import copy
 from queue import Empty
 from urllib import request
 from django.shortcuts import render
@@ -18,6 +19,7 @@ from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken, Ou
 from django.shortcuts import get_object_or_404
 from .models import *
 from .serializers import *
+import copy
 class ArchiveOfflineHeaderView(APIView):
 
     def post(self, request):
@@ -39,20 +41,22 @@ class ArchiveOfflineHeaderView(APIView):
         return Response(ser.error(), status=status.HTTP_400_BAD_REQUEST)
     
     def get(self, request):
-        if 'id' in request.GET:
-            id = request.GET['id']
-            archiveOfflineHeader = get_object_or_404(ArchiveOfflineHeader, id=id)
-            ser = archiveOfflineHeaderSerializer(archiveOfflineHeader.objects.get(id=id))  
+        if 'c_id' in request.GET:
+            id = request.GET['c_id']
+            archiveOfflineHeader = ArchiveOfflineHeader.objects.filter(courseID=id)
+            ser = archiveOfflineHeaderSerializer(archiveOfflineHeader,many=True)  
+            copy_Ser=copy.deepcopy(ser.data)
+            for i in copy_Ser:
+                courses=get_object_or_404(Course,id=i['courseID'])
+                i['courseName']=courses.name
         else:
-            ser = archiveOfflineHeaderSerializer(ArchiveOfflineHeader.objects.all(), many=True)
-        return Response(ser.data)  
+            return Response('id is required', status=status.HTTP_400_BAD_REQUEST)
+        return Response(copy_Ser)  
 
     def delete(self, request):
-        if 'id' not in request.data:
-            return Response('id is required', status=status.HTTP_400_BAD_REQUEST)
-        id = request.data['id']
-        archiveOfflineHeader = get_object_or_404(ArchiveOfflineHeader, id=id)
-        archiveOfflineHeader.delete()
+        for x in request.data:
+            archiveFiles= get_object_or_404(ArchiveFiles, id=x['id'])
+            archiveFiles.delete()
         return Response(status=status.HTTP_201_CREATED)
 
 

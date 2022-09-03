@@ -14,6 +14,6 @@ class ArchiveFiles(models.Model):
     archiveHeaderID = models.ForeignKey(ArchiveOfflineHeader, on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=100, null=True)
     description = models.CharField(max_length=500, null=True)
-    fileArchibe = models.FileField(upload_to ='upload_course/', max_length=100, null=True,blank=True)
+    link = models.CharField( max_length=100, null=True,blank=True)
     reated_at=models.DateTimeField(auto_now_add=True,null=True)
     updated_at=models.DateTimeField(auto_now=True,null=True)

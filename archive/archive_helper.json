@@ -1,0 +1,53 @@
+khob bebin baraye file haye archivi 2 ta API darim
+chejoeriee aval to mikhay file haye archivee ye darsooo bbini
+http://127.0.0.1:8000/archive/archiveOfflineHeader/?c_id=1
+
+in resposneee geteshee
+
+[
+    {
+        "id": 1,
+        "title": "test",
+        "description": "lkajskdld",
+        "created_at": "2022-09-03T21:16:58.940801Z",
+        "updated_at": "2022-09-03T21:16:58.940841Z",
+        "courseID": 1,
+        "courseName": "Mohamad"
+    }
+]
+arayast esmam mide
+
+agee bekhay add koni
+{
+        "title": "test25",
+        "description": "lkajskdld",
+        "created_at": "2022-09-03T21:16:58.940801Z",
+        "updated_at": "2022-09-03T21:16:58.940841Z",
+        "courseID": 1
+    }
+    ye obejcte postesh haminee
+
+havaset basheeee inja va delete id coursee nistaa id in objecteeee
+{
+    "id": 3,   
+    "title": "test25",
+    "description": "lkajskdld",
+    "created_at": "2022-09-03T21:21:47.341866Z",
+    "updated_at": "2022-09-03T21:21:47.341906Z",
+    "courseID": 1
+}
+    put ham hamine faqat pute
+
+
+    [
+{
+"id":3
+}
+]
+araye migireee
+
+
+
+halaa in be che dard mihkoore masaaln dars 3 ta mabhas dare masaln mabhas 1 mabhas 2 mabhas 3 se ta zina bayad dorost she
+
+
