@@ -216,18 +216,31 @@ class OTPViewRegister(APIView):
     def _handle_login(self, otp,request):
         type=request.data["type"]
         if(type=="student"):
-            user = Student.objects.create(phone=otp['receiver'] )
-            created = True
-            refresh = RefreshToken.for_user(user)
+            try:
+                s=get_object_or_404(Student,phone=otp['receiver'])
+                return Response("phone already exists",status=status.HTTP_400_BAD_REQUEST)
+            except:    
+                user = Student.objects.create(phone=otp['receiver'] )
+                created = True
+                refresh = RefreshToken.for_user(user)
         elif(type=="teacher"):
-            user = Teacher.objects.create(phone=otp['receiver'] )
-            created = True
-            refresh = RefreshToken.for_user(user)
+            try:
+                s=get_object_or_404(Teacher,phone=otp['receiver'])
+                return Response("phone already exists",status=status.HTTP_400_BAD_REQUEST)
+            except:    
+                user =  Teacher.objects.create(phone=otp['receiver'] )
+                created = True
+                refresh = RefreshToken.for_user(user)
     
         else:
-            user = User.objects.create(phone=otp['receiver'] )
-            created = True
-            refresh = RefreshToken.for_user(user)
+            try:
+                s=get_object_or_404(User,phone=otp['receiver'])
+                return Response("phone already exists",status=status.HTTP_400_BAD_REQUEST)
+            except:
+                    
+                user = User.objects.create(phone=otp['receiver'] )
+                created = True
+                refresh = RefreshToken.for_user(user)
 
         return ObtainTokenSerializer({
             'refresh': str(refresh),
@@ -316,6 +329,7 @@ class CurruptedView(APIView):
         return Response(data=new_copy,status=status.HTTP_200_OK)
 
 class loginUserView(APIView):
+    permission_classes=(IsAuthenticated,)
     def post(self,request):
         user=get_object_or_404(User,pk=request.data["id"])
         refresh = RefreshToken.for_user(user)
