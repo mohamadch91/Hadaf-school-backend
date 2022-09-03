@@ -1,0 +1,126 @@
+eynee archiveee in ye header dare ye detail yani khob avval ye forum misaze bad khast chat be on ezaf mikonee
+barayee headeresh in sheklie
+
+
+http://127.0.0.1:8000/forum/forumHeader/?c_id=2
+in GET be in get bezani ba on c_id hame forum haye ye course ro behet mide
+
+
+[
+    {
+        "id": 1,
+        "title": "header1",
+        "description": "kosoosher mizarim bbinim chi mishe",
+        "picture": "/media/profile_pictures/Screenshot_from_2022-07-27_13-02-08.png",
+        "created_at": "2022-09-03",
+        "updated_at": "2022-09-03",
+        "course_id": 2,
+        "Userid": 10,
+        "Username": "+989126196168",
+        "course_name": "Sara"
+    }
+]
+
+halaa farz konim mikhay forum besazii
+http://127.0.0.1:8000/forum/forumHeader/
+ {
+        "title": "header1",
+        "description": "ye kossher dge",
+        "picture": "in ja bayad file basheeeeeee",
+        "course_id": 2
+
+    }********** deqqat kon user nmigire har user besazi hmono user midam behesh
+    picture mitoni bedi mitoni nadi
+
+    baraye in ke edit koni put mizani 
+http://127.0.0.1:8000/forum/forumHeader/
+
+{
+    "id": 2,
+    "title": "header1",
+    "description": "ye kossher dge shomare 5",
+    "picture": null,
+    "course_id": 2,
+    "Userid": 10
+} hmintorii har kodomo khasti avaz koni bedi okeye
+
+inam deleteshe
+http://127.0.0.1:8000/forum/forumHeader/
+[
+    {
+        "id": 2
+    }
+]
+
+ye noktee che to in che archivee baraye get faqat query param mikhadd vagarna post va put va delete query param mnmikhad
+/*
+*
+*
+*
+*
+*
+/
+*/
+halaa mikhaym be in forum ye message bedim masaaalan ye comment user mikhad ye kossheri benivise
+
+
+http://127.0.0.1:8000/forum/forumDetail/?h_id=1
+
+in hame message haye ye header ro behet mide getesh in shekli
+
+[
+    {
+        "id": 1,
+        "show": true,
+        "title": "comment1",
+        "description": "some desc",
+        "file": "/media/forum_file/Screenshot_from_2022-08-19_17-30-41.png",
+        "created_at": "2022-09-03",
+        "updated_at": "2022-09-03",
+        "ForumHeaderid": 1,
+        "Userid": 10,
+        "Username": "+989126196168"
+    }
+]
+
+baraye in ke ye message bedi post mizani
+
+http://127.0.0.1:8000/forum/forumDetail/
+
+in shekli post mizani
+
+
+{
+        "show": true,
+        "title": "comment2",
+        "description": "some desc",
+        "file": "in ja fileee",
+        "ForumHeaderid": 1,
+        "Userid": 10
+    }
+
+
+hala khasti edit koniii
+
+{
+    "id": 3,
+    "show": true,
+    "title": "comment85",
+    "description": "some desc",
+    "file": null,
+    "ForumHeaderid": 2,
+    "Userid": 10
+}
+
+bare delete ham ine 
+ [
+{
+"id":5
+},
+{
+    "id":6
+}
+]
+ya yedone arrayast dge mesle qablieee
+
+hala ye noktee che to in che archivee baraye get faqat query param mikhadd vagarna post va put va delete query param nmikhad

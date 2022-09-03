@@ -25,7 +25,7 @@ from .serializers import *
 import copy
 
 class ForumHeaderView(APIView):
-    permission_classes=(IsAuthenticated)
+    permission_classes=(IsAuthenticated,)
     def post(self, request):
         user=request.user
         new_data=copy.deepcopy(request.data)
@@ -55,22 +55,25 @@ class ForumHeaderView(APIView):
             new_data=copy.deepcopy(ser.data)
             for x in new_data:
                 user=User.objects.get(id=x["Userid"])
-                x["Username"]=user.last_name+" "+user.first_name
+                username=user.phone
+                if(user.last_name and user.first_name):
+                    username=user.last_name+" "+user.first_name
+                x["Username"]=username
                 x["course_name"]=Course.objects.get(id=x["course_id"]).name
 
         else:
             return Response('id required', status=status.HTTP_400_BAD_REQUEST)
-        return Response(ser.data)  
+        return Response(new_data)  
 
     def delete(self, request):
         for x in request.data:
            archiveFiles= get_object_or_404(ForumHeader, id=x["id"])
            archiveFiles.delete()
-        return Response(status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_202_ACCEPTED)
 
 
 class ForumDetailView(APIView):
-
+    permission_classes=(IsAuthenticated,)
     def post(self, request):
         new_data=copy.deepcopy(request.data)
         new_data["Userid"]=request.user.pk
@@ -99,14 +102,17 @@ class ForumDetailView(APIView):
             new_data=copy.deepcopy(ser.data)
             for x in new_data:
                 user=User.objects.get(id=x["Userid"])
-                x["Username"]=user.last_name+" "+user.first_name
+                username=user.phone
+                if(user.last_name and user.first_name):
+                    username=user.last_name+" "+user.first_name
+                x["Username"]=username
 
         else:
             return Response('id required', status=status.HTTP_400_BAD_REQUEST)
-        return Response(ser.data)  
+        return Response(new_data)  
 
     def delete(self, request):
         for x in request.data:
               archiveFiles= get_object_or_404(ForumDetail, id=x["id"])
               archiveFiles.delete()
-        return Response(status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_202_ACCEPTED)
