@@ -15,5 +15,5 @@ class ArchiveFiles(models.Model):
     title = models.CharField(max_length=100, null=True)
     description = models.CharField(max_length=500, null=True)
     link = models.CharField( max_length=100, null=True,blank=True)
-    reated_at=models.DateTimeField(auto_now_add=True,null=True)
+    created_at=models.DateTimeField(auto_now_add=True,null=True)
     updated_at=models.DateTimeField(auto_now=True,null=True)

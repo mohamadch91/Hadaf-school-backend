@@ -57,7 +57,7 @@ class ArchiveOfflineHeaderView(APIView):
         for x in request.data:
             archiveFiles= get_object_or_404(ArchiveFiles, id=x['id'])
             archiveFiles.delete()
-        return Response(status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_202_ACCEPTED)
 
 
 class ArchiveFilesView(APIView):
@@ -81,18 +81,21 @@ class ArchiveFilesView(APIView):
         return Response(ser.error(), status=status.HTTP_400_BAD_REQUEST)
     
     def get(self, request):
-        if 'id' in request.GET:
-            id = request.GET['id']
-            archiveFiles = get_object_or_404(ArchiveFiles, id=id)
-            ser = archiveFilesSerializer(ArchiveFiles.objects.get(id=id))  
+        if 'a_id' in request.GET:
+            id = request.GET['a_id']
+            archiveFiles = ArchiveFiles.objects.filter(archiveHeaderID=id)
+            ser = archiveFilesSerializer(archiveFiles,many=True)
+            copy_Ser=copy.deepcopy(ser.data)
+            for i in copy_Ser:
+                archiveOfflineHeader=get_object_or_404(ArchiveOfflineHeader,id=i['archiveHeaderID'])
+                i['archiveHeaderTitle']=archiveOfflineHeader.title
+
         else:
-            ser = archiveFilesSerializer(ArchiveFiles.objects.all(), many=True)
-        return Response(ser.data)  
+            return Response('id is required', status=status.HTTP_400_BAD_REQUEST)
+        return Response(copy_Ser)  
 
     def delete(self, request):
-        if 'id' not in request.data:
-            return Response('id is required', status=status.HTTP_400_BAD_REQUEST)
-        id = request.data['id']
-        archiveFiles= get_object_or_404(ArchiveFiles, id=id)
-        archiveFiles.delete()
-        return Response(status=status.HTTP_201_CREATED)
+        for x in request.data:
+            archiveFiles= get_object_or_404(ArchiveFiles, id=x['id'])
+            archiveFiles.delete()
+        return Response(status=status.HTTP_202_ACCEPTED)

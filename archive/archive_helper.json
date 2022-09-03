@@ -21,8 +21,6 @@ agee bekhay add koni
 {
         "title": "test25",
         "description": "lkajskdld",
-        "created_at": "2022-09-03T21:16:58.940801Z",
-        "updated_at": "2022-09-03T21:16:58.940841Z",
         "courseID": 1
     }
     ye obejcte postesh haminee
@@ -32,8 +30,6 @@ havaset basheeee inja va delete id coursee nistaa id in objecteeee
     "id": 3,   
     "title": "test25",
     "description": "lkajskdld",
-    "created_at": "2022-09-03T21:21:47.341866Z",
-    "updated_at": "2022-09-03T21:21:47.341906Z",
     "courseID": 1
 }
     put ham hamine faqat pute
@@ -51,3 +47,59 @@ araye migireee
 halaa in be che dard mihkoore masaaln dars 3 ta mabhas dare masaln mabhas 1 mabhas 2 mabhas 3 se ta zina bayad dorost she
 
 
+hala header ha sakhte shoood mikhay be in header ha link ezaf konii
+
+http://127.0.0.1:8000/archive/archiveFiles/?a_id=1 in API ee
+
+geteshe
+inam responseshe
+[
+    {
+        "id": 1,
+        "title": "link1",
+        "description": "nemidonam",
+        "link": "http://127.0.0.1:8000/job/",
+        "created_at": "2022-09-03T21:26:53.512874Z",
+        "updated_at": "2022-09-03T21:26:53.512929Z",
+        "archiveHeaderID": 1,
+        "archiveHeaderTitle": "test"
+    }
+]
+
+hala mikhay post koni
+
+
+id ee hamin objectoo midiii
+
+{
+        
+        "title": "link12",
+        "description": "nemidonam",
+        "link": "http://127.0.0.1:8000/job/222",
+     
+        "archiveHeaderID": 1
+      
+    }
+bazaaam migam iddd idiie in objectee ha
+
+    bekhay put koni 
+
+    {
+    "id": 2,
+    "title": "link12",
+    "description": "nemidonam",
+    "link": "http://127.0.0.1:8000/job/222",
+    "archiveHeaderID": 1
+}
+
+bekhay delete koniii 
+
+ [
+{
+"id":3
+}
+]
+
+
+hame API haro do bar check kardam ba post man ham req dadam 
+yani ehtemal inke error dashte bashe manfieee
