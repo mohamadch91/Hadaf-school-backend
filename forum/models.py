@@ -11,8 +11,8 @@ class ForumHeader(models.Model):
     picture=models.ImageField(upload_to='profile_pictures/',blank=True,null=True)
     course_id=models.ForeignKey(Course,on_delete=models.CASCADE,null=True)
     Userid= models.ForeignKey(User,on_delete=models.CASCADE,null=True)
-    created_at=models.DateField(auto_now_add=True)
-    updated_at=models.DateField(auto_now=True)
+    created_at=models.DateField(auto_now_add=True,blank=True,null=True)
+    updated_at=models.DateField(auto_now=True,blank=True,null=True)
 
     
 class ForumDetail(models.Model):
@@ -23,7 +23,7 @@ class ForumDetail(models.Model):
     show=models.BooleanField(default=True)
     title=models.CharField(max_length=100,blank=True,null=True)
     description=models.TextField(max_length=250,blank=True,null=True)
-    file=models.FileField(upload_to='forum_file/')
-    created_at=models.DateField(auto_now_add=True)
-    updated_at=models.DateField(auto_now=True)
+    file=models.FileField(upload_to='forum_file/',blank=True,null=True)
+    created_at=models.DateField(auto_now_add=True,blank=True,null=True)
+    updated_at=models.DateField(auto_now=True,blank=True,null=True)
 
