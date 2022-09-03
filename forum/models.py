@@ -18,8 +18,7 @@ class ForumHeader(models.Model):
 class ForumDetail(models.Model):
     id=models.AutoField(primary_key=True)
     ForumHeaderid=models.ForeignKey(ForumHeader,on_delete=models.CASCADE, null=True)
-    student=models.ForeignKey(Student,on_delete=models.CASCADE,blank=True,related_name='student')
-    teacher=models.ForeignKey(Teacher,on_delete=models.CASCADE,blank=True,related_name='teacher')
+    Userid= models.ForeignKey(User,on_delete=models.CASCADE,null=True)    
     show=models.BooleanField(default=True)
     title=models.CharField(max_length=100,blank=True,null=True)
     description=models.TextField(max_length=250,blank=True,null=True)

@@ -27,7 +27,7 @@ class ArchiveOfflineHeaderView(APIView):
         if ser.is_valid():
             ser.save()
             return Response(ser.data, status=status.HTTP_201_CREATED)
-        return Response(ser.error(), status=status.HTTP_400_BAD_REQUEST)
+        return Response(ser. errors, status=status.HTTP_400_BAD_REQUEST)
     
     def put(self, request):
         if 'id' not in request.data:
@@ -38,7 +38,7 @@ class ArchiveOfflineHeaderView(APIView):
         if ser.is_valid():
             ser.save()
             return Response(ser.data, status=status.HTTP_201_CREATED)
-        return Response(ser.error(), status=status.HTTP_400_BAD_REQUEST)
+        return Response(ser. errors, status=status.HTTP_400_BAD_REQUEST)
     
     def get(self, request):
         if 'c_id' in request.GET:
@@ -67,7 +67,7 @@ class ArchiveFilesView(APIView):
         if ser.is_valid():
             ser.save()
             return Response(ser.data, status=status.HTTP_201_CREATED)
-        return Response(ser.error(), status=status.HTTP_400_BAD_REQUEST)
+        return Response(ser. errors, status=status.HTTP_400_BAD_REQUEST)
     
     def put(self, request):
         if 'id' not in request.data:
@@ -78,7 +78,7 @@ class ArchiveFilesView(APIView):
         if ser.is_valid():
             ser.save()
             return Response(ser.data, status=status.HTTP_201_CREATED)
-        return Response(ser.error(), status=status.HTTP_400_BAD_REQUEST)
+        return Response(ser. errors, status=status.HTTP_400_BAD_REQUEST)
     
     def get(self, request):
         if 'a_id' in request.GET:

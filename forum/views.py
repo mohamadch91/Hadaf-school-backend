@@ -22,16 +22,19 @@ from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken, Ou
 from django.shortcuts import get_object_or_404
 from .models import *
 from .serializers import *
-
+import copy
 
 class ForumHeaderView(APIView):
-
+    permission_classes=(IsAuthenticated)
     def post(self, request):
-        ser = ForumHeaderSeriliazer(data=request.data)
+        user=request.user
+        new_data=copy.deepcopy(request.data)
+        new_data["Userid"]=user.pk
+        ser = ForumHeaderSeriliazer(data=new_data)
         if ser.is_valid():
             ser.save()
             return Response(ser.data, status=status.HTTP_201_CREATED)
-        return Response(ser.error(), status=status.HTTP_400_BAD_REQUEST)
+        return Response(ser.errors, status=status.HTTP_400_BAD_REQUEST)
     
     def put(self, request):
         if 'id' not in request.data:
@@ -42,34 +45,40 @@ class ForumHeaderView(APIView):
         if ser.is_valid():
             ser.save()
             return Response(ser.data, status=status.HTTP_201_CREATED)
-        return Response(ser.error(), status=status.HTTP_400_BAD_REQUEST)
+        return Response(ser.errors, status=status.HTTP_400_BAD_REQUEST)
     
     def get(self, request):
-        if 'id' in request.GET:
-            id = request.GET['id']
-            archiveOfflineHeader = get_object_or_404(ForumHeader, id=id)
-            ser = ForumHeaderSeriliazer(ForumHeader.objects.get(id=id))  
+        if 'c_id' in request.GET:
+            id = request.GET['c_id']
+            forumH=ForumHeader.objects.filter(course_id=id)
+            ser = ForumHeaderSeriliazer(forumH, many=True)
+            new_data=copy.deepcopy(ser.data)
+            for x in new_data:
+                user=User.objects.get(id=x["Userid"])
+                x["Username"]=user.last_name+" "+user.first_name
+                x["course_name"]=Course.objects.get(id=x["course_id"]).name
+
         else:
-            ser = ForumHeaderSeriliazer(ForumHeader.objects.all(), many=True)
+            return Response('id required', status=status.HTTP_400_BAD_REQUEST)
         return Response(ser.data)  
 
     def delete(self, request):
-        if 'id' not in request.data:
-            return Response('id is required', status=status.HTTP_400_BAD_REQUEST)
-        id = request.data['id']
-        archiveOfflineHeader = get_object_or_404(ForumHeader, id=id)
-        archiveOfflineHeader.delete()
+        for x in request.data:
+           archiveFiles= get_object_or_404(ForumHeader, id=x["id"])
+           archiveFiles.delete()
         return Response(status=status.HTTP_201_CREATED)
 
 
 class ForumDetailView(APIView):
 
     def post(self, request):
+        new_data=copy.deepcopy(request.data)
+        new_data["Userid"]=request.user.pk
         ser = ForumDetailSerializer(data=request.data)
         if ser.is_valid():
             ser.save()
             return Response(ser.data, status=status.HTTP_201_CREATED)
-        return Response(ser.error(), status=status.HTTP_400_BAD_REQUEST)
+        return Response(ser.errors, status=status.HTTP_400_BAD_REQUEST)
     
     def put(self, request):
         if 'id' not in request.data:
@@ -80,7 +89,7 @@ class ForumDetailView(APIView):
         if ser.is_valid():
             ser.save()
             return Response(ser.data, status=status.HTTP_201_CREATED)
-        return Response(ser.error(), status=status.HTTP_400_BAD_REQUEST)
+        return Response(ser.errors, status=status.HTTP_400_BAD_REQUEST)
     
     def get(self, request):
         if 'id' in request.GET:
