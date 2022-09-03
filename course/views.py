@@ -275,10 +275,9 @@ class blockstudents(APIView):
             else:
                 ans.append(ser.errors)
         return Response(ans,status=status.HTTP_201_CREATED)
-    def   delete(self,request):
+    def  delete(self,request):
         for i in request.data:
             block=get_object_or_404(BlocedStudent,id=i['id'])
             block.delete()
-            block.save()
         return Response(status=status.HTTP_200_OK)    
         
