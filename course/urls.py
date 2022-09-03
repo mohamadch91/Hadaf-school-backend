@@ -10,7 +10,9 @@ urlpatterns = [
     path('courseType/',CourseTypeView.as_view(), name='courseType'),
     path('teacherCourse/',teacherCourse.as_view(), name='teacher courses'),
     path('coursehw/',coursegetHomeVIew.as_view(), name=' courses hw'),
-    path('specificstudentCourse/',specifiecStudentcourse.as_view(),name="student course")
+    path('specificstudentCourse/',specifiecStudentcourse.as_view(),name="student course"),
+    path('block/',blockstudents.as_view(),name="student course"),
+
 
 
 

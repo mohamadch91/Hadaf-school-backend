@@ -1,0 +1,17 @@
+baraye listesh
+http://127.0.0.1:8000/courseDEP/lesson
+
+
+[{"id":1,"name":"arabi","code":"123","sortindex":1,"department":1,"grade":1}]
+
+baraye add kardan
+post
+{"name":"riazi","code":"123","sortindex":1,"department":1,"grade":1}
+
+baraye edit put
+
+{"id":2,"name":"riazi","code":"1234","sortindex":1,"department":1,"grade":1}
+
+bare delet ham 
+{"id":3}
+response nadare 204 no content mide

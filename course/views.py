@@ -61,8 +61,8 @@ class studentCourseView(APIView):
     def post(self, request):
         ans=[]
         for item in request.data:
-            block=BlocedStudent.objects.filter(student=item['studentID'],course=item['courseID'])
-            if(block.count()==0):
+            block=BlocedStudent.objects.filter(studentID=item['studentID'],courseID=item['courseID'])
+            if(block.count()!=0):
                 return Response('student is blocked', status=status.HTTP_400_BAD_REQUEST)
             ser = studentCourseSerializer(data=item)
             if ser.is_valid():
@@ -245,6 +245,40 @@ class specifiecStudentcourse(APIView):
         ser=studentCourseSerializer(courses,many=True)
         return Response(ser.data,status=status.HTTP_200_OK)
         
-# class addstudentCourse(APIView):
-#     permission_classes=(IsAuthenticated,)
-#     def get()
+class blockstudents(APIView):
+    permission_classes=(IsAuthenticated,)
+    def get(self,request):
+        sid=request.query_params.get('student_id',None)
+        cid=request.query_params.get('course_id',None)
+        if(sid  is None and cid is None):
+            return Response("need query params",status=status.HTTP_400_BAD_REQUEST)
+        if(sid is not None and cid is  None):
+            student=get_object_or_404(Student,pk=sid)
+            blocked=BlocedStudent.objects.filter(studentID=student.pk)
+            ser=blockstudentSerializer(blocked,many=True)
+            return Response(ser.data,status=status.HTTP_200_OK)
+        if(sid is None and cid is not None):
+            course=get_object_or_404(Course,id=cid)
+            blocked=BlocedStudent.objects.filter(courseID=course.id)
+            ser=blockstudentSerializer(blocked,many=True)
+            return Response(ser.data,status=status.HTTP_200_OK)
+        blocked=BlocedStudent.objects.filter(courseID=cid,studentID=sid)
+        ser=blockstudentSerializer(blocked,many=True)
+        return Response(ser.data,status=status.HTTP_200_OK)    
+    def post(self,request):
+        ans=[]
+        for i in request.data:
+            ser=blockstudentSerializer(data=i)
+            if(ser.is_valid()):
+                ser.save()
+                ans.append(ser.data)
+            else:
+                ans.append(ser.errors)
+        return Response(ans,status=status.HTTP_201_CREATED)
+    def   delete(self,request):
+        for i in request.data:
+            block=get_object_or_404(BlocedStudent,id=i['id'])
+            block.delete()
+            block.save()
+        return Response(status=status.HTTP_200_OK)    
+        
