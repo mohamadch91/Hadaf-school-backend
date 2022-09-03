@@ -20,6 +20,8 @@ urlpatterns = [
     path('change_password/', changePasswordViews.as_view(), name='auth_change_password'),
     path('admin_login/', adminLoginbyUserView.as_view(), name='admin_login'),
     path('user/', UserView.as_view(), name='admin_login'),
+    path('currupted/', CurruptedView.as_view(), name='currupted'),
+    
     
 
 

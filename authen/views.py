@@ -17,6 +17,7 @@ from rest_framework import status
 from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken, OutstandingToken
 from django.shortcuts import get_object_or_404
 from itertools import chain
+import copy
 class MyObtainTokenPairView(TokenObtainPairView):
     permission_classes = (AllowAny,)
     serializer_class = MyTokenObtainPairSerializer
@@ -275,3 +276,42 @@ class UserView(APIView):
         user = request.user
         serializer = UserSerializer(user)
         return Response(data=serializer.data,status=status.HTTP_200_OK)
+
+class CurruptedView(APIView):
+    permission_classes = (IsAuthenticated,)
+    def get(self, request):
+        school=request.query_params.get('school')
+        parentName=request.query_params.get('parentName')
+        parentNationalCode=request.query_params.get('parentNationalCode')
+        pbirthday=request.query_params.get('pbirthday')
+        peducation=request.query_params.get('peducation')
+        pjob=request.query_params.get('pjob')
+        address=request.query_params.get('address')
+        students=Student.objects.all()
+        if(school is not None):
+            students=students.filter(school=None) |students.filter(school="")
+        if(parentName is not None):
+            students=students.filter(parentName=None)|students.filter(parentName="")
+        if(parentNationalCode is not None):
+            students=students.filter(parentNationalCode=None)|students.filter(parentNationalCode="")
+        if(pbirthday is not None):
+            students=students.filter(pbirthday=None)|students.filter(pbirthday="")
+        if(peducation is not None):
+            students=students.filter(peducation=None)|students.filter(peducation="")
+        if(pjob is not None):
+            students=students.filter(pjob=None)|students.filter(pjob="")
+        if(address is not None):
+            students=students.filter(address=None)|students.filter(address="")
+        serializer = StudentSerializer(students,many=True)
+        new_copy=copy.deepcopy(serializer.data)
+        for i in new_copy:
+            grades=""
+            if(i["grade"] is not None):
+                grades=get_object_or_404(grade,id=i["grade"]).name
+            i["gradeName"]=grades
+            dep=""
+            if(i["department"] is not None):
+                dep=get_object_or_404(department,id=i["department"]).name
+            i["departmentName"]=dep              
+        return Response(data=new_copy,status=status.HTTP_200_OK)
+        
