@@ -1,3 +1,4 @@
+from itertools import count
 from django.shortcuts import render
 
 # Create your views here.
@@ -30,5 +31,21 @@ class dahsboardVIew(APIView):
         data={
             "s_count":studenr_count,
             "t_count":courses
+        }
+        return Response(data,status.HTTP_200_OK)
+
+class admindahsboardVIew(APIView):
+    permission_classes=(IsAuthenticated,)
+    def get(self,request):
+        studenr_count=Student.objects.all().count()
+        courses=Course.objects.all().count()
+        teacher_count=Teacher.objects.all().count()
+        admin_count=User.objects.all().count()
+        admin_count=admin_count-teacher_count-studenr_count
+        data={
+            "s_count":studenr_count,
+            "courses":courses,
+            "t_Count":teacher_count,
+            "admin":admin_count
         }
         return Response(data,status.HTTP_200_OK)
