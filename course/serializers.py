@@ -28,3 +28,7 @@ class courseTypeSerializer(serializers.ModelSerializer):
         fields = '__all__'  
 
 
+class blockstudentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BlocedStudent
+        fields = '__all__'
