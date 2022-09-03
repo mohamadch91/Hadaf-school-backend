@@ -281,3 +281,23 @@ class blockstudents(APIView):
             block.delete()
         return Response(status=status.HTTP_200_OK)    
         
+class specificCoourseSes(APIView):
+    permission_classes=(IsAuthenticated,)
+    def get(self,request):
+        id=request.query_params.get('c_id',None)
+        if(id is None):
+            return Response('need query param',status.HTTP_400_BAD_REQUEST)
+
+        students=StudetCourse.objects.filter(courseID=id)
+        ans=[]
+        for x in students:
+            data={
+                'name':x.studentID.username,
+                'phone':x.studentID.phone,
+                'l_name':x.studentID.last_name,
+                'grade':x.studentID.grade
+            }
+            ans.append(data)
+        return Response(ans,status.HTTP_200_OK)    
+
+

@@ -31,6 +31,8 @@ urlpatterns = [
     path('courseDEP/',include('courseDEP.urls')),
     path('discount/',include('discount.urls')),
     path('sms/',include('sms.urls')),
+    path('dashboard/',include('dashboard.urls')),
+
 
     
     
