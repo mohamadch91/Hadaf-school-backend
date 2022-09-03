@@ -92,18 +92,21 @@ class ForumDetailView(APIView):
         return Response(ser.errors, status=status.HTTP_400_BAD_REQUEST)
     
     def get(self, request):
-        if 'id' in request.GET:
-            id = request.GET['id']
-            archiveFiles = get_object_or_404(ForumDetail, id=id)
-            ser = ForumDetailSerializer(ForumDetail.objects.get(id=id))  
+        if 'h_id' in request.GET:
+            id = request.GET['h_id']
+            archiveFiles = ForumDetail.objects.filter(ForumHeaderid=id)
+            ser = ForumDetailSerializer(archiveFiles, many=True) 
+            new_data=copy.deepcopy(ser.data)
+            for x in new_data:
+                user=User.objects.get(id=x["Userid"])
+                x["Username"]=user.last_name+" "+user.first_name
+
         else:
-            ser = ForumDetailSerializer(ForumDetail.objects.all(), many=True)
+            return Response('id required', status=status.HTTP_400_BAD_REQUEST)
         return Response(ser.data)  
 
     def delete(self, request):
-        if 'id' not in request.data:
-            return Response('id is required', status=status.HTTP_400_BAD_REQUEST)
-        id = request.data['id']
-        archiveFiles= get_object_or_404(ForumDetail, id=id)
-        archiveFiles.delete()
+        for x in request.data:
+              archiveFiles= get_object_or_404(ForumDetail, id=x["id"])
+              archiveFiles.delete()
         return Response(status=status.HTTP_201_CREATED)

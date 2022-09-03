@@ -63,7 +63,7 @@ class User(AbstractUser):
 
 class Teacher(User):
     def __str__(self):
-        return "{}".format(self.user.phone)
+        return "{}".format(self.phone)
 
 class Student(User):
     gpaverage=models.FloatField(blank=True,null=True)
@@ -80,7 +80,7 @@ class Student(User):
     method='phone'
    
     def __str__(self):
-        return "{}".format(self.user.phone)
+        return "{}".format(self.phone)
 class OtpRequestQuerySet(models.QuerySet):
     def is_valid(self, receiver, request, password):
         current_time = timezone.now()
