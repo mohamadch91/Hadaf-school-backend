@@ -17,11 +17,13 @@ from rest_framework import status
 from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken, OutstandingToken
 from django.shortcuts import get_object_or_404
 from .models import *
-
+import copy
 class courseView(APIView):
 
     def post(self, request):
+        
         ser = courseSerializer(data=request.data)
+
         if ser.is_valid():
             ser.save()
             return Response(ser.data,status=status.HTTP_201_CREATED)
@@ -43,9 +45,76 @@ class courseView(APIView):
             id = request.GET['id']
             course = get_object_or_404(Course, id=id)
             ser = courseSerializer(Course.objects.get(id=id))
+            i =copy.deepcopy(ser.data)
+            teacher=""
+            department=""
+            grade=""
+            course_tye=""
+            lesson=""
+            year=""
+            user=""
+            if course.teacherID:
+                if(course.teacherID.last_name and course.teacherID.first_name):
+                    teacher=course.teacherID.last_name+" "+course.teacherID.first_name
+                else:
+                    teacher=course.teacherID.phone
+            if  course.departmentID:
+                department=course.departmentID.name
+            if(course.gradeID):
+                grade=course.gradeID.name
+            if course.courseTypeID:
+                course_tye=course.courseTypeID.name
+            if course.userID:
+                if(course.userID.last_name and course.userID.first_name):
+                    user=course.userID.last_name+" "+course.userID.first_name
+                else:
+                    user=course.userID.phone
+            i["teacher_name"]=teacher
+            i["department_name"]=department
+            i["grade_name"]=grade
+            i["course_type_name"]=course_tye
+            i["lesson_name"]=lesson
+            i["year_name"]=year
+            i["user_name"]=user
+            return Response(i,status=status.HTTP_200_OK)            
+
         else:
             ser = courseSerializer(Course.objects.all(), many=True)
-        return Response(ser.data)  
+            new_data=copy.deepcopy(ser.data)
+            for i in new_data:
+                course=get_object_or_404(Course,id=i["id"])
+                teacher=""
+                department=""
+                grade=""
+                course_tye=""
+                lesson=""
+                year=""
+                user=""
+                if course.teacherID:
+                    if(course.teacherID.last_name and course.teacherID.first_name):
+                        teacher=course.teacherID.last_name+" "+course.teacherID.first_name
+                    else:
+                        teacher=course.teacherID.phone
+                if  course.departmentID:
+                    department=course.departmentID.name
+                if(course.gradeID):
+                    grade=course.gradeID.name
+                if course.courseTypeID:
+                    course_tye=course.courseTypeID.name
+                if course.userID:
+                    if(course.userID.last_name and course.userID.first_name):
+                        user=course.userID.last_name+" "+course.userID.first_name
+                    else:
+                        user=course.userID.phone
+                i["teacher_name"]=teacher
+                i["department_name"]=department
+                i["grade_name"]=grade
+                i["course_type_name"]=course_tye
+                i["lesson_name"]=lesson
+                i["year_name"]=year
+                i["user_name"]=user
+
+            return Response(new_data)  
     
     def delete(self, request):
         if 'id' not in request.data:
@@ -223,7 +292,40 @@ class teacherCourse(APIView):
             return Response("need query params",status=status.HTTP_400_BAD_REQUEST)
         courses=Course.objects.filter(teacherID=id)
         ser=courseSerializer(courses,many=True)
-        return Response(ser.data,status=status.HTTP_200_OK)
+        new_data=copy.deepcopy(ser.data)
+        for i in new_data:
+                course=get_object_or_404(Course,id=i["id"])
+                teacher=""
+                department=""
+                grade=""
+                course_tye=""
+                lesson=""
+                year=""
+                user=""
+                if course.teacherID:
+                    if(course.teacherID.last_name and course.teacherID.first_name):
+                        teacher=course.teacherID.last_name+" "+course.teacherID.first_name
+                    else:
+                        teacher=course.teacherID.phone
+                if  course.departmentID:
+                    department=course.departmentID.name
+                if(course.gradeID):
+                    grade=course.gradeID.name
+                if course.courseTypeID:
+                    course_tye=course.courseTypeID.name
+                if course.userID:
+                    if(course.userID.last_name and course.userID.first_name):
+                        user=course.userID.last_name+" "+course.userID.first_name
+                    else:
+                        user=course.userID.phone
+                i["teacher_name"]=teacher
+                i["department_name"]=department
+                i["grade_name"]=grade
+                i["course_type_name"]=course_tye
+                i["lesson_name"]=lesson
+                i["year_name"]=year
+                i["user_name"]=user
+        return Response(new_data,status=status.HTTP_200_OK)
 
 class coursegetHomeVIew(APIView):
     def get(self,request):
@@ -232,7 +334,11 @@ class coursegetHomeVIew(APIView):
             return Response("need query params",status=status.HTTP_400_BAD_REQUEST)
         hw=CourseHomeWork.objects.filter(courseID=id)
         hw_Ser=courseHomeWorkSerializer(hw,many=True)
-        return Response(hw_Ser.data,status=status.HTTP_200_OK)
+        new_data=copy.deepcopy(hw_Ser.data)
+        for i in new_data:
+            course=get_object_or_404(Course,id=i["courseID"])
+            i["course_name"]=course.name
+        return Response(new_data,status=status.HTTP_200_OK)
         
 class specifiecStudentcourse(APIView):
     permission_classes=(IsAuthenticated,)
