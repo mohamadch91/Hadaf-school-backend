@@ -22,6 +22,7 @@ from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken, Ou
 from django.shortcuts import get_object_or_404
 from .models import *
 from .serializers import *
+import copy
 class quizHeaderView(APIView):
 
     def post(self, request):
@@ -43,13 +44,16 @@ class quizHeaderView(APIView):
         return Response(ser. errors, status=status.HTTP_400_BAD_REQUEST)
     
     def get(self, request):
-        if 'id' in request.GET:
-            id = request.GET['id']
-            archiveOfflineHeader = get_object_or_404(quizHeader, id=id)
-            ser = quizHeaderSerializer(quizHeader.objects.get(id=id))  
+        if 'c_id' in request.GET:
+            id = request.GET['c_id']
+            archiveOfflineHeader = get_object_or_404(quizHeader, course=id)
+            ser = quizHeaderSerializer(quizHeader.objects.get(id=id)) 
+            new_data=copy.deepcopy(ser.data)
+            new_data['course_name']=archiveOfflineHeader.course.name
+            new_data['teacher_name']=archiveOfflineHeader.teacher.last_name
+            return Response(new_data, status=status.HTTP_200_OK)
         else:
-            ser = quizHeaderSerializer(quizHeader.objects.all(), many=True)
-        return Response(ser.data)  
+            return Response('id is required', status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request):
         if 'id' not in request.data:
@@ -63,11 +67,13 @@ class quizHeaderView(APIView):
 class quizQuestionView(APIView):
 
     def post(self, request):
-        ser = quizQuestionSerializer(data=request.data)
-        if ser.is_valid():
-            ser.save()
-            return Response(ser.data, status=status.HTTP_201_CREATED)
-        return Response(ser. errors, status=status.HTTP_400_BAD_REQUEST)
+        ans=[]
+        for i in request.data:
+            ser = quizQuestionSerializer(data=i)
+            if ser.is_valid():
+                ser.save()
+                ans.append(ser.data)
+        return Response(ans, status=status.HTTP_400_BAD_REQUEST)
     
     def put(self, request):
         if 'id' not in request.data:
@@ -81,31 +87,32 @@ class quizQuestionView(APIView):
         return Response(ser. errors, status=status.HTTP_400_BAD_REQUEST)
     
     def get(self, request):
-        if 'id' in request.GET:
-            id = request.GET['id']
-            archiveFiles = get_object_or_404(quizQuestion, id=id)
-            ser = quizQuestionSerializer(quizQuestion.objects.get(id=id))  
+        if 'h_id' in request.GET:
+            id = request.GET['h_id']
+            archiveFiles = quizQuestion.objects.filter(header_id=id)
+            ser=quizQuestionSerializer(archiveFiles,many=True)
         else:
-            ser = quizQuestionSerializer(quizQuestion.objects.all(), many=True)
+            return Response('id is required', status=status.HTTP_400_BAD_REQUEST)
         return Response(ser.data)  
 
     def delete(self, request):
-        if 'id' not in request.data:
-            return Response('id is required', status=status.HTTP_400_BAD_REQUEST)
-        id = request.data['id']
-        archiveFiles= get_object_or_404(quizQuestion, id=id)
-        archiveFiles.delete()
+        for x in request.data:
+            id=x["id"]
+            archiveFiles= get_object_or_404(quizQuestion, id=id)
+            archiveFiles.delete()
         return Response(status=status.HTTP_201_CREATED)
 
 
 class studentQueezView(APIView):
 
     def post(self, request):
-        ser = studentQueezSerializer(data=request.data)
-        if ser.is_valid():
-            ser.save()
-            return Response(ser.data, status=status.HTTP_201_CREATED)
-        return Response(ser. errors, status=status.HTTP_400_BAD_REQUEST)
+        ans=[]
+        for i in request.data:    
+            ser = studentQueezSerializer(data=i)
+            if ser.is_valid():
+                ser.save()
+                ans.append(ser.data)
+        return Response(ans, status=status.HTTP_400_BAD_REQUEST)
     
     def put(self, request):
         if 'id' not in request.data:
@@ -119,13 +126,44 @@ class studentQueezView(APIView):
         return Response(ser. errors, status=status.HTTP_400_BAD_REQUEST)
     
     def get(self, request):
-        if 'id' in request.GET:
-            id = request.GET['id']
-            archiveFiles = get_object_or_404(studentQueez, id=id)
-            ser = studentQueezSerializer(studentQueez.objects.get(id=id))  
+        if 'h_id' in request.GET and 's_id' not in request.GET:
+            id = request.GET['h_id']
+            archiveFiles = studentQueez.objects.filter(quizheader=id)
+            ser= studentQueezSerializer(archiveFiles,many=True)
+            new_data=copy.deepcopy(ser.data) 
+            for i in new_data:
+                header=get_object_or_404(quizHeader,id=i["quizheader"])
+                i["header_name"]=header.description
+                user=get_object_or_404(Student,pk=i["student"])
+                i["student_name"]=user.phone
+            return Response(new_data,status.HTTP_200_OK)    
+        
+        elif 'h_id' not in request.GET and 's_id'  in request.GET:
+            id = request.GET['s_id']
+            archiveFiles = studentQueez.objects.filter(student=id)
+            ser= studentQueezSerializer(archiveFiles,many=True)
+            new_data=copy.deepcopy(ser.data) 
+            for i in new_data:
+                header=get_object_or_404(quizHeader,id=i["quizheader"])
+                i["header_name"]=header.description
+                user=get_object_or_404(Student,pk=i["student"])
+                i["student_name"]=user.phone
+            return Response(new_data,status.HTTP_200_OK)
+        elif 'h_id'  in request.GET and 's_id'  in request.GET:
+            id = request.GET['s_id']
+            h_id=request.GET['h_id']
+            archiveFiles = studentQueez.objects.filter(student=id,quizheader=h_id)
+            ser= studentQueezSerializer(archiveFiles,many=True)
+            new_data=copy.deepcopy(ser.data) 
+            for i in new_data:
+                header=get_object_or_404(quizHeader,id=i["quizheader"])
+                i["header_name"]=header.description
+                user=get_object_or_404(Student,pk=i["student"])
+                i["student_name"]=user.phone
+            return Response(new_data,status.HTTP_200_OK)
+
         else:
-            ser = studentQueezSerializer(studentQueez.objects.all(), many=True)
-        return Response(ser.data)  
+            return Response('need query param',status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request):
         if 'id' not in request.data:

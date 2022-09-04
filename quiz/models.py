@@ -1,7 +1,7 @@
 
 from django.db import models
 
-from authen.models import Teacher
+from authen.models import Student, Teacher
 from course.models import Course
 
 # Create your models here.
@@ -15,6 +15,8 @@ class quizHeader(models.Model):
     start_data=models.DateTimeField(blank=True,null=True)
     end_data=models.DateTimeField(blank=True,null=True)
     question_count=models.IntegerField(blank=True,null=True,default=5)
+    min_range=models.IntegerField(blank=True,null=True,default=5)
+    type=models.CharField(max_length=50,blank=True,null=True)
     created_at=models.DateTimeField(auto_now_add=True,null=True)    ########
     updated_at=models.DateTimeField(auto_now=True,null=True) 
 
@@ -32,4 +34,5 @@ class studentQueez(models.Model):
     id=models.AutoField(primary_key=True)
     quizheader=models.ForeignKey(quizHeader,on_delete=models.CASCADE,blank=True)    
     quizQuestion=models.ForeignKey(quizQuestion,on_delete=models.CASCADE,blank=True,null=True)
+    student=models.ForeignKey(Student,on_delete=models.CASCADE,blank=True,null=True)
     result=models.IntegerField(blank=True,null=True)

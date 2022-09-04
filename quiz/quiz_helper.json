@@ -1,0 +1,216 @@
+bbin quiz ha 3 ta qesmat daran alan tak tak api haro midam
+
+
+avval ham khob khode azmonne headreshe yani
+
+
+in getesh in sheklie
+http://127.0.0.1:8000/quiz/quizHeader/?c_id=1
+
+azmone ye dore ro midee
+nokte ine ke in azmoon objectee chon har dore ye azmon dareeeee
+{
+    "id": 1,
+    "description": "kljlk",
+    "quizTime": 0,
+    "start_data": null,
+    "end_data": null,
+    "question_count": 7,
+    "min_range": 5,
+    "created_at": "2022-08-23T23:03:57.840400Z",
+    "updated_at": "2022-09-04T01:04:05.512831Z",
+    "teacher": 3,
+    "type": null,
+    "course": 2,
+    "course_name": "Mohamad",
+    "teacher_name": "choupan"
+}
+
+
+khoob hala farzan khasti ye quiz ezaf koni che sheklie:
+http://127.0.0.1:8000/quiz/quizHeader/
+
+
+{
+    "description": "kljlk",
+    "quizTime": 0,
+    "start_data": null,
+    "end_data": "2022-09-04T01:04:05.512831Z format time hminae",
+    "question_count": 7,
+    "min_range": 5, "in hadaqal soal qabolieee"
+    "teacher": 3,
+    "type": null,
+    "course": 2
+}
+
+put
+eyne hamine
+{
+    "id": 1,
+    "description": "kljlk",
+    "quizTime": 0,
+    "start_data": null,
+    "end_data": null,
+    "question_count": 7,
+    "min_range": 7,
+    "teacher": 3,
+    "course": 2,
+    "type": null,
+    "course_name": "Mohamad",
+    "teacher_name": "choupan"
+}
+
+delete ham ye donast dge
+
+{
+    "id":7
+}
+
+in az in
+
+************ baraye type do ta string sabet bgir masalan pellei va ina hamono set kon
+chon ye chize male fronte ke chejori neshon bede azmono
+hala mikhay be in azmon soal ezaf koni
+
+
+
+http://127.0.0.1:8000/quiz/quizQuestion/?h_id=1
+
+query param ee soal hayee ye azmono mide
+
+[
+    {
+        "id": 1,
+        "title": "ssss",
+        "answer1": "gozine2",
+        "answer2": "gozine3",
+        "answer3": "gozine4",
+        "answer4": "gozine 5",
+        "result": 3,
+        "header_id": 1
+    }
+]
+
+
+postesh
+
+http://127.0.0.1:8000/quiz/quizQuestion/
+
+soalaro mitone baham add konee
+
+
+[
+    {
+        "title": "ssss",
+        "answer1": "gozine2",
+        "answer2": "gozine3",
+        "answer3": "gozine4",
+        "answer4": "gozine 5",
+        "result": 3,
+        "header_id": 1
+    }
+]
+in shekliii bekhad edit kone yeki yekie editesh 
+
+{
+        "id": 4,
+        "title": "mohamad",
+        "answer1": "gozine2",
+        "answer2": "gozine3",
+        "answer3": "gozine4",
+        "answer4": "gozine 5",
+        "result": 2,
+        "header_id": 1
+    }
+
+
+    bekhad pak kone ham daste jamie
+
+
+     [
+{
+"id":4
+}
+]
+
+
+hala danesh amooz mikhad biad azmon bedee
+
+
+chejori azmon mide do ta halat dare tebgh on do ta halat
+ya hame soalro baham mibineee jaavab midi midi be man
+man hame soalaro baham behet midam
+ya ye stepper mizari tak tak soalo  mibine javabesho mibine
+tahesh azmono ke sabt kard midi be ham man kollan araye migiram
+
+
+http://127.0.0.1:8000/quiz/studentQueez/?h_id=1
+
+in getesh in sheklie
+hame soalaye male ye azmono midee 
+harki harchi javab dadee 
+[
+    {
+        "id": 1,
+        "result": 2,
+        "quizheader": 1,
+        "quizQuestion": 2,
+        "student": 8,
+        "header_name": "kljlk",
+        "student_name": "+989121456273"
+    }
+]
+
+http://127.0.0.1:8000/quiz/studentQueez/?s_id=8
+in query param hameyee javabaye ye danesh amozz baree hame azmonaro mide
+ke nmidonam be che dard mikhore
+[
+    {
+        "id": 1,
+        "result": 2,
+        "quizheader": 1,
+        "quizQuestion": 2,
+        "student": 8,
+        "header_name": "kljlk",
+        "student_name": "+989121456273"
+    }
+]
+
+http://127.0.0.1:8000/quiz/studentQueez/?s_id=8&h_id=1
+
+in javabaye ye azmone khas male ye danesh amooz khaseeeeee
+[
+    {
+        "id": 1,
+        "result": 2,
+        "quizheader": 1,
+        "quizQuestion": 2,
+        "student": 8,
+        "header_name": "kljlk",
+        "student_name": "+989121456273"
+    }
+]
+
+bare javaba ziadd put va delete  faydei nadare chon sabt shodee
+postesham in shekliee
+
+[
+    {
+        "result": 2,
+        "quizheader": 1,
+        "quizQuestion": 2,
+        "student": 8,
+        "header_name": "kljlk"
+      
+    },
+    {
+        "result": 3,
+        "quizheader": 1,
+        "quizQuestion": 3,
+        "student": 8,
+        "header_name": "kljlk"
+      
+    }
+]
+
+inaam az quizaaaa
