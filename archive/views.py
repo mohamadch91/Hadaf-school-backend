@@ -55,7 +55,7 @@ class ArchiveOfflineHeaderView(APIView):
 
     def delete(self, request):
         for x in request.data:
-            archiveFiles= get_object_or_404(ArchiveFiles, id=x['id'])
+            archiveFiles= get_object_or_404(ArchiveOfflineHeader, id=x['id'])
             archiveFiles.delete()
         return Response(status=status.HTTP_202_ACCEPTED)
 
