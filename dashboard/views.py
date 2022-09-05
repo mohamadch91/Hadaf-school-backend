@@ -22,7 +22,9 @@ from django.shortcuts import get_object_or_404
 from .models import *
 from course.models import *
 from authen.models import *
-
+from package.models import *
+from .serializers import *
+from package.serializers import *
 
 class dahsboardVIew(APIView):
     def get(self,request):
@@ -49,3 +51,64 @@ class admindahsboardVIew(APIView):
             "admin":admin_count
         }
         return Response(data,status.HTTP_200_OK)
+
+class walletView(APIView):
+    permission_classes=(IsAuthenticated,)
+    def get(self,request):
+        id=request.user.id
+        wallets=wallet.objects.get(studentID=id)
+        data={
+            "amount":wallets.amount
+        }
+        return Response(data,status.HTTP_200_OK)     
+
+class basketView(APIView):
+    permission_classes=(IsAuthenticated,)
+    def get(self,request):
+        id=request.user.id
+        baskets=basket.objects.filter(studentID=id)
+        ans=[]
+        for x in baskets:
+            if x.type=='normal':
+                normal=normalPackage.objects.get(id=x.buyID)
+                ans.append({
+                    "id":x.id,
+                    "name":normal.name,
+                    "percent":normal.percent,
+                    "type":x.type
+                })
+            elif x.type=='timing':
+                timing=timingPackage.objects.get(id=x.buyID)
+                ans.append({
+                    "id":x.id,
+                    "name":timing.name,
+                    "percent":timing.percent,
+                    "type":x.type,
+                    "asDate":timing.asDate,
+                    "toDate":timing.toDate
+                })
+            elif x.type=='student':
+                student=studentPackage.objects.get(id=x.buyID)
+                ans.append({
+                    "id":x.id,
+                    "name":student.name,
+                    "type":x.type
+                })
+            elif x.type=='course':
+                course=Course.objects.get(id=x.buyID)
+                ans.append({
+                    "id":x.id,
+                    "name":course.name,
+                    "type":x.type
+                })
+        return Response(ans,status.HTTP_200_OK)   
+    def post(self,request):
+        id=request.user.id
+        type=request.data['type']
+        buyID=request.data['buyID']
+        basket.objects.create(studentID_id=id,type=type,buyID=buyID)
+        return Response(status=status.HTTP_200_OK)
+    def delete(self,request):
+        id=request.data['id']
+        basket.objects.get(id=id).delete()
+        return Response(status=status.HTTP_200_OK)
