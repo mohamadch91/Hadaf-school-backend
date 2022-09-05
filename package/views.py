@@ -154,9 +154,16 @@ class timingPackageCourseView(APIView):
 class studentPackageView(APIView):
     permission_classes=[IsAuthenticated]
     def get(self, request):
-        studentPackageList = studentPackage.objects.all()
-        serializer = studentPackageSerializer(studentPackageList, many=True)
-        return Response(serializer.data)
+        s_id=request.query_params.get('s_id')
+        studentPackageList = studentPackage.objects.filter(student=s_id)
+        ans=[]
+        for i in studentPackageList:
+            ser=studentPackageSerializer(i)
+            new_data=copy.deepcopy(ser.data)
+            student=get_object_or_404(Student, id=new_data['student'])
+            new_data['student_name']=student.name
+            ans.append(new_data)
+        return Response(ans)
     def post(self, request):
         serializer = studentPackageSerializer(data=request.data)
         if serializer.is_valid():

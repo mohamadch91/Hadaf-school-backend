@@ -1,6 +1,6 @@
 from django.db import models
 from course.models import Course
-from discount.models import Discount
+from authen.models import Student
 # Create your models here.
 
 
@@ -29,7 +29,7 @@ class timingPackageCourse(models.Model):
 class studentPackage(models.Model):
     id=models.AutoField(primary_key=True)
     name=models.CharField(max_length=50, blank=True, null=True)
-    percent=models.IntegerField(blank=True, null=True)
+    student=models.ForeignKey(Student, on_delete=models.CASCADE, null=True)
 
 class studentPackageCourse(models.Model):
     id=models.AutoField(primary_key=True)
