@@ -305,9 +305,9 @@ class CurruptedView(APIView):
             students=students.filter(school=None) |students.filter(school="")
         if(parentName is not None):
             students=students.filter(parentName=None)|students.filter(parentName="")
-        if(parentNationalCode is not None):
+        if(parentNationalCode is not None and parentNationalCode is not ''):
             students=students.filter(parentNationalCode=None)|students.filter(parentNationalCode="")
-        if(pbirthday is not None):
+        if(pbirthday is not None and pbirthday is not ''):
             students=students.filter(pbirthday=None)|students.filter(pbirthday="")
         if(peducation is not None):
             students=students.filter(peducation=None)|students.filter(peducation="")
