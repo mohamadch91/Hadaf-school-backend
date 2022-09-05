@@ -5,16 +5,16 @@ from django.shortcuts import redirect
 import requests
 import json
 
-MERCHANT = 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX'
+MERCHANT = '9970d044-dbbd-11e6-9a51-005056a205be'
 ZP_API_REQUEST = "https://api.zarinpal.com/pg/v4/payment/request.json"
 ZP_API_VERIFY = "https://api.zarinpal.com/pg/v4/payment/verify.json"
 ZP_API_STARTPAY = "https://www.zarinpal.com/pg/StartPay/{authority}"
-amount = 11000  # Rial / Required
-description = "توضیحات مربوط به تراکنش را در این قسمت وارد کنید"  # Required
+amount = 1000  # Rial / Required
+description = "backend test"  # Required
 email = 'email@example.com'  # Optional
 mobile = '09123456789'  # Optional
 # Important: need to edit for realy server.
-CallbackURL = 'http://localhost:8000/verify/'
+CallbackURL = 'http://localhost:8000/zarinpal/verify/'
 
 
 def send_request(request):
@@ -29,8 +29,9 @@ def send_request(request):
                   "content-type": "application/json'"}
     req = requests.post(url=ZP_API_REQUEST, data=json.dumps(
         req_data), headers=req_header)
-    authority = req.json()['data']['authority']
+    print(req.json())    
     if len(req.json()['errors']) == 0:
+        authority = req.json()['data']['authority']
         return redirect(ZP_API_STARTPAY.format(authority=authority))
     else:
         e_code = req.json()['errors']['code']
