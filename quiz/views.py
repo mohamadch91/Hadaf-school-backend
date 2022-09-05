@@ -47,11 +47,14 @@ class quizHeaderView(APIView):
         if 'c_id' in request.GET:
             id = request.GET['c_id']
             archiveOfflineHeader = quizHeader.objects.filter(course=id)
-            ser = quizHeaderSerializer(archiveOfflineHeader,many=True) 
-            new_data=copy.deepcopy(ser.data)
-            new_data['course_name']=archiveOfflineHeader.course.name
-            new_data['teacher_name']=archiveOfflineHeader.teacher.last_name
-            return Response(new_data, status=status.HTTP_200_OK)
+            ans=[]
+            for z in archiveOfflineHeader:
+                ser=quizHeaderSerializer(z)
+                i=copy.deepcopy(ser.data)
+                i['course_name']=z.course.name
+                i['teacher_name']=z.teacher.last_name
+                ans.append(i)
+            return Response(ans, status=status.HTTP_200_OK)
         else:
             return Response('id is required', status=status.HTTP_400_BAD_REQUEST)
 
