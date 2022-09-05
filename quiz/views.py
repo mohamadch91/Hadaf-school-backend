@@ -47,7 +47,7 @@ class quizHeaderView(APIView):
         if 'c_id' in request.GET:
             id = request.GET['c_id']
             archiveOfflineHeader = get_object_or_404(quizHeader, course=id)
-            ser = quizHeaderSerializer(quizHeader.objects.get(id=id)) 
+            ser = quizHeaderSerializer(archiveOfflineHeader,many=True) 
             new_data=copy.deepcopy(ser.data)
             new_data['course_name']=archiveOfflineHeader.course.name
             new_data['teacher_name']=archiveOfflineHeader.teacher.last_name
