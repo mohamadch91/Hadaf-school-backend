@@ -1,0 +1,43 @@
+
+http://127.0.0.1:8000/discount/user
+in url e moarefeee
+
+get bezani hamsho behet mide
+http://127.0.0.1:8000/discount/user?id=1
+in bare yedonasho mideee
+
+
+
+http://127.0.0.1:8000/discount/user
+
+in posteshe
+
+objectee hamsh done done mikone 
+{
+    "name": "mehran",
+    "family": "azizi",
+    "phone": "+989126196168",
+    "code": "mehran",
+    "percent": 20
+}
+
+
+in puteshee
+
+{
+    "id": 2,
+    "name": "mehran",
+    "family": "azizi1",
+    "phone": "+989126196168",
+    "code": "mehran",
+    "percent": 20
+}
+
+inam deletshe
+
+ [
+{
+"id":2
+}
+]
+in yedoneee object nist in yedonee array migiree DELETE 

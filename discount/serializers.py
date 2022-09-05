@@ -14,3 +14,8 @@ class discountCourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = DiscountCourse
         fields = '__all__'  
+
+class discountUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DiscountUser
+        fields = '__all__'
