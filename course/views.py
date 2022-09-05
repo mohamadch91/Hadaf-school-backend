@@ -41,6 +41,7 @@ class courseView(APIView):
         return Response(ser.errors,status=status.HTTP_400_BAD_REQUEST)
 
     def get(self, request):
+
         if 'id' in request.GET :
             id = request.GET['id']
             course = get_object_or_404(Course, id=id)
@@ -79,6 +80,24 @@ class courseView(APIView):
             return Response(i,status=status.HTTP_200_OK)            
 
         else:
+            page=request.query_params.get('page',None)
+            dep=request.query_params.get('dep',None)
+            grade=request.query_params.get('grade',None)
+            course_type=request.query_params.get('course_type',None)
+            lesson=request.query_params.get('lesson',None)
+            courses=Course.objects.all()
+            if dep:
+                courses=courses.filter(departmentID=dep)
+            if(grade):
+                courses=courses.filter(gradeID=grade)
+            if(course_type):
+                courses=courses.filter(courseTypeID=course_type)
+            if(lesson):
+                courses=courses.filter(lessonID=lesson)
+            if(page):
+                page=int(page)-1
+                courses=courses[page*9:page*9+9]
+                
             ser = courseSerializer(Course.objects.all(), many=True)
             new_data=copy.deepcopy(ser.data)
             for i in new_data:
