@@ -88,6 +88,7 @@ INSTALLED_APPS = [
     'package',
     'sms',
     'dashboard',
+    'zarinpal'
     'corsheaders',
     'rest_framework_simplejwt.token_blacklist',
     
