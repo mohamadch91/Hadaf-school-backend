@@ -76,7 +76,7 @@ class quizQuestionView(APIView):
             if ser.is_valid():
                 ser.save()
                 ans.append(ser.data)
-        return Response(ans, status=status.HTTP_400_BAD_REQUEST)
+        return Response(ans, status=status.HTTP_200_OK)
     
     def put(self, request):
         if 'id' not in request.data:
@@ -115,7 +115,7 @@ class studentQueezView(APIView):
             if ser.is_valid():
                 ser.save()
                 ans.append(ser.data)
-        return Response(ans, status=status.HTTP_400_BAD_REQUEST)
+        return Response(ans, status=status.HTTP_200_OK)
     
     def put(self, request):
         if 'id' not in request.data:
