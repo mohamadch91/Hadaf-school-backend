@@ -1,12 +1,38 @@
 from rest_framework import serializers
 from .models import *
 
-class ForumHeaderSeriliazer(serializers.ModelSerializer):
+class normalPackageSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ForumHeader
-        fields = '__all__'  
+        model = normalPackage
+        fields = '__all__'
 
-class ForumDetailSerializer(serializers.ModelSerializer):
+class normalPackageCourseSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ForumDetail
-        fields = '__all__'  
+        model = normalPackageCourse
+        fields = '__all__'
+
+
+class timingPackageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = timingPackage
+        fields = '__all__'
+
+class timingPackageCourseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = timingPackageCourse
+        fields = '__all__'
+
+class studentPackageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = studentPackage
+        fields = '__all__'
+
+class studentPackageCourseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = studentPackageCourse
+        fields = '__all__'
+
+class studentPackageDiscountSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = studentPackageDiscount
+        fields = '__all__'

@@ -2,6 +2,12 @@ from django.urls import path
 from .views import *
 
 urlpatterns = [
- path('forumHeader/',ForumHeaderView.as_view(), name='forumHeader'),
-    path('forumDetail/',ForumDetailView.as_view(), name='forum Detail'),
+    path('normalPackage', normalPackageView.as_view()),
+    path('normalPackageCourse', normalPackageCourseView.as_view()),
+    path('timingPackage', timingPackageView.as_view()),
+    path('timingPackageCourse', timingPackageCourseView.as_view()),
+    path('studentPackage', studentPackageView.as_view()),
+    path('studentPackageCourse', studentPackageCourseView.as_view()),
+    path('studentPackageDiscount', studentPackageDiscount.as_view()),
+
 ]

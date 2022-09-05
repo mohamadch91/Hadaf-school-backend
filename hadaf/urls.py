@@ -33,6 +33,7 @@ urlpatterns = [
     path('sms/',include('sms.urls')),
     path('dashboard/',include('dashboard.urls')),
     path('zarinpal/',include('zarinpal.urls')),
+    path('package/',include('package.urls')),
 
 
 

@@ -38,6 +38,5 @@ class studentPackageCourse(models.Model):
 
 class studentPackageDiscount(models.Model):
     id=models.AutoField(primary_key=True)
-    packageID=models.ForeignKey(studentPackage, on_delete=models.CASCADE, null=True)
     percent=models.IntegerField(blank=True, null=True)
     max_count=models.IntegerField(blank=True, null=True)
