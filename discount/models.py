@@ -1,3 +1,4 @@
+from unicodedata import name
 from django.db import models
 from course.models import   Course
 from authen.models import User
@@ -22,5 +23,8 @@ class DiscountCourse(models.Model): #???????
 
 class DiscountUser(models.Model): #???????
     id = models.AutoField(primary_key=True)
-    discountID = models.ForeignKey(Discount, on_delete=models.CASCADE, null=True)
-    userID = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    name=models.CharField(max_length=50, blank=True, null=True)
+    family=models.CharField(max_length=50, blank=True, null=True)
+    phone=models.CharField(max_length=50, blank=True, null=True)
+    code=models.CharField(max_length=50, blank=True, null=True)
+    percent=models.IntegerField(blank=True, null=True)
