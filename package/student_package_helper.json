@@ -1,0 +1,156 @@
+injaa 3 ta API ee
+
+
+in avvali faqat male adminee
+
+in moshakhas mikone ke package ha cheqadr takhfif daran 
+http://127.0.0.1:8000/package/studentPackageDiscount
+
+kollan ye donast baraye hmisheee
+yani post bezani pak mishe bishtar az yedone nist
+
+[
+    {
+        "id": 1,
+        "percent": 20,
+        "max_count": 5
+    }
+]
+getesh
+
+in posteshh :
+ {
+        "id": 1,
+        "percent": 20,
+        "max_count": 5
+    }
+
+
+    in putesh
+ {
+        "id": 2,
+        "percent": 75,
+        "max_count": 5
+    }
+
+    inam dlete
+
+ 
+{
+"id":2
+}
+
+
+
+hala bare khode studentee
+baraye ijad packageee
+
+
+http://127.0.0.1:8000/package/studentPackage?s_id=4 package haye ye studentt ro midr
+[
+    {
+        "id": 1,
+        "name": "package riazi",
+        "student": 4,
+        "student_name": "choupantaghe"
+    },
+    {
+        "id": 2,
+        "name": "package shimi",
+        "student": 4,
+        "student_name": "choupantaghe"
+    },
+    {
+        "id": 3,
+        "name": "ddasd",
+        "student": 4,
+        "student_name": "choupantaghe"
+    }
+]
+in posteshee
+[
+    {
+     
+        "name": "package riazi",
+        "student": 4
+    },
+    {
+
+        "name": "package shimi",
+        "student": 4
+      
+    }]
+    in putesheee 
+
+[
+    {
+        "id": 6,
+        "name": "package riasdsdzi",
+        "student": 4
+    },
+    {
+        "id": 7,
+        "name": "package shsddimi",
+        "student": 4
+    }
+]
+
+inam deletee
+
+
+
+baraye ezaf kardane course be in
+http://127.0.0.1:8000/package/studentPackageCourse?p_id=1
+in url 
+in get:[]
+
+[
+    {
+        "id": 1,
+        "packageID": 1,
+        "courseID": 1,
+        "course_name": "Mohamad",
+        "package_name": "package riazi"
+    },
+    {
+        "id": 2,
+        "packageID": 1,
+        "courseID": 2,
+        "course_name": "Sara",
+        "package_name": "package riazi"
+    }
+]
+
+in post:
+[
+    {
+        "packageID": 1,
+        "courseID": 1
+    },
+    {
+        "packageID": 1,
+        "courseID": 2
+    }
+]
+
+in putesh
+
+[
+    {
+        "id": 5,
+        "packageID": 1,
+        "courseID": 1
+    },
+    {
+        "id": 6,
+        "packageID": 1,
+        "courseID": 3
+    }
+]
+
+inam delete
+ [
+{
+"id":2
+}
+ ]

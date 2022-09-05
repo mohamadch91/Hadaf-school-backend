@@ -8,6 +8,7 @@ urlpatterns = [
     path('timingPackageCourse', timingPackageCourseView.as_view()),
     path('studentPackage', studentPackageView.as_view()),
     path('studentPackageCourse', studentPackageCourseView.as_view()),
-    path('studentPackageDiscount', studentPackageDiscount.as_view()),
+    path('studentPackageDiscount', studentPackageDiscountView.as_view()),
 
 ]
+

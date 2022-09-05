@@ -1,0 +1,104 @@
+khob bbin meharn 3 no package dariim
+sadee
+zamandar male danesh amooz
+az sade shoro mikonim
+http://127.0.0.1:8000/package/timingPackage
+in getesheee
+
+[
+    {
+        "id": 1,
+        "name": "timing1",
+        "percent": 40,
+        "asDate": "2022-09-01",
+        "toDate": "2022-09-06"
+    },
+    {
+        "id": 2,
+        "name": "timing 2",
+        "percent": 30,
+        "asDate": "2022-09-01",
+        "toDate": "2022-09-09"
+    }
+]
+in posteshe
+[
+ {
+        "name": "timing normal 3",
+        "percent": 35,
+         "asDate": "2022-09-01",
+        "toDate": "2022-09-09"
+    }
+]
+    in puteshe
+
+[
+    {
+        "id": 4,
+        "name": "timing normal 3",
+        "percent": 85,
+        "asDate": "2022-09-01",
+        "toDate": "2022-09-09"
+    }
+]
+   arayast
+
+delete ham arrayast 
+ [
+{
+"id":2
+}
+]
+
+
+barayeee add kardane course be in packageee
+
+http://127.0.0.1:8000/package/timingPackageCourse?p_id=1
+
+inliste course haye ye package zamandare
+
+
+[
+    {
+        "id": 1,
+        "packageID": 1,
+        "courseID": 1,
+        "course_name": "Mohamad",
+        "package_name": "timing1"
+    },
+    {
+        "id": 2,
+        "packageID": 1,
+        "courseID": 2,
+        "course_name": "Sara",
+        "package_name": "timing1"
+    }
+]
+
+
+in posteshe arrayst
+[{
+        
+        "packageID": 1,
+        "courseID": 1
+     
+    }]
+
+    in puteshee
+
+    [
+    {
+        "id": 1,
+        "packageID": 1,
+        "courseID": 2
+    
+    }]
+
+
+    inam delete 
+
+     [
+{
+"id":4
+}
+]

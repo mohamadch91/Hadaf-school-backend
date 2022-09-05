@@ -35,19 +35,25 @@ class normalPackageView(APIView):
         serializer = normalPackageSerializer(normalPackageList, many=True)
         return Response(serializer.data)
     def post(self, request):
-        serializer = normalPackageSerializer(data=request.data)
+        serializer = normalPackageSerializer(data=request.data,many=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     def put(self, request):
-        normalPackageList = normalPackage.objects.all()
-        serializer = normalPackageSerializer(normalPackageList, many=True)
-        return Response(serializer.data)
+        id=request.data['id']
+        normalPackageList = get_object_or_404(normalPackage, id=id)
+        serializer = normalPackageSerializer(normalPackageList, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     def delete(self, request):
-        normalPackageList = normalPackage.objects.all()
-        serializer = normalPackageSerializer(normalPackageList, many=True)
-        return Response(serializer.data)
+        for i in request.data:
+            id=i['id']
+            normalPackageList = get_object_or_404(normalPackage, id=id)
+            normalPackageList.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)    
 
 class normalPackageCourseView(APIView):
     permission_classes=[IsAuthenticated]
@@ -87,7 +93,7 @@ class normalPackageCourseView(APIView):
             id=i["id"] 
             cpackage_cours=get_object_or_404(normalPackageCourse, id=id)
             cpackage_cours.delete()
-        return Response(status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 class timingPackageView(APIView):
     permission_classes=[IsAuthenticated]
@@ -96,19 +102,28 @@ class timingPackageView(APIView):
         serializer = timingPackageSerializer(timingPackageList, many=True)
         return Response(serializer.data)
     def post(self, request):
-        serializer = timingPackageSerializer(data=request.data)
+        serializer = timingPackageSerializer(data=request.data,many=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     def put(self, request):
-        timingPackageList = timingPackage.objects.all()
-        serializer = timingPackageSerializer(timingPackageList, many=True)
-        return Response(serializer.data)
+        for  i in request.data:
+            id=i["id"] 
+            cpackage_cours=get_object_or_404(timingPackage, id=id)
+            serializer = timingPackageSerializer(cpackage_cours, data=i)
+            if serializer.is_valid():
+                serializer.save()
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(status=status.HTTP_202_ACCEPTED)
     def delete(self, request):
-        timingPackageList = timingPackage.objects.all()
-        serializer = timingPackageSerializer(timingPackageList, many=True)
-        return Response(serializer.data)
+        for i in request.data:
+            id=i["id"] 
+            cpackage_cours=get_object_or_404(timingPackage, id=id)
+            cpackage_cours.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+       
 
 class timingPackageCourseView(APIView):
     permission_classes=[IsAuthenticated]
@@ -128,8 +143,8 @@ class timingPackageCourseView(APIView):
         for i in request.data:
             serializer = timingPackageCourseSerializer(data=i)
             if serializer.is_valid():
-                ans.append(serializer.data)
                 serializer.save()
+                ans.append(serializer.data)
             else:
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         return Response(ans, status=status.HTTP_201_CREATED)
@@ -161,23 +176,32 @@ class studentPackageView(APIView):
             ser=studentPackageSerializer(i)
             new_data=copy.deepcopy(ser.data)
             student=get_object_or_404(Student, id=new_data['student'])
-            new_data['student_name']=student.name
+            new_data['student_name']=student.first_name+student.last_name
             ans.append(new_data)
         return Response(ans)
     def post(self, request):
-        serializer = studentPackageSerializer(data=request.data)
+        serializer = studentPackageSerializer(data=request.data,many=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     def put(self, request):
-        studentPackageList = studentPackage.objects.all()
-        serializer = studentPackageSerializer(studentPackageList, many=True)
-        return Response(serializer.data)
+        for  i in request.data:
+            id=i["id"] 
+            cpackage_cours=get_object_or_404(studentPackage, id=id)
+            serializer = studentPackageSerializer(cpackage_cours, data=i)
+            if serializer.is_valid():
+                serializer.save()
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(status=status.HTTP_201_CREATED)
     def delete(self, request):
-        studentPackageList = studentPackage.objects.all()
-        serializer = studentPackageSerializer(studentPackageList, many=True)
-        return Response(serializer.data)
+        for i in request.data:
+            id=i["id"] 
+            cpackage_cours=get_object_or_404(studentPackage, id=id)
+            cpackage_cours.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 class studentPackageCourseView(APIView):
     permission_classes=[IsAuthenticated]
@@ -197,8 +221,9 @@ class studentPackageCourseView(APIView):
         for i in request.data:
             serializer = studentPackageCourseSerializer(data=i)
             if serializer.is_valid():
-                ans.append(serializer.data)
                 serializer.save()
+                ans.append(serializer.data)
+
             else:
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         return Response(ans, status=status.HTTP_201_CREATED)
@@ -217,25 +242,31 @@ class studentPackageCourseView(APIView):
             id=i["id"] 
             cpackage_cours=get_object_or_404(studentPackageCourse, id=id)
             cpackage_cours.delete()
-        return Response(status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
-class studentPackageDiscount(APIView):
+class studentPackageDiscountView(APIView):
     permission_classes=[IsAuthenticated]
     def get(self, request):
         studentPackageDiscountList = studentPackageDiscount.objects.all()
         serializer = studentPackageDiscountSerializer(studentPackageDiscountList, many=True)
         return Response(serializer.data)
     def post(self, request):
+        studentPackageDiscount.objects.all().delete()
         serializer = studentPackageDiscountSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     def put(self, request):
-        studentPackageDiscountList = studentPackageDiscount.objects.all()
-        serializer = studentPackageDiscountSerializer(studentPackageDiscountList, many=True)
-        return Response(serializer.data)
+        id=request.data["id"]
+        studentPackageDiscountList = get_object_or_404(studentPackageDiscount, id=id)
+        serializer = studentPackageDiscountSerializer(studentPackageDiscountList, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     def delete(self, request):
-        studentPackageDiscountList = studentPackageDiscount.objects.all()
-        serializer = studentPackageDiscountSerializer(studentPackageDiscountList, many=True)
-        return Response(serializer.data)
+        id=request.data["id"]
+        studentPackageDiscountList = get_object_or_404(studentPackageDiscount, id=id)
+        studentPackageDiscountList.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

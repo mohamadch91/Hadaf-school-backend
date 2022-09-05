@@ -1,0 +1,93 @@
+khob bbin meharn 3 no package dariim
+sadee
+zamandar male danesh amooz
+az sade shoro mikonim
+http://127.0.0.1:8000/package/normalPackage
+in getesheee
+[
+    {
+        "id": 1,
+        "name": "package avval",
+        "percent": 50
+    },
+    {
+        "id": 2,
+        "name": "package normal 2",
+        "percent": 40
+    }
+]
+
+in posteshe
+[
+ {
+        "name": "package normal 3",
+        "percent": 35
+    }
+]
+    in puteshe
+ {
+        "id": 6,
+        "name": "package normal 35656",
+        "percent": 35
+    }
+
+    tak objecte
+
+delete ham arrayast 
+ [
+{
+"id":2
+}
+]
+
+
+barayeee add kardane course be in packageee
+
+http://127.0.0.1:8000/package/normalPackageCourse?p_id=1
+
+inliste course haye ye package sadast
+
+[
+    {
+        "id": 1,
+        "packageID": 1,
+        "courseID": 1,
+        "course_name": "Mohamad",
+        "package_name": "package avval"
+    },
+    {
+        "id": 2,
+        "packageID": 1,
+        "courseID": 3,
+        "course_name": null,
+        "package_name": "package avval"
+    }]
+
+
+
+in posteshe arrayst
+[{
+        
+        "packageID": 1,
+        "courseID": 1
+     
+    }]
+
+    in puteshee
+
+    [
+    {
+        "id": 1,
+        "packageID": 1,
+        "courseID": 2
+    
+    }]
+
+
+    inam delete 
+
+     [
+{
+"id":4
+}
+]
