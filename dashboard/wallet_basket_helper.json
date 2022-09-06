@@ -1,0 +1,60 @@
+baraye kiff poll
+
+
+http://127.0.0.1:8000/dashboard/wallet
+
+hamino mizani faqat behet pole tosho midee
+
+bare sabad kharid
+
+http://127.0.0.1:8000/dashboard/basket
+ino mizani 
+get khalii
+[
+    {
+        "id": 1,
+        "name": "package avval",
+        "percent": 50,
+        "type": "normal"
+    },
+    {
+        "id": 2,
+        "name": "timing1",
+        "percent": 40,
+        "type": "timing",
+        "asDate": "2022-09-01",
+        "toDate": "2022-09-06"
+    }
+] male on usero behet mide
+
+type noe chizie ke ezaf kardee
+anvae gozine hayie ke mitoni entekhab koni inast
+choices=[('normal', 'normal'), ('timing', 'timing'), ('student', 'student'),('course','course')]
+yanii faqaat be onvane string type mitoni inaro baraye man post konii
+
+in posteshee
+
+
+[
+    {
+    "buyID":1,
+        "type": "normal"
+    },
+    {
+    "buyID":2,
+        "type": "timing",
+      
+    }
+]
+buy id idie on chizie ke mikhad bekhare type ham typeshe
+
+agara ham pak kard ine
+ [
+{
+"id":2
+},
+{
+"id":4
+}
+ ]
+ arraye

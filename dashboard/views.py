@@ -1,3 +1,4 @@
+from cmath import exp
 from itertools import count
 from django.shortcuts import render
 
@@ -56,7 +57,17 @@ class walletView(APIView):
     permission_classes=(IsAuthenticated,)
     def get(self,request):
         id=request.user.id
-        wallets=wallet.objects.get(studentID=id)
+        try:
+            wallets=get_object_or_404(wallet,studentID=id)
+        except:
+            new_data={
+                "amount":0,
+                "studentID":id
+            }
+            serializer=walletSerializer(data=new_data)
+            if serializer.is_valid():
+                serializer.save()
+                wallets=get_object_or_404(wallet,studentID=id)
         data={
             "amount":wallets.amount
         }
@@ -104,11 +115,24 @@ class basketView(APIView):
         return Response(ans,status.HTTP_200_OK)   
     def post(self,request):
         id=request.user.id
-        type=request.data['type']
-        buyID=request.data['buyID']
-        basket.objects.create(studentID_id=id,type=type,buyID=buyID)
-        return Response(status=status.HTTP_200_OK)
+        ans=[]
+        for i in request.data:
+            new_data={
+                "studentID":id,
+                "type":i['type'],
+                "buyID":i['buyID']
+            }
+            serializer=basketSerializer(data=new_data)
+            if serializer.is_valid():
+                serializer.save()
+                ans.append(serializer.data)
+            else:
+                return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+        return Response(ans,status=status.HTTP_200_OK)
     def delete(self,request):
-        id=request.data['id']
-        basket.objects.get(id=id).delete()
+        for i in request.data:
+
+            id=i['id']
+            bas=get_object_or_404(basket,id=id)
+            bas.delete()
         return Response(status=status.HTTP_200_OK)
