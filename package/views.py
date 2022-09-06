@@ -29,7 +29,6 @@ from .serializers import *
 import copy
 
 class normalPackageView(APIView):
-    permission_classes=[IsAuthenticated]
     def get(self, request):
         normalPackageList = normalPackage.objects.all()
         serializer = normalPackageSerializer(normalPackageList, many=True)
@@ -96,7 +95,6 @@ class normalPackageCourseView(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 class timingPackageView(APIView):
-    permission_classes=[IsAuthenticated]
     def get(self, request):
         timingPackageList = timingPackage.objects.all()
         serializer = timingPackageSerializer(timingPackageList, many=True)
@@ -126,7 +124,6 @@ class timingPackageView(APIView):
        
 
 class timingPackageCourseView(APIView):
-    permission_classes=[IsAuthenticated]
     def get(self, request):
         p_id=request.query_params.get('p_id')
         timingPackageCourseList = timingPackageCourse.objects.filter(packageID=p_id)
@@ -167,7 +164,6 @@ class timingPackageCourseView(APIView):
 
 
 class studentPackageView(APIView):
-    permission_classes=[IsAuthenticated]
     def get(self, request):
         s_id=request.query_params.get('s_id')
         studentPackageList = studentPackage.objects.filter(student=s_id)
