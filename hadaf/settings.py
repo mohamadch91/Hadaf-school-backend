@@ -87,6 +87,7 @@ INSTALLED_APPS = [
     'discount',
     'package',
     'sms',
+    'live',
     'dashboard',
     'zarinpal',
     'corsheaders',
