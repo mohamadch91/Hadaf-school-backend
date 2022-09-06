@@ -55,7 +55,6 @@ class normalPackageView(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)    
 
 class normalPackageCourseView(APIView):
-    permission_classes=[IsAuthenticated]
     def get(self, request):
         p_id=request.query_params.get('p_id')
         normalPackageCourseList = normalPackageCourse.objects.filter(packageID=p_id)
