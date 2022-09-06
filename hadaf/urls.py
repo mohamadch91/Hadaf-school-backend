@@ -34,6 +34,7 @@ urlpatterns = [
     path('dashboard/',include('dashboard.urls')),
     path('zarinpal/',include('zarinpal.urls')),
     path('package/',include('package.urls')),
+    path('live/',include('live.urls')),
 
 
 
