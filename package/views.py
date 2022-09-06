@@ -164,6 +164,7 @@ class timingPackageCourseView(APIView):
 
 
 class studentPackageView(APIView):
+    permission_classes=[IsAuthenticated]
     def get(self, request):
         s_id=request.query_params.get('s_id')
         studentPackageList = studentPackage.objects.filter(student=s_id)
