@@ -86,6 +86,7 @@ class basketView(APIView):
                     "id":x.id,
                     "name":normal.name,
                     "percent":normal.percent,
+                    "buy_id":normal.id,
                     "type":x.type
                 })
             elif x.type=='timing':
@@ -95,6 +96,7 @@ class basketView(APIView):
                     "name":timing.name,
                     "percent":timing.percent,
                     "type":x.type,
+                    "buy_id":timing.id,
                     "asDate":timing.asDate,
                     "toDate":timing.toDate
                 })
@@ -103,6 +105,7 @@ class basketView(APIView):
                 ans.append({
                     "id":x.id,
                     "name":student.name,
+                    "buy_id":student.id,
                     "type":x.type
                 })
             elif x.type=='course':
@@ -110,6 +113,7 @@ class basketView(APIView):
                 ans.append({
                     "id":x.id,
                     "name":course.name,
+                    "buy_id":course.id,
                     "type":x.type
                 })
         return Response(ans,status.HTTP_200_OK)   
