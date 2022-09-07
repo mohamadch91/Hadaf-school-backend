@@ -185,7 +185,7 @@ CORS_ALLOWED_ORIGINS = [
 # CSRF_TRUSTED_ORIGINS = [
 #     'www.test-cors.org',
 # ]
-
+#  saalaaam
 lo = True
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': [
