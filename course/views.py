@@ -97,7 +97,8 @@ class courseView(APIView):
             if(page):
                 page=int(page)-1
                 courses=courses[page*9:page*9+9]
-                
+            if(courses.count()==0):
+                return Response(status.HTTP_404_NOT_FOUND)    
             ser = courseSerializer(courses, many=True)
             new_data=copy.deepcopy(ser.data)
             for i in new_data:
