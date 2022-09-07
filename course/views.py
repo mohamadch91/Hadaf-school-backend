@@ -98,7 +98,7 @@ class courseView(APIView):
                 page=int(page)-1
                 courses=courses[page*9:page*9+9]
                 
-            ser = courseSerializer(Course.objects.all(), many=True)
+            ser = courseSerializer(courses, many=True)
             new_data=copy.deepcopy(ser.data)
             for i in new_data:
                 course=get_object_or_404(Course,id=i["id"])
