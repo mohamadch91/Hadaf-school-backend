@@ -427,3 +427,15 @@ class specificCoourseSes(APIView):
         return Response(ans,status.HTTP_200_OK)    
 
 
+class teacherStudensView(APIView):
+    permission_classes=(IsAuthenticated,)
+    def get(self,request):
+        id=request.query_params.get('id',None)
+        if(id is None):
+            return Response('need query param',status.HTTP_400_BAD_REQUEST)
+        course=Course.objects.filter(teacherID=id)
+        ans=0
+        for x in course:
+            student_c=StudetCourse.objects.filter(courseID=x.id)
+            ans+=student_c.count()
+        return Response(ans,status.HTTP_200_OK)

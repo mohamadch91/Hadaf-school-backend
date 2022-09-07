@@ -13,6 +13,8 @@ urlpatterns = [
     path('specificstudentCourse/',specifiecStudentcourse.as_view(),name="student course"),
     path('block/',blockstudents.as_view(),name="student course"),
     path('courseStudent/',specificCoourseSes.as_view(),name="student course"),
+    path('teacherScount/',teacherStudensView.as_view(),name="student course"),
+
 
 
 
