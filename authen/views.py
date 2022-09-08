@@ -18,6 +18,8 @@ from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken, Ou
 from django.shortcuts import get_object_or_404
 from itertools import chain
 from course.models import *
+from dashboard.models import *
+from dashboard .serializers import *
 import copy
 class MyObtainTokenPairView(TokenObtainPairView):
     permission_classes = (AllowAny,)
@@ -232,6 +234,8 @@ class OTPViewRegister(APIView):
                 return Response("phone already exists",status=status.HTTP_400_BAD_REQUEST)
             except:    
                 user = Student.objects.create(phone=otp['receiver'] )
+                #create wallet for students
+                Wallet=wallet.objects.create(studentID=user,amount=0)
                 created = True
                 refresh = RefreshToken.for_user(user)
         elif(type=="teacher"):

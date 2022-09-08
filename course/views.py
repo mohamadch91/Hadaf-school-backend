@@ -17,6 +17,8 @@ from rest_framework import status
 from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken, OutstandingToken
 from django.shortcuts import get_object_or_404
 from .models import *
+from forum.models import *
+from forum.serializers import *
 import copy
 class courseView(APIView):
 
@@ -26,6 +28,16 @@ class courseView(APIView):
 
         if ser.is_valid():
             ser.save()
+            #create forum header for course
+            data={
+                "name":ser.data["name"],
+                "description":ser.data["description"],
+                "course_id":ser.data["id"],
+                "Userid":ser.data["teacherID"]
+            }
+            forum_header=ForumHeaderSeriliazer(data=data,many=False)
+            if(forum_header.is_valid()):
+                forum_header.save()
             return Response(ser.data,status=status.HTTP_201_CREATED)
         return Response(ser.errors,status=status.HTTP_400_BAD_REQUEST)
 
