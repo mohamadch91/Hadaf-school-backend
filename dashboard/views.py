@@ -140,3 +140,4 @@ class basketView(APIView):
             bas=get_object_or_404(basket,id=id)
             bas.delete()
         return Response(status=status.HTTP_200_OK)
+

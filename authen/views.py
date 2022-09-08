@@ -127,6 +127,8 @@ class UserListView(generics.ListAPIView):
     def get(self, request):
         type=request.query_params.get('type',None)
         id=request.query_params.get('id',None)
+        grade=request.query_params.get('grade',None)
+        department=request.query_params.get('department',None)
         if(type==None):
             students=Student.objects.values_list('pk',flat=True)
             teachers=Teacher.objects.values_list('pk',flat=True)
@@ -140,6 +142,10 @@ class UserListView(generics.ListAPIView):
             users=Student.objects.all()
             if(id is not None):
                 users=users.filter(pk=id)
+            if(grade is not None):
+                users=users.filter(grade=grade)
+            if(department is not None):
+                users=users.filter(department=department)
             ser=StudentSerializer(users,many=True)
             return Response(ser.data,status=status.HTTP_200_OK)
         if(type=='teacher'):
