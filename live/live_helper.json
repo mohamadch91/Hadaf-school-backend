@@ -1,1 +1,45 @@
 khopb salam baraye live
+
+baraye sakhte live baraye doree
+http://127.0.0.1:8000/live/create/
+ post
+ {
+"name" :"test 25",name esme darseee
+
+"id" :25 id ham idishe
+}
+barae join kardan be onvane ostad ya admin
+http://127.0.0.1:8000/live/join/
+
+{
+    "name": "test 25", name esme ostade
+    "id": 25 id ham idie darse
+}
+
+bare jppin kardan be onvane danesh amoz
+http://127.0.0.1:8000/live/student_join/
+
+{
+    "name": "test 25", name esme danesh amoze
+    "id": 25 id ham idie darse
+}
+
+
+post mizani
+baraye inkee 
+
+list kelas haye live ro dashte bashii
+
+http://127.0.0.1:8000/live/getmeetings
+
+response inam intorie
+
+[
+    {
+        "name": 25,
+        "id": 15,
+        "url": "https://live.iranbama.com/bigbluebutton/api/join?fullName=admin&meetingID=25&password=hadafadmin&redirect=true&checksum=8d8c71cc87cf1d074d18ab5037cfa81520a028ac"
+    }
+]
+link join baraye admine havaset bashe
+felan hamine

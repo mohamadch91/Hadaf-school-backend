@@ -1,0 +1,78 @@
+in barae liste sms hast
+http://127.0.0.1:8000/sms/list?start_time=2022-9-7&end_time=
+
+on sheklie
+[
+    {
+        "messageid": 418196088,
+        "message": "آموزشگاه هدف \nکد تایید شما : 8057619\nhadaf.academy",
+        "status": 10,
+        "statustext": "رسیده به گیرنده",
+        "sender": "1000551451",
+        "receptor": "09126196168",
+        "date": 1662613140,
+        "cost": 420
+    },
+    {
+        "messageid": 418193851,
+        "message": "salam",
+        "status": 5,
+        "statustext": "ارسال به مخابرات",
+        "sender": "100022200222",
+        "receptor": "09126196168",
+        "date": 1662612900,
+        "cost": 966
+    }]
+
+
+
+    baraye kharin ha
+
+    http://127.0.0.1:8000/sms/last
+
+
+    inam natijash:[]
+    [
+    {
+        "messageid": 418196088,
+        "message": "آموزشگاه هدف \nکد تایید شما : 8057619\nhadaf.academy",
+        "status": 10,
+        "statustext": "رسیده به گیرنده",
+        "sender": "1000551451",
+        "receptor": "09126196168",
+        "date": 1662613140,
+        "cost": 420
+    },
+    {
+        "messageid": 418193851,
+        "message": "salam",
+        "status": 5,
+        "statustext": "ارسال به مخابرات",
+        "sender": "100022200222",
+        "receptor": "09126196168",
+        "date": 1662612900,
+        "cost": 966
+    }]
+
+
+    be hame ferestadan
+    http://127.0.0.1:8000/sms/send_bulk
+
+    {
+	"receivers": ["989126196168"],
+"message" :"test"
+}
+inam natijash
+
+[
+    {
+        "messageid": 418223405,
+        "message": "test",
+        "status": 1,
+        "statustext": "در صف ارسال",
+        "sender": "0018018949161",
+        "receptor": "+989126196168",
+        "date": 1662616181,
+        "cost": 50000
+    }
+]
