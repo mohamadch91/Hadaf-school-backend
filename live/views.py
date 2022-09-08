@@ -43,3 +43,7 @@ class student_joinView(APIView):
         ans=student_join(request.data["name"],request.data["id"])
         return Response(ans,status.HTTP_200_OK)
 
+class getMeetings(APIView):
+    def get(self,request):
+        ans=getmeetings()
+        return Response(ans,status.HTTP_200_OK)
