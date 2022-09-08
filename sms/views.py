@@ -36,18 +36,15 @@ class smsList(APIView):
         start_time=request.query_params.get('start_time')
         end_time=request.query_params.get('end_time')
         x=sms_list(start_time,end_time)
-        print(x)
         return Response(x)
 class lastsms(APIView):
     permission_classes = (IsAuthenticated,)
     def get(self, request):
         x=last_sends()
-        print(x)
         return Response(x)
     
 class send_bulks(APIView):
     permission_classes = (IsAuthenticated,)
     def post(self, request):
         x=send_bulk(request.data["receivers"],request.data["message"])
-        print(x)
         return Response(x)
