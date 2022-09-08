@@ -7,6 +7,8 @@ urlpatterns = [
     path('admin',admindahsboardVIew.as_view(), name='course'),
     path('wallet',walletView.as_view(), name='course'),
     path('basket',basketView.as_view(), name='course'),
+    path('search',search.as_view(), name='course'),
+
 
 
 ]

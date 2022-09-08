@@ -141,3 +141,46 @@ class basketView(APIView):
             bas.delete()
         return Response(status=status.HTTP_200_OK)
 
+
+class search(APIView):
+    def get(self,request):
+        id=request.user.id
+        search=request.query_params.get('search','')
+        ans=[]
+        if search=='':
+            return Response(ans,status=status.HTTP_200_OK)
+        courses=Course.objects.filter(name__icontains=search)
+        for x in courses:
+            ans.append({
+                "id":x.id,
+                "name":x.name,
+                "price":x.price1,
+                "type":"course"
+            })
+        normal=normalPackage.objects.filter(name__icontains=search)
+        price=0
+        for x in normal:
+            price=0
+            np=normalPackageCourse.objects.filter(packageID=x.id)
+            for y in np:
+                price+=y.courseID.price1
+            ans.append({
+                "id":x.id,
+                "name":x.name,
+                "price":price,
+                "type":"normal"
+            })
+        timing=timingPackage.objects.filter(name__icontains=search)
+        for x in timing:
+            price=0
+            np=timingPackageCourse.objects.filter(packageID=x.id)
+            for y in np:
+                price+=y.courseID.price1
+            ans.append({
+                "id":x.id,
+                "name":x.name,
+                "price":price,
+                "type":"timing"
+            })
+      
+        return Response(ans,status=status.HTTP_200_OK)

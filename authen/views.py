@@ -17,6 +17,7 @@ from rest_framework import status
 from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken, OutstandingToken
 from django.shortcuts import get_object_or_404
 from itertools import chain
+from course.models import *
 import copy
 class MyObtainTokenPairView(TokenObtainPairView):
     permission_classes = (AllowAny,)
@@ -129,6 +130,7 @@ class UserListView(generics.ListAPIView):
         id=request.query_params.get('id',None)
         grade=request.query_params.get('grade',None)
         department=request.query_params.get('department',None)
+        course=request.query_params.get('course',None)
         if(type==None):
             students=Student.objects.values_list('pk',flat=True)
             teachers=Teacher.objects.values_list('pk',flat=True)
@@ -146,6 +148,9 @@ class UserListView(generics.ListAPIView):
                 users=users.filter(grade=grade)
             if(department is not None):
                 users=users.filter(department=department)
+            if(course is not None):
+                s_c=StudetCourse.objects.filter(courseID=course)
+                users=users.filter(pk__in=s_c.values_list('studentID',flat=True))
             ser=StudentSerializer(users,many=True)
             return Response(ser.data,status=status.HTTP_200_OK)
         if(type=='teacher'):
