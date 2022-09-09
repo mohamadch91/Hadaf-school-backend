@@ -1,5 +1,4 @@
 from queue import Empty
-from tkinter import N
  
 from urllib import request
 from django.shortcuts import render
