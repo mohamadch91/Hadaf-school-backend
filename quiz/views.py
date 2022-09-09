@@ -194,3 +194,127 @@ class studentResult(APIView):
             return Response({'correct_count':correct_count,'q_count':q_count},status.HTTP_200_OK)
         else:
             return Response('need query param',status.HTTP_400_BAD_REQUEST)
+
+class totalquizHeaderView(APIView):
+    def get(self,request):
+        totals=totalquizHeader.objects.all()
+        ser=totalquizHeaderSerializer(totals,many=True)
+        return Response(ser.data,status.HTTP_200_OK)
+    def post(self,request):
+        ser=totalquizHeaderSerializer(data=request.data)
+        if ser.is_valid():
+            ser.save()
+            return Response(ser.data,status.HTTP_201_CREATED)
+        return Response(ser.errors,status.HTTP_400_BAD_REQUEST)
+    def put(self,request):
+        id=request.data['id']
+        total=get_object_or_404(totalquizHeader,id=id)
+        ser=totalquizHeaderSerializer(total,data=request.data)
+        if ser.is_valid():
+            ser.save()
+            return Response(ser.data,status.HTTP_201_CREATED)
+        return Response(ser.errors,status.HTTP_400_BAD_REQUEST)
+    def delete(self,request):
+        id=request.data['id']
+        total=get_object_or_404(totalquizHeader,id=id)
+        total.delete()
+        return Response(status.HTTP_201_CREATED)
+
+
+class totalquizSubjectsView(APIView):
+    def get(self,request):
+        h_id=request.query_params.get('h_id',None)
+        if h_id is not None:
+            total=get_object_or_404(totalquizHeader,id=h_id)
+            subjects=totalquizSubjects.objects.filter(quizheader=total)
+            ser=totalquizSubjectsSerializer(subjects,many=True)
+            return Response(ser.data,status.HTTP_200_OK)
+        else:
+            return Response('need query param',status.HTTP_400_BAD_REQUEST)
+    def post(self,request):
+        ser=totalquizSubjectsSerializer(data=request.data)
+        if ser.is_valid():
+            ser.save()
+            return Response(ser.data,status.HTTP_201_CREATED)
+        return Response(ser.errors,status.HTTP_400_BAD_REQUEST)
+    def put(self,request):
+        id=request.data['id']
+        total=get_object_or_404(totalquizSubjects,id=id)
+        ser=totalquizSubjectsSerializer(total,data=request.data)
+        if ser.is_valid():
+            ser.save()
+            return Response(ser.data,status.HTTP_201_CREATED)
+        return Response(ser.errors,status.HTTP_400_BAD_REQUEST)
+    def delete(self,request):
+        id=request.data['id']
+        total=get_object_or_404(totalquizSubjects,id=id)
+        total.delete()
+        return Response(status.HTTP_201_CREATED)
+
+class totalquizQuestionsView(APIView):
+        def get(self,request):
+            h_id=request.query_params.get('h_id',None)
+            s_id=request.query_params.get('s_id',None)
+            if h_id is not None and s_id is not None:
+                total=get_object_or_404(totalquizHeader,id=h_id)
+                subject=get_object_or_404(totalquizSubjects,id=s_id)
+                questions=totalquizQuestion.objects.filter(header_id=total,subject=subject)
+                ser=totalquizQuestionSerializer(questions,many=True)
+                return Response(ser.data,status.HTTP_200_OK)
+            else:
+                return Response('need query param',status.HTTP_400_BAD_REQUEST)
+        def post(self,request):
+            for i in request.data:
+                ser=totalquizQuestionSerializer(data=i)
+                if ser.is_valid():
+                    ser.save()
+                else:
+                    return Response(ser.errors,status.HTTP_400_BAD_REQUEST)
+            return Response(status.HTTP_201_CREATED)
+        def put(self,request):
+            id=request.data['id']
+            total=get_object_or_404(totalquizQuestion,id=id)
+            ser=totalquizQuestionSerializer(total,data=request.data)
+            if ser.is_valid():
+                ser.save()
+                return Response(ser.data,status.HTTP_201_CREATED)
+            return Response(ser.errors,status.HTTP_400_BAD_REQUEST)
+        def delete(self,request):
+            for i in request.data:
+                id=i['id']
+                total=get_object_or_404(totalquizQuestion,id=id)
+                total.delete()
+
+class totalstudentQueezView(APIView):
+    def get(self,request):
+        s_id=request.query_params.get('s_id',None)
+        h_id=request.query_params.get('h_id',None)
+        if s_id is not None and h_id is not None:
+            student=get_object_or_404(Student,pk=s_id)
+            quizHeaders=get_object_or_404(totalquizHeader,id=h_id)
+            studentQueezs=totalstudentQueez.objects.filter(student=student,quizheader=quizHeaders)
+            ser=totalstudentQueezSerializer(studentQueezs,many=True)
+            return Response(ser.data,status.HTTP_200_OK)
+        else:
+            return Response('need query param',status.HTTP_400_BAD_REQUEST)
+    def post(self,request):
+        for i in request.data:
+            ser=totalstudentQueezSerializer(data=i)
+            if ser.is_valid():
+                ser.save()
+            else:
+                return Response(ser.errors,status.HTTP_400_BAD_REQUEST)
+        return Response(status.HTTP_201_CREATED)
+    def put(self,request):
+        id=request.data['id']
+        total=get_object_or_404(totalstudentQueez,id=id)
+        ser=totalstudentQueezSerializer(total,data=request.data)
+        if ser.is_valid():
+            ser.save()
+            return Response(ser.data,status.HTTP_201_CREATED)
+        return Response(ser.errors,status.HTTP_400_BAD_REQUEST)
+    def delete(self,request):
+        id=request.data['id']
+        total=get_object_or_404(totalstudentQueez,id=id)
+        total.delete()
+        return Response(status.HTTP_201_CREATED)

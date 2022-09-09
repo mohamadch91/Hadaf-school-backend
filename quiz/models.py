@@ -49,7 +49,7 @@ class totalquizHeader(models.Model):
 class totalquizSubjects(models.Model):
     id=models.AutoField(primary_key=True)
     quizheader=models.ForeignKey(totalquizHeader,on_delete=models.CASCADE,blank=True,null=True)
-    subject=models.ForeignKey(Course,on_delete=models.CASCADE,blank=True,null=True)
+    subject=models.CharField(max_length=50,blank=True,null=True)
     ratio=models.IntegerField(blank=True,null=True,default=0)
     created_at=models.DateTimeField(auto_now_add=True,null=True)    ########
     updated_at=models.DateTimeField(auto_now=True,null=True)
