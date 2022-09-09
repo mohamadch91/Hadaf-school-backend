@@ -177,3 +177,20 @@ class studentQueezView(APIView):
         archiveFiles= get_object_or_404(studentQueez, id=id)
         archiveFiles.delete()
         return Response(status=status.HTTP_201_CREATED)
+
+class studentResult(APIView):
+    def get(self,request):
+        s_id=request.query_params.get('s_id',None)
+        h_id=request.query_params.get('h_id',None)
+        if s_id is not None and h_id is not None:
+            student=get_object_or_404(Student,pk=s_id)
+            quizHeaders=get_object_or_404(quizHeader,id=h_id)
+            studentQueezs=studentQueez.objects.filter(student=student,quizheader=quizHeaders)
+            q_count=quizHeaders.question_count
+            correct_count=0
+            for i in studentQueezs:
+                if i.result==i.question.result:
+                    correct_count+=1
+            return Response({'correct_count':correct_count,'q_count':q_count},status.HTTP_200_OK)
+        else:
+            return Response('need query param',status.HTTP_400_BAD_REQUEST)

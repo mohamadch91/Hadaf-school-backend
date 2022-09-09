@@ -5,7 +5,7 @@ from django.shortcuts import redirect
 import requests
 import json
 
-MERCHANT = '9970d044-dbbd-11e6-9a51-005056a205be'
+MERCHANT = '18cd0405-b44b-4c21-858b-c834f7a035f8'
 ZP_API_REQUEST = "https://api.zarinpal.com/pg/v4/payment/request.json"
 ZP_API_VERIFY = "https://api.zarinpal.com/pg/v4/payment/verify.json"
 ZP_API_STARTPAY = "https://www.zarinpal.com/pg/StartPay/{authority}"
@@ -23,7 +23,7 @@ def send_request(request):
         "amount": amount,
         "callback_url": CallbackURL,
         "description": description,
-        "metadata": {"mobile": mobile, "email": email}
+        
     }
     req_header = {"accept": "application/json",
                   "content-type": "application/json'"}
