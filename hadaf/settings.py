@@ -179,7 +179,7 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOWED_ORIGINS = [
-    "https://www.test-cors.org",'http://localhost:3000','http://212.33.202.49','http://212.33.202.49:3000','http://212.33.202.49:3001'
+    "https://www.test-cors.org",'http://localhost:3000','http://212.33.202.49','http://212.33.202.49:3000','http://212.33.202.49:3001','https://srvschool.ir','https://adm.srvschool.ir'
 ]
 
 # CSRF_TRUSTED_ORIGINS = [
