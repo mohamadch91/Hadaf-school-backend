@@ -115,6 +115,8 @@ class studentQueezView(APIView):
             if ser.is_valid():
                 ser.save()
                 ans.append(ser.data)
+            else:
+                return Response(ser. errors, status=status.HTTP_400_BAD_REQUEST)
         return Response(ans, status=status.HTTP_200_OK)
     
     def put(self, request):
