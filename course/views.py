@@ -1,4 +1,5 @@
 from queue import Empty
+from tkinter import N
  
 from urllib import request
 from django.shortcuts import render
@@ -429,11 +430,14 @@ class specificCoourseSes(APIView):
         students=StudetCourse.objects.filter(courseID=id)
         ans=[]
         for x in students:
+            grade=""
+            if(x.studentID.grade is not None):
+                grade=x.studentID.grade.name
             data={
                 'name':x.studentID.username,
                 'phone':x.studentID.phone,
                 'l_name':x.studentID.last_name,
-                'grade':x.studentID.grade.name
+                'grade':grade
             }
             ans.append(data)
         return Response(ans,status.HTTP_200_OK)    
