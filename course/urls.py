@@ -14,6 +14,8 @@ urlpatterns = [
     path('block/',blockstudents.as_view(),name="student course"),
     path('courseStudent/',specificCoourseSes.as_view(),name="student course"),
     path('teacherScount/',teacherStudensView.as_view(),name="student course"),
+    path('bulkimport/',bulkstudentView.as_view(),name="student course"),
+
 
 
 

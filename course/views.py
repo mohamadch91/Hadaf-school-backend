@@ -451,3 +451,25 @@ class teacherStudensView(APIView):
             student_c=StudetCourse.objects.filter(courseID=x.id)
             ans+=student_c.count()
         return Response(ans,status.HTTP_200_OK)
+
+
+class bulkstudentView(APIView):
+    def post(self,request):
+        ans=[]
+        course=request.data['course']
+        for i in request.data['students']:
+           studnet=get_object_or_404(Student,phone=i) 
+           block=BlocedStudent.objects.filter(studentID=studnet.pk,courseID=course)
+        if(block.count()!=0):
+            return Response('student is blocked', status=status.HTTP_400_BAD_REQUEST)
+        datas={
+            "studentID":studnet.pk,
+            "courseID":course
+        }    
+        ser = studentCourseSerializer(data=datas)
+        if ser.is_valid():
+            ser.save()
+            ans.append(ser.data)
+        else:
+            return Response(ser.errors,status=status.HTTP_400_BAD_REQUEST)
+        return Response(ans,status=status.HTTP_201_CREATED)
