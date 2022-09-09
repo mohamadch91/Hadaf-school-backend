@@ -35,6 +35,7 @@ urlpatterns = [
     path('zarinpal/',include('zarinpal.urls')),
     path('package/',include('package.urls')),
     path('live/',include('live.urls')),
+    path('notification/',include('notification.urls')),
 
 
 

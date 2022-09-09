@@ -90,6 +90,7 @@ INSTALLED_APPS = [
     'live',
     'dashboard',
     'zarinpal',
+    'notification',
     'corsheaders',
     'rest_framework_simplejwt.token_blacklist',
     
