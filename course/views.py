@@ -433,7 +433,7 @@ class specificCoourseSes(APIView):
                 'name':x.studentID.username,
                 'phone':x.studentID.phone,
                 'l_name':x.studentID.last_name,
-                'grade':x.studentID.grade
+                'grade':x.studentID.grade.name
             }
             ans.append(data)
         return Response(ans,status.HTTP_200_OK)    
