@@ -43,7 +43,9 @@ class totalquizHeader(models.Model):
     description=models.TextField(max_length=250,blank=True,null=True)
     quizTime=models.IntegerField( blank=True,null=True,default=0)
     question_count=models.IntegerField(blank=True,null=True,default=5)
-    created_at=models.DateTimeField(auto_now_add=True,null=True)    ########
+    created_at=models.DateTimeField(auto_now_add=True,null=True) 
+    start_data=models.DateTimeField(blank=True,null=True)
+    end_data=models.DateTimeField(blank=True,null=True)   ########
     updated_at=models.DateTimeField(auto_now=True,null=True)
 
 class totalquizSubjects(models.Model):
