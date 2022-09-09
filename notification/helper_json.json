@@ -1,0 +1,101 @@
+http://127.0.0.1:8000/notification/
+
+in getesh]
+
+
+[
+    {
+        "id": 1,
+        "title": "salaam",
+        "description": "khabareee",
+        "created_at": "2022-09-09T19:21:39.881132Z",
+        "updated_at": "2022-09-09T19:21:39.881172Z"
+    },
+    {
+        "id": 2,
+        "title": "asdad",
+        "description": "adsdada",
+        "created_at": "2022-09-09T19:21:45.930929Z",
+        "updated_at": "2022-09-09T19:21:45.930969Z"
+    }
+]
+
+
+in postesh:
+
+{
+        "title": "salaam",
+        "description": "khabareee"
+  
+    }
+
+    in putesh
+
+    {
+        "id": 2,
+        "title": "asdad",
+        "description": "adsdada"
+        
+    }
+    in delete
+
+    {
+        "id": 2
+        
+        
+    }
+
+    in barayeee ine ke ye notification besaziii 
+
+    http://127.0.0.1:8000/notification/student/
+    in kolle danesh amozaro mide
+
+[
+    {
+        "id": 1,
+        "title": "salaam",
+        "description": "khabareee",
+        "student": 5
+    },
+    {
+        "id": 2,
+        "title": "salaam",
+        "description": "khabareee",
+        "student": 2
+    }
+]
+
+http://127.0.0.1:8000/notification/student/?s_id=2
+in baraye ye daneshamozo midee hmoni ke moghe login mikhay
+
+[
+    {
+        "id": 2,
+        "title": "salaam",
+        "description": "khabareee",
+        "student": 2
+    }
+]
+in geete
+in posteshe
+{
+"notification" : 1,
+"students" : [2,5]
+}
+hala che yedone bedi che 10 ta students id danesh amoozaro migire
+
+in putesh
+{
+        "id": 3,
+        "title": "salaam",
+        "description": "adawadw",
+        "student": 2
+    }
+
+    inam deltesh
+     {
+        "s_id": 5
+      
+    }
+
+    notif haye ye student ro kamel pak mikone
