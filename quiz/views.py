@@ -266,6 +266,11 @@ class totalquizQuestionsView(APIView):
                 questions=totalquizQuestion.objects.filter(header_id=total,subject=subject)
                 ser=totalquizQuestionSerializer(questions,many=True)
                 return Response(ser.data,status.HTTP_200_OK)
+            elif h_id is not None:
+                total=get_object_or_404(totalquizHeader,id=h_id)
+                questions=totalquizQuestion.objects.filter(header_id=total)
+                ser=totalquizQuestionSerializer(questions,many=True)
+                return Response(ser.data,status.HTTP_200_OK)
             else:
                 return Response('need query param',status.HTTP_400_BAD_REQUEST)
         def post(self,request):
