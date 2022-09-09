@@ -285,10 +285,10 @@ class totalquizQuestionsView(APIView):
                 return Response(ser.data,status.HTTP_201_CREATED)
             return Response(ser.errors,status.HTTP_400_BAD_REQUEST)
         def delete(self,request):
-            for i in request.data:
-                id=i['id']
-                total=get_object_or_404(totalquizQuestion,id=id)
-                total.delete()
+            id=request.data['id']
+            total=get_object_or_404(totalquizQuestion,id=id)
+            total.delete()
+            return Response(status.HTTP_204_NO_CONTENT)
 
 class totalstudentQueezView(APIView):
     def get(self,request):
