@@ -197,6 +197,11 @@ class studentResult(APIView):
 
 class totalquizHeaderView(APIView):
     def get(self,request):
+        id=request.query_params.get('id',None)
+        if(id is not None ):
+            totals=get_object_or_404(totalquizHeader,id=id)
+            ser=totalquizHeaderSerializer(totals,many=False)
+            return Response(ser.data,status.HTTP_200_OK)
         totals=totalquizHeader.objects.all()
         ser=totalquizHeaderSerializer(totals,many=True)
         return Response(ser.data,status.HTTP_200_OK)
