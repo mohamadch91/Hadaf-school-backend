@@ -183,9 +183,9 @@ CORS_ALLOWED_ORIGINS = [
     "https://www.test-cors.org",'http://localhost:3000','http://212.33.202.49','http://212.33.202.49:3000','http://212.33.202.49:3001','https://srvschool.ir','https://adm.srvschool.ir'
 ]
 
-# CSRF_TRUSTED_ORIGINS = [
-#     'www.test-cors.org',
-# ]
+CSRF_TRUSTED_ORIGINS = [
+   'https://api.srvschool.ir'
+]
 #  saalaaam
 lo = True
 REST_FRAMEWORK = {
