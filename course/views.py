@@ -381,7 +381,10 @@ class specifiecStudentcourse(APIView):
         student=get_object_or_404(Student,pk=id)
         courses=StudetCourse.objects.filter(studentID=student.pk)
         ser=studentCourseSerializer(courses,many=True)
-        return Response(ser.data,status=status.HTTP_200_OK)
+        new_data=copy.deepcopy(ser.data)
+        for i in new_data:
+            i["course_name"]=Course.objects.get(id=i["courseID"]).name
+        return Response(new_data,status=status.HTTP_200_OK)
         
 class blockstudents(APIView):
     permission_classes=(IsAuthenticated,)
