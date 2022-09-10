@@ -13,3 +13,9 @@ class studentNotificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = studentNotification
         fields = '__all__'
+
+class studentNotificationReadSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = studentNotificationRead
+        fields = '__all__'
+        

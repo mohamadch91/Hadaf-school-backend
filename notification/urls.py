@@ -5,4 +5,5 @@ from .views import *
 urlpatterns = [
     path('',notificationView.as_view(), name='notification'),
     path('student/',studentNotificationView.as_view(), name='studentNotification'),
+    path('read/',readedView.as_view(), name='studentNotificationRead'),
 ]

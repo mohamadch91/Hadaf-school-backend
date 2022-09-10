@@ -1,0 +1,23 @@
+http://127.0.0.1:8000/notification/read/
+in amar bazdidee
+khali bezanii hamaro midee
+
+[
+    {
+        "id": 1,
+        "title": "asdad",
+        "description": "adsdada",
+        "student": 9,
+        "readed": "2022-09-10T01:59:57.149782Z"
+    }
+]
+
+http://127.0.0.1:8000/notification/read/?s_id=9
+male ye danesh amozz
+
+http://127.0.0.1:8000/notification/read/?n_id=2
+male ye notif khasss
+
+
+http://127.0.0.1:8000/notification/read/?n_id=2&s_id=9
+ye danesh amozo ye notif khasss

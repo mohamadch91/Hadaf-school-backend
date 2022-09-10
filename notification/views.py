@@ -106,5 +106,72 @@ class studentNotificationView(APIView):
         s_id=request.data['s_id']
         s_not=studentNotification.objects.filter(student=s_id)
         for i in s_not:
+            data={
+                "notification":i.notification.id,
+                "student":i.student.pk
+            }
+            serializer = studentNotificationReadSerializer( data=data)
+            if serializer.is_valid():
+                serializer.save()
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                
             i.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+class readedView(APIView):
+    def get(self,request):
+        s_id=request.query_params.get('s_id',None)
+        n_id=request.query_params.get('n_id',None)
+        if s_id and n_id:
+            ans=[]
+            s_not=studentNotificationRead.objects.filter(student=s_id,notification=n_id)
+            for x in s_not:
+                data={
+                    'id':x.id,
+                    'title':x.notification.title,
+                    'description':x.notification.description,
+                    'student':x.student.pk,
+                    'readed':x.created_at
+                }
+                ans.append(data)
+            return Response(ans)
+        elif s_id:
+            ans=[]
+            s_not=studentNotificationRead.objects.filter(student=s_id)
+            for x in s_not:
+                data={
+                    'id':x.id,
+                    'title':x.notification.title,
+                    'description':x.notification.description,
+                    'student':x.student.pk,
+                    'readed':x.created_at
+                }
+                ans.append(data)
+            return Response(ans)
+        elif n_id:
+            ans=[]
+            s_not=studentNotificationRead.objects.filter(notification=n_id)
+            for x in s_not:
+                data={
+                    'id':x.id,
+                    'title':x.notification.title,
+                    'description':x.notification.description,
+                    'student':x.student.pk,
+                    'readed':x.created_at
+                }
+                ans.append(data)
+            return Response(ans)
+        else:
+            s_not=studentNotificationRead.objects.all()
+            ans=[]
+            for x in s_not:
+                data={
+                    'id':x.id,
+                    'title':x.notification.title,
+                    'description':x.notification.description,
+                    'student':x.student.pk,
+                    'readed':x.created_at
+                }
+                ans.append(data)
+            return Response(ans)

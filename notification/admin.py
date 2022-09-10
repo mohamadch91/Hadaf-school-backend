@@ -4,3 +4,4 @@ from django.contrib import admin
 from .models import *
 admin.site.register(notification)
 admin.site.register(studentNotification)
+admin.site.register(studentNotificationRead)
