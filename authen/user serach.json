@@ -1,0 +1,9 @@
+ first_name=request.query_params.get('first_name',None)
+        last_name=request.query_params.get('last_name',None)
+        phone=request.query_params.get('phone',None)
+
+
+
+        filter haye jadid baraye user ha
+
+        string ha filteran

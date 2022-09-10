@@ -157,7 +157,13 @@ class search(APIView):
         ans=[]
         if search=='':
             return Response(ans,status=status.HTTP_200_OK)
-        courses=Course.objects.filter(name__icontains=search)
+        courses=Course.objects.filter(name__icontains=search,showforstudents=True,active=True)
+        courses=Course.objects.filter(lessonID__name__icontains=search,showforstudents=True,active=True)|courses
+        courses=Course.objects.filter(lessonID__description__icontains=search,showforstudents=True,active=True)|courses
+        courses=Course.objects.filter(departmentID__name__icontains=search,showforstudents=True,active=True)|courses
+        courses=Course.objects.filter(departmentID__description__icontains=search,showforstudents=True,active=True)|courses
+        courses=Course.objects.filter(teacherID__last_name__icontains=search,showforstudents=True,active=True)|courses
+        
         for x in courses:
             ans.append({
                 "id":x.id,

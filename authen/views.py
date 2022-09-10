@@ -133,6 +133,9 @@ class UserListView(generics.ListAPIView):
         grade=request.query_params.get('grade',None)
         department=request.query_params.get('department',None)
         course=request.query_params.get('course',None)
+        first_name=request.query_params.get('first_name',None)
+        last_name=request.query_params.get('last_name',None)
+        phone=request.query_params.get('phone',None)
         if(type==None):
             students=Student.objects.values_list('pk',flat=True)
             teachers=Teacher.objects.values_list('pk',flat=True)
@@ -140,6 +143,13 @@ class UserListView(generics.ListAPIView):
             users=User.objects.exclude(pk__in=all)
             if(id is not None):
                 users=users.filter(pk=id)
+            if(first_name is not None):
+                users=users.filter(first_name=first_name)
+            if(last_name is not None):
+                users=users.filter(last_name=last_name)
+            if(phone is not None):
+                users=users.filter(phone=phone)
+            
             ser=UserSerializer(users,many=True)
             return Response(ser.data,status=status.HTTP_200_OK)
         if(type=='student'):
@@ -153,12 +163,25 @@ class UserListView(generics.ListAPIView):
             if(course is not None):
                 s_c=StudetCourse.objects.filter(courseID=course)
                 users=users.filter(pk__in=s_c.values_list('studentID',flat=True))
+            if(first_name is not None):
+                users=users.filter(first_name=first_name)
+            if(last_name is not None):
+                users=users.filter(last_name=last_name)
+            if(phone is not None):
+                users=users.filter(phone=phone)
+            
             ser=StudentSerializer(users,many=True)
             return Response(ser.data,status=status.HTTP_200_OK)
         if(type=='teacher'):
             users=Teacher.objects.all()
             if(id is not None):
                 users=users.filter(pk=id)
+            if(first_name is not None):
+                users=users.filter(first_name=first_name)
+            if(last_name is not None):
+                users=users.filter(last_name=last_name)
+            if(phone is not None):
+                users=users.filter(phone=phone)
             ser=TeacherSerializer(users,many=True)
             return Response(ser.data,status=status.HTTP_200_OK)
 

@@ -1,0 +1,8 @@
+http://127.0.0.1:8000/dashboard/wallet
+
+baraye add kardan pool be ye danesh amooz intori req bezan az admin panel in bayad ezaf she
+
+ {
+   "studentID": 4,
+   "amount": 5000
+ }
