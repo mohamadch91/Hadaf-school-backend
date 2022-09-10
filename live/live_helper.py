@@ -11,7 +11,7 @@ from lxml.etree import fromstring, tostring
 def create(name,id):
     id=str(id+10)
     name=name.replace(" ","_")
-    voice_bridge=str(id)+10000
+    voice_bridge=str(id+10000)
     create_query='allowStartStopRecording=true&attendeePW=hadafuser&autoStartRecording=false&meetingID='+id+'&moderatorPW=hadafadmin&name='+name+'&record=true&voiceBridge='+voice_bridge+'&welcome=welcome'
     string='create'+create_query+SECRET_KEY
     result = hashlib.sha1(string.encode())
