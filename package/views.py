@@ -54,7 +54,7 @@ class normalPackageView(APIView):
             normalPackageList.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)    
 
-class normalPackageCourseView(APIView):
+class  normalPackageCourseView(APIView):
     def get(self, request):
         p_id=request.query_params.get('p_id')
         normalPackageCourseList = normalPackageCourse.objects.filter(packageID=p_id)
@@ -69,12 +69,17 @@ class normalPackageCourseView(APIView):
     def post(self, request):
         ans=[]
         for i in request.data:
-            serializer = normalPackageCourseSerializer(data=i)
-            if serializer.is_valid():
-                serializer.save()
-                ans.append(serializer.data)
+            #check course is exist in   package
+            courseID=i['courseID']
+            packageID=i['packageID']
+            if normalPackageCourse.objects.filter(courseID=courseID,packageID=packageID).exists():
+                ans.append("course is exist in package")
             else:
-                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                serializer = normalPackageCourseSerializer(data=i)
+                if serializer.is_valid():
+                    serializer.save()
+                else:
+                    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         return Response(ans, status=status.HTTP_201_CREATED)
     def put(self, request):
         for  i in request.data:
@@ -137,12 +142,18 @@ class timingPackageCourseView(APIView):
     def post(self, request):
         ans=[]
         for i in request.data:
-            serializer = timingPackageCourseSerializer(data=i)
-            if serializer.is_valid():
-                serializer.save()
-                ans.append(serializer.data)
+            #check course is exist in   package
+            courseID=i['courseID']
+            packageID=i['packageID']
+            if timingPackageCourse.objects.filter(courseID=courseID,packageID=packageID).exists():
+                ans.append("course is exist in package")
             else:
-                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                serializer = timingPackageCourseSerializer(data=i)
+                if serializer.is_valid():
+                    serializer.save()
+                    ans.append(serializer.data)
+                else:
+                    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         return Response(ans, status=status.HTTP_201_CREATED)
     def put(self, request):
         for  i in request.data:
@@ -215,13 +226,19 @@ class studentPackageCourseView(APIView):
     def post(self, request):
         ans=[]
         for i in request.data:
-            serializer = studentPackageCourseSerializer(data=i)
-            if serializer.is_valid():
-                serializer.save()
-                ans.append(serializer.data)
-
+            #check course is exist in   package
+            courseID=i['courseID']
+            packageID=i['packageID']
+            if studentPackageCourse.objects.filter(courseID=courseID,packageID=packageID).exists():
+                ans.append("course is exist in package")
             else:
-                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                serializer = studentPackageCourseSerializer(data=i)
+                if serializer.is_valid():
+                    serializer.save()
+                    ans.append(serializer.data)
+                else:
+                    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
         return Response(ans, status=status.HTTP_201_CREATED)
     def put(self, request):
         for  i in request.data:
