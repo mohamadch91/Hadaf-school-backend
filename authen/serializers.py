@@ -22,8 +22,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 class TeacherSerializer(serializers.ModelSerializer):
     class Meta:
         model = Teacher
-        fields = ['pk','phone','password','birth','national_code','role','first_name','last_name','created_at','updated_at','picture']
-        extra_kwargs = {'password': {'write_only': True}}
+        fields = ['pk','phone','birth','national_code','role','first_name','last_name','created_at','updated_at','picture']
     def validate_password(self, value: str) -> str:
         """
         Hash value passed by user.
@@ -35,8 +34,7 @@ class TeacherSerializer(serializers.ModelSerializer):
 class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
-        fields = ['pk','phone','grade','department','birth','password','national_code','role','first_name','last_name','created_at','updated_at','picture','gpaverage','disipcline','school','parentName','parentNationalCode','pbirthday','peducation','pjob','address']
-        extra_kwargs = {'password': {'write_only': True}}
+        fields = ['pk','phone','grade','department','birth','national_code','role','first_name','last_name','created_at','updated_at','picture','gpaverage','disipcline','school','parentName','parentNationalCode','pbirthday','peducation','pjob','address']
     def validate_password(self, value: str) -> str:
         """
         Hash value passed by user.
@@ -49,22 +47,20 @@ class StudentSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['pk','phone','password','birth','national_code','role','first_name','last_name','created_at','updated_at','picture']                
-        extra_kwargs = {'password': {'write_only': True}}
-    def validate_password(self, value: str) -> str:
-        """
-        Hash value passed by user.
+        fields = ['pk','phone','birth','national_code','role','first_name','last_name','created_at','updated_at','picture']                
+    # def validate_password(self, value: str) -> str:
+    #     """
+    #     Hash value passed by user.
 
-        :param value: password of a user
-        :return: a hashed version of the password
-        """
-        return make_password(value)   
+    #     :param value: password of a user
+    #     :return: a hashed version of the password
+    #     """
+    #     return make_password(value)   
 # Register Serializer
 class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = '__all__'
-        extra_kwargs = {'password': {'write_only': True}}
         
 class StudentRegisterSerializer(serializers.ModelSerializer):
     class Meta:

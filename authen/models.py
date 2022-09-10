@@ -47,9 +47,10 @@ class CustomUserManager(BaseUserManager):
 
 class User(AbstractUser):
     username = None
+    password =None
     phone = models.CharField( max_length = 13, unique = True)
     birth = models.DateField(blank=True,null=True)
-    national_code=models.IntegerField(blank=True,null=True)
+    national_code=models.IntegerField(blank=True,null=True,unique=True)
     role=models.CharField(max_length=10,blank=True,null=True)
     first_name =models.CharField(max_length=20,blank=True,null=True)
     last_name =models.CharField(max_length=20,blank=True,null=True)
@@ -68,13 +69,13 @@ class Teacher(User):
 class Student(User):
     gpaverage=models.FloatField(blank=True,null=True)
     disipcline=models.FloatField(blank=True,null=True)
-    school=models.CharField(max_length=20,blank=True,null=True)
-    parentName=models.CharField(max_length=20,blank=True,null=True)
+    school=models.CharField(max_length=50,blank=True,null=True)
+    parentName=models.CharField(max_length=50,blank=True,null=True)
     parentNationalCode=models.IntegerField(blank=True,null=True)
     pbirthday=models.DateField(blank=True,null=True)
-    peducation=models.CharField(max_length=20,blank=True,null=True)
-    pjob=models.CharField(max_length=20,blank=True,null=True)
-    address=models.CharField(max_length=20,blank=True,null=True)
+    peducation=models.CharField(max_length=50,blank=True,null=True)
+    pjob=models.CharField(max_length=50,blank=True,null=True)
+    address=models.CharField(max_length=50,blank=True,null=True)
     grade=models.ForeignKey(grade,on_delete=models.CASCADE,null=True)
     department=models.ForeignKey(department,on_delete=models.CASCADE,null=True)
     method='phone'
