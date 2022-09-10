@@ -44,6 +44,7 @@ class notificationView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     def put(self, request):
+        id=request.data['id']
         notifications = get_object_or_404(notification, id=id)
         serializer = notificationSerializer(notifications, data=request.data)
         if serializer.is_valid():
