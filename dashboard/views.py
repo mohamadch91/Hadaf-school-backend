@@ -72,6 +72,14 @@ class walletView(APIView):
             "amount":wallets.amount
         }
         return Response(data,status.HTTP_200_OK)     
+    def post(self,request):
+        s_wallet=get_object_or_404(wallet,studentID=request.data["studentID"])
+        s_wallet.amount=s_wallet.amount+request.data["amount"]
+        s_wallet.save()
+        data={
+            "amount":s_wallet.amount
+        }
+        return Response(data,status.HTTP_200_OK)
 
 class basketView(APIView):
     permission_classes=(IsAuthenticated,)
