@@ -165,7 +165,14 @@ class basketView(APIView):
                     "price":final_price
 
                 })
-        return Response(ans,status.HTTP_200_OK)   
+        final_price=0
+        for k in ans:
+            final_price+=k["price"]
+        ans_data={
+            "basket":ans,
+            "final_price":final_price
+        }
+        return Response(ans_data,status.HTTP_200_OK)   
     def post(self,request):
         id=request.user.id
         ans=[]
