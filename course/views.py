@@ -502,5 +502,20 @@ class TeacherCcount(APIView):
         course=Course.objects.filter(teacherID=id)
         ans=0
         for x in course:
-            ans+=x.student_count
+            ans+=StudetCourse.objects.filter(courseID=x.id).count()
         return Response(ans,status.HTTP_200_OK)
+
+# class courseHWansView(models.Model):
+#     permission_classes=(IsAuthenticated,)
+#     def get(self,request):
+#         s_id=request.query_params.get('s_id',None)
+#         h_id=request.query_params.get('h_id',None)
+#         if(s_id is None and h_id is None):
+#             return Response('need query param',status.HTTP_400_BAD_REQUEST)
+#         if(s_id is not None and h_id is None):
+#             ans=StudentHW.objects.filter(studentID=s_id)
+#             ser=studentHWSerializer(ans,many=True)
+#             return Response(ser.data,status.HTTP_200_OK)
+        
+
+        

@@ -32,3 +32,8 @@ class blockstudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = BlocedStudent
         fields = '__all__'
+
+class homeworkanswerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Homeworkanswer
+        fields = '__all__'

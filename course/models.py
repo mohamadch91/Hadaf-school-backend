@@ -63,7 +63,16 @@ class CourseHomeWork(models.Model):
     created_at=models.DateTimeField(auto_now_add=True,null=True)
     updated_at=models.DateTimeField(auto_now=True,null=True)
     active = models.BooleanField(default=True, null=True)
-    
+
+class Homeworkanswer(models.Model):
+    id=models.AutoField(primary_key=True)
+    courseHWID=models.ForeignKey(CourseHomeWork,on_delete=models.CASCADE,null=True)
+    file=models.FileField(upload_to ='hw_answer/', max_length=100, null=True,blank=True)
+    studentId=models.ForeignKey(Student,on_delete=models.CASCADE,null=True)
+    created_at=models.DateTimeField(auto_now_add=True,null=True)
+    updated_at=models.DateTimeField(auto_now=True,null=True)
+
+
 class CourseDays(models.Model):        #???????????
     id = models.AutoField(primary_key=True)
     courseID = models.ForeignKey(Course, on_delete=models.CASCADE, null=True)
