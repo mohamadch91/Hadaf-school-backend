@@ -34,6 +34,7 @@ class courseView(APIView):
                 "description":ser.data["description"],
                 "course_id":ser.data["id"],
                 "Userid":ser.data["teacherID"]
+
             }
             forum_header=ForumHeaderSeriliazer(data=data,many=False)
             if(forum_header.is_valid()):
@@ -82,6 +83,10 @@ class courseView(APIView):
                     user=course.userID.last_name+" "+course.userID.first_name
                 else:
                     user=course.userID.phone
+            #student count
+            students=StudetCourse.objects.filter(courseID=course)
+            i["students"]=students
+
             i["teacher_name"]=teacher
             i["department_name"]=department
             i["grade_name"]=grade
@@ -138,6 +143,9 @@ class courseView(APIView):
                         user=course.userID.last_name+" "+course.userID.first_name
                     else:
                         user=course.userID.phone
+                #student for course
+                students=StudetCourse.objects.filter(courseID=course.id).count()
+                i["students"]=students
                 i["teacher_name"]=teacher
                 i["department_name"]=department
                 i["grade_name"]=grade
