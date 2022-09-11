@@ -1,6 +1,6 @@
 
 SECRET_KEY='vUBbw45VhCsDlw0djlSAtBxaM7HMhko2VlaxNIE1BI8'
-FIX_URL='https://class.srvschool.ir/bigbluebutton/'
+FIX_URL='https://class.srvschool.ir/bigbluebutton/api/'
 from django.contrib.auth.hashers import make_password
 import hashlib
 import requests
