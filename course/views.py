@@ -84,7 +84,7 @@ class courseView(APIView):
                 else:
                     user=course.userID.phone
             #student count
-            students=StudetCourse.objects.filter(courseID=course)
+            students=StudetCourse.objects.filter(courseID=course).count()
             i["students"]=students
 
             i["teacher_name"]=teacher
