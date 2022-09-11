@@ -97,7 +97,8 @@ class basketView(APIView):
                     if(z.courseID.price2!=None):
                         price=price+z.courseID.price2
                     else:
-                        price=price+z.courseID.price1
+                        if z.courseID.price1 != None:
+                            price=price+z.courseID.price1
                 price=price*((100-normal.percent)/100) 
                 ans.append({
                     "id":x.id,
@@ -116,7 +117,8 @@ class basketView(APIView):
                     if(z.courseID.price2!=None):
                         price=price+z.courseID.price2
                     else:
-                        price=price+z.courseID.price1
+                        if z.courseID.price1 != None:
+                            price=price+z.courseID.price1
                 price=price*((100-normal.percent)/100) 
                       
                 ans.append({
@@ -139,7 +141,8 @@ class basketView(APIView):
                     if(z.courseID.price2!=None):
                         price=price+z.courseID.price2
                     else:
-                        price=price+z.courseID.price1
+                        if z.courseID.price1 != None:
+                            price=price+z.courseID.price1
                 m=studentPackageDiscount.objects.all()[0].percent
                 price=price*((100-m*count_course)/100)
 
@@ -153,7 +156,9 @@ class basketView(APIView):
                 })
             elif x.type=='course':
                 course=Course.objects.get(id=x.buyID)
-                final_price=course.price1
+                final_price=0
+                if course.price1 != None:
+                    final_price=course.price1
                 if course.price2!=None:
                     final_price=course.price2
                 
@@ -260,3 +265,17 @@ class discountView(APIView):
             amount=amount-discount.amount
         return Response({"amount":amount},status=status.HTTP_200_OK)
         
+class discountUserview(APIView):
+    def post(self,request):
+        code=request.data["code"]
+        discount=get_object_or_404(Discount,code=code)
+        if discount.active==False:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        id=request.user.id
+        student=get_object_or_404(Student,id=id)
+        if student.discountID==None:
+            student.discountID=discount
+            student.save()
+            return Response(status=status.HTTP_200_OK)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
