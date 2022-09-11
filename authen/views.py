@@ -184,6 +184,7 @@ class UserListView(generics.ListAPIView):
                 users=users.filter(phone=phone)
             ser=TeacherSerializer(users,many=True)
             return Response(ser.data,status=status.HTTP_200_OK)
+        return Response("type is not valid",status=status.HTTP_400_BAD_REQUEST)
 
 
 class OTPViewLogin(APIView):

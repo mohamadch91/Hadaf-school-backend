@@ -4,7 +4,37 @@ from django.http import HttpResponse
 from django.shortcuts import redirect
 import requests
 import json
+from curses import A_PROTECT
+from django.shortcuts import render
 
+# Create your views here.
+from django.shortcuts import render
+
+# Create your views here.
+from django.shortcuts import render
+
+# Create your views here.
+from re import I
+from django.shortcuts import render
+
+# Create your views here.
+import json
+from os import stat
+from urllib import response
+from django.shortcuts import render
+
+# Create your views here.
+from rest_framework.permissions import IsAuthenticated
+
+# from authen.models import User
+from .models import *
+
+from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from django.shortcuts import get_object_or_404
 MERCHANT = '18cd0405-b44b-4c21-858b-c834f7a035f8'
 ZP_API_REQUEST = "https://api.zarinpal.com/pg/v4/payment/request.json"
 ZP_API_VERIFY = "https://api.zarinpal.com/pg/v4/payment/verify.json"
@@ -71,3 +101,8 @@ def verify(request):
             return HttpResponse(f"Error code: {e_code}, Error Message: {e_message}")
     else:
         return HttpResponse('Transaction failed or canceled by user')
+
+class buyView(APIView):
+    def get(self,request):
+        url=request.data['url'
+        ]
