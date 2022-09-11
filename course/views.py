@@ -512,24 +512,27 @@ class courseHWansView(APIView):
         if(s_id is None and h_id is None):
             return Response('need query param',status.HTTP_400_BAD_REQUEST)
         if(s_id is not None and h_id is None):
-            ans=Homeworkanswer.objects.filter(studentID=s_id)
-            final_ans=[]
-            for x in ans:
-                username=x.studentID.phone
-                if(x.studentID.first_name is not None and x.studentID.last_name is not None):
-                    username=x.studentID.first_name+" "+x.studentID.last_name
+            if(s_id!=''):
+                ans=Homeworkanswer.objects.filter(studentID=s_id)
+                final_ans=[]
+                for x in ans:
+                    username=x.studentID.phone
+                    if(x.studentID.first_name is not None and x.studentID.last_name is not None):
+                        username=x.studentID.first_name+" "+x.studentID.last_name
 
-                data={
-                    "id":x.id,
-                    "studentID":x.studentID.id,
-                    "student_name":username,
-                    "courseHWID":x.courseHWID.pk,
-                    "homework_name":x.courseHWID.title,
-                }
-                final_ans.append(data)
+                    data={
+                        "id":x.id,
+                        "studentID":x.studentID.id,
+                        "student_name":username,
+                        "courseHWID":x.courseHWID.pk,
+                        "homework_name":x.courseHWID.title,
+                    }
+                    final_ans.append(data)
+                    
                 
-            
-            return Response(final_ans,status.HTTP_200_OK)
+                return Response(final_ans,status.HTTP_200_OK)
+            else:
+                return Response('need query param',status.HTTP_400_BAD_REQUEST)
         if(s_id is None and h_id is not None):
             ans=Homeworkanswer.objects.filter(courseHWID=h_id)
             final_ans=[]
@@ -565,6 +568,19 @@ class courseHWansView(APIView):
                 final_ans.append(data)
                 
         return Response(final_ans,status.HTTP_200_OK)
-        
-
+    def post(self,request):
+        ser=homeworkanswerSerializer(data=request.data)
+        if ser.is_valid():
+            ser.save()
+            return Response(ser.data,status.HTTP_201_CREATED)
+        return Response(ser.errors,status.HTTP_400_BAD_REQUEST)
+    def put(self,request):
+        id=request.data['id']
+        ans=Homeworkanswer.objects.get(pk=id)
+        ser=homeworkanswerSerializer(ans,data=request.data)
+        if ser.is_valid():
+            ser.save()
+            return Response(ser.data,status.HTTP_201_CREATED)
+        return Response(ser.errors,status.HTTP_400_BAD_REQUEST)
+    
         
