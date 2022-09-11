@@ -500,12 +500,11 @@ class TeacherCcount(APIView):
         if(id is None):
             return Response('need query param',status.HTTP_400_BAD_REQUEST)
         course=Course.objects.filter(teacherID=id)
-        ans=0
-        for x in course:
-            ans+=StudetCourse.objects.filter(courseID=x.id).count()
+        ans=course.count()
+            
         return Response(ans,status.HTTP_200_OK)
 
-class courseHWansView(models.Model):
+class courseHWansView(APIView):
     permission_classes=(IsAuthenticated,)
     def get(self,request):
         s_id=request.query_params.get('s_id',None)
@@ -524,15 +523,15 @@ class courseHWansView(models.Model):
                     "id":x.id,
                     "studentID":x.studentID.id,
                     "student_name":username,
-                    "homeworkID":x.homeworkID.pk,
-                    "homework_name":x.homeworkID.title,
+                    "courseHWID":x.courseHWID.pk,
+                    "homework_name":x.courseHWID.title,
                 }
                 final_ans.append(data)
                 
             
             return Response(final_ans,status.HTTP_200_OK)
         if(s_id is None and h_id is not None):
-            ans=Homeworkanswer.objects.filter(homeworkID=h_id)
+            ans=Homeworkanswer.objects.filter(courseHWID=h_id)
             final_ans=[]
             for x in ans:
                 username=x.studentID.phone
@@ -543,13 +542,13 @@ class courseHWansView(models.Model):
                     "id":x.id,
                     "studentID":x.studentID.id,
                     "student_name":username,
-                    "homeworkID":x.homeworkID.pk,
-                    "homework_name":x.homeworkID.title,
+                    "courseHWID":x.courseHWID.pk,
+                    "homework_name":x.courseHWID.title,
                 }
                 final_ans.append(data)
                 
             return Response(final_ans,status.HTTP_200_OK)
-        ans=Homeworkanswer.objects.filter(homeworkID=h_id,studentID=s_id)
+        ans=Homeworkanswer.objects.filter(courseHWID=h_id,studentID=s_id)
         final_ans=[]
         for x in ans:
                 username=x.studentID.phone
@@ -560,8 +559,8 @@ class courseHWansView(models.Model):
                     "id":x.id,
                     "studentID":x.studentID.id,
                     "student_name":username,
-                    "homeworkID":x.homeworkID.pk,
-                    "homework_name":x.homeworkID.title,
+                    "courseHWID":x.courseHWID.pk,
+                    "homework_name":x.courseHWID.title,
                 }
                 final_ans.append(data)
                 
