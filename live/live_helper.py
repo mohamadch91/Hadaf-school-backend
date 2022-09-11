@@ -25,7 +25,7 @@ def create(name,id):
 
 def join(name,id):
     id=str(id+10)
-    name=name.replace(" ","_")
+    # name=name.replace(" ","_")
     join_query='fullName='+name+'&meetingID='+id+'&password=hadafadmin&redirect=true'
     string='join'+join_query+SECRET_KEY
     result = hashlib.sha1(string.encode())
