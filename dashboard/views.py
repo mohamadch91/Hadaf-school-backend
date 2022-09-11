@@ -268,14 +268,11 @@ class discountView(APIView):
 class discountUserview(APIView):
     def post(self,request):
         code=request.data["code"]
-        discount=get_object_or_404(Discount,code=code)
-        if discount.active==False:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
-        id=request.user.id
-        student=get_object_or_404(Student,id=id)
-        if student.discountID==None:
-            student.discountID=discount
-            student.save()
-            return Response(status=status.HTTP_200_OK)
+        discount=get_object_or_404(DiscountUser,code=code)
+        amount=request.data["amount"]
+        if(discount.percent is not None):
+            amount=amount*((100-discount.percent)/100)
         else:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+            amount=amount
+        return Response({"amount":amount},status=status.HTTP_200_OK)
+
