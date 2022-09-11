@@ -461,7 +461,7 @@ class specificCoourseSes(APIView):
 class teacherStudensView(APIView):
     permission_classes=(IsAuthenticated,)
     def get(self,request):
-        id=request.query_params.get('id',None)
+        id=request.query_params.get('id'tea,None)
         if(id is None):
             return Response('need query param',status.HTTP_400_BAD_REQUEST)
         course=Course.objects.filter(teacherID=id)
@@ -492,3 +492,15 @@ class bulkstudentView(APIView):
         else:
             return Response(ser.errors,status=status.HTTP_400_BAD_REQUEST)
         return Response(ans,status=status.HTTP_201_CREATED)
+
+class TeacherCcount(APIView):
+    permission_classes=(IsAuthenticated,)
+    def get(self,request):
+        id=request.query_params.get('id',None)
+        if(id is None):
+            return Response('need query param',status.HTTP_400_BAD_REQUEST)
+        course=Course.objects.filter(teacherID=id)
+        ans=0
+        for x in course:
+            ans+=x.student_count
+        return Response(ans,status.HTTP_200_OK)
