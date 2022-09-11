@@ -436,6 +436,7 @@ class specificCoourseSes(APIView):
             if(x.studentID.grade is not None):
                 grade=x.studentID.grade.name
             data={
+                "id":x.studentID.pk,
                 'name':x.studentID.username,
                 'phone':x.studentID.phone,
                 'l_name':x.studentID.last_name,
