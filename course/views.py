@@ -409,6 +409,10 @@ class blockstudents(APIView):
     def post(self,request):
         ans=[]
         for i in request.data:
+            #check if student is blocked
+            if BlocedStudent.objects.filter(studentID=i["studentID"],courseID=i["courseID"]).exists():
+                ans.append("student is blocked")
+                continue
             ser=blockstudentSerializer(data=i)
             if(ser.is_valid()):
                 ser.save()
