@@ -461,7 +461,7 @@ class specificCoourseSes(APIView):
 class teacherStudensView(APIView):
     permission_classes=(IsAuthenticated,)
     def get(self,request):
-        id=request.query_params.get('id'tea,None)
+        id=request.query_params.get('id',None)
         if(id is None):
             return Response('need query param',status.HTTP_400_BAD_REQUEST)
         course=Course.objects.filter(teacherID=id)
