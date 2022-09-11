@@ -505,17 +505,67 @@ class TeacherCcount(APIView):
             ans+=StudetCourse.objects.filter(courseID=x.id).count()
         return Response(ans,status.HTTP_200_OK)
 
-# class courseHWansView(models.Model):
-#     permission_classes=(IsAuthenticated,)
-#     def get(self,request):
-#         s_id=request.query_params.get('s_id',None)
-#         h_id=request.query_params.get('h_id',None)
-#         if(s_id is None and h_id is None):
-#             return Response('need query param',status.HTTP_400_BAD_REQUEST)
-#         if(s_id is not None and h_id is None):
-#             ans=StudentHW.objects.filter(studentID=s_id)
-#             ser=studentHWSerializer(ans,many=True)
-#             return Response(ser.data,status.HTTP_200_OK)
+class courseHWansView(models.Model):
+    permission_classes=(IsAuthenticated,)
+    def get(self,request):
+        s_id=request.query_params.get('s_id',None)
+        h_id=request.query_params.get('h_id',None)
+        if(s_id is None and h_id is None):
+            return Response('need query param',status.HTTP_400_BAD_REQUEST)
+        if(s_id is not None and h_id is None):
+            ans=Homeworkanswer.objects.filter(studentID=s_id)
+            final_ans=[]
+            for x in ans:
+                username=x.studentID.phone
+                if(x.studentID.first_name is not None and x.studentID.last_name is not None):
+                    username=x.studentID.first_name+" "+x.studentID.last_name
+
+                data={
+                    "id":x.id,
+                    "studentID":x.studentID.id,
+                    "student_name":username,
+                    "homeworkID":x.homeworkID.pk,
+                    "homework_name":x.homeworkID.title,
+                }
+                final_ans.append(data)
+                
+            
+            return Response(final_ans,status.HTTP_200_OK)
+        if(s_id is None and h_id is not None):
+            ans=Homeworkanswer.objects.filter(homeworkID=h_id)
+            final_ans=[]
+            for x in ans:
+                username=x.studentID.phone
+                if(x.studentID.first_name is not None and x.studentID.last_name is not None):
+                    username=x.studentID.first_name+" "+x.studentID.last_name
+
+                data={
+                    "id":x.id,
+                    "studentID":x.studentID.id,
+                    "student_name":username,
+                    "homeworkID":x.homeworkID.pk,
+                    "homework_name":x.homeworkID.title,
+                }
+                final_ans.append(data)
+                
+            return Response(final_ans,status.HTTP_200_OK)
+        ans=Homeworkanswer.objects.filter(homeworkID=h_id,studentID=s_id)
+        final_ans=[]
+        for x in ans:
+                username=x.studentID.phone
+                if(x.studentID.first_name is not None and x.studentID.last_name is not None):
+                    username=x.studentID.first_name+" "+x.studentID.last_name
+
+                data={
+                    "id":x.id,
+                    "studentID":x.studentID.id,
+                    "student_name":username,
+                    "homeworkID":x.homeworkID.pk,
+                    "homework_name":x.homeworkID.title,
+                }
+                final_ans.append(data)
+                
+        return Response(final_ans,status.HTTP_200_OK)
         
 
         
