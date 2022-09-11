@@ -175,7 +175,8 @@ class search(APIView):
             price=0
             np=normalPackageCourse.objects.filter(packageID=x.id)
             for y in np:
-                price+=y.courseID.price1
+                if(y.courseID.showforstudents==True and y.courseID.active==True and y.courseID.price1>0):
+                    price=price+y.courseID.price1
             ans.append({
                 "id":x.id,
                 "name":x.name,
