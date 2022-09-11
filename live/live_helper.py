@@ -7,13 +7,15 @@ import requests
 import xml.etree.ElementTree as ET
 import json, xmljson
 from lxml.etree import fromstring, tostring
-
+import urllib.parse
 def create(name,id):
-    name=name.replace(" ","_")
+    welcome='به کلاس '+name+' خوش آمدید'
+    welcome=urllib.parse.quote(welcome)
+    name=urllib.parse.quote(name)
     voice_bridge=str(id+10000)
     id=str(id+10)
 
-    create_query='allowStartStopRecording=true&attendeePW=hadafuser&autoStartRecording=false&meetingID='+id+'&moderatorPW=hadafadmin&name='+name+'&record=true&voiceBridge='+voice_bridge+'&welcome=welcome'
+    create_query='allowStartStopRecording=true&attendeePW=hadafuser&autoStartRecording=false&meetingID='+id+'&moderatorPW=hadafadmin&name='+name+'&record=true&voiceBridge='+voice_bridge+'&welcome=+'+welcome
     string='create'+create_query+SECRET_KEY
     result = hashlib.sha1(string.encode())
     checksum=result.hexdigest()
@@ -26,6 +28,8 @@ def create(name,id):
 def join(name,id):
     id=str(id+10)
     # name=name.replace(" ","_")
+    name=urllib.parse.quote(name)
+
     join_query='fullName='+name+'&meetingID='+id+'&password=hadafadmin&redirect=true'
     string='join'+join_query+SECRET_KEY
     result = hashlib.sha1(string.encode())
@@ -35,7 +39,8 @@ def join(name,id):
 
 def student_join(name,id):
     id=str(id+10)
-    name=name.replace(" ","_")
+    name=urllib.parse.quote(name)
+
     join_query='fullName='+name+'&meetingID='+id+'&password=hadafuser&redirect=true'
     string='join'+join_query+SECRET_KEY
     result = hashlib.sha1(string.encode())
