@@ -26,7 +26,7 @@ from authen.models import *
 from package.models import *
 from .serializers import *
 from package.serializers import *
-
+from discount.models import *
 class dahsboardVIew(APIView):
     def get(self,request):
         studenr_count=Student.objects.all().count()
@@ -246,3 +246,17 @@ class search(APIView):
             })
       
         return Response(ans,status=status.HTTP_200_OK)
+
+class discountView(APIView):
+    def post(self,request):
+        code=request.data["code"]
+        discount=get_object_or_404(Discount,code=code)
+        if discount.active==False:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        amount=request.data["amount"]
+        if(discount.isPercent):
+            amount=amount*((100-discount.amount)/100)
+        else:
+            amount=amount-discount.amount
+        return Response({"amount":amount},status=status.HTTP_200_OK)
+        
