@@ -90,15 +90,35 @@ class basketView(APIView):
         for x in baskets:
             if x.type=='normal':
                 normal=normalPackage.objects.get(id=x.buyID)
+                course=normalPackageCourse.objects.filter(packageID=student.id)
+                #calculate price
+                price=0
+                for z in course:
+                    if(z.courseID.price2!=None):
+                        price=price+z.courseID.price2
+                    else:
+                        price=price+z.courseID.price1
+                price=price*((100-normal.percent)/100) 
                 ans.append({
                     "id":x.id,
                     "name":normal.name,
                     "percent":normal.percent,
                     "buy_id":normal.id,
-                    "type":x.type
+                    "type":x.type,
+                    "price":price
                 })
             elif x.type=='timing':
                 timing=timingPackage.objects.get(id=x.buyID)
+                course=timingPackageCourse.objects.filter(packageID=student.id)
+                #calculate price
+                price=0
+                for z in course:
+                    if(z.courseID.price2!=None):
+                        price=price+z.courseID.price2
+                    else:
+                        price=price+z.courseID.price1
+                price=price*((100-normal.percent)/100) 
+                      
                 ans.append({
                     "id":x.id,
                     "name":timing.name,
@@ -106,23 +126,44 @@ class basketView(APIView):
                     "type":x.type,
                     "buy_id":timing.id,
                     "asDate":timing.asDate,
-                    "toDate":timing.toDate
+                    "toDate":timing.toDate,
+                    "price":price
                 })
             elif x.type=='student':
                 student=studentPackage.objects.get(id=x.buyID)
+                course=studentPackageCourse.objects.filter(packageID=student.id)
+                #calculate price
+                price=0
+                count_course=course.count()
+                for z in course:
+                    if(z.courseID.price2!=None):
+                        price=price+z.courseID.price2
+                    else:
+                        price=price+z.courseID.price1
+                m=studentPackageDiscount.objects.all()[0].percent
+                price=price*((100-m*count_course)/100)
+
+
                 ans.append({
                     "id":x.id,
                     "name":student.name,
                     "buy_id":student.id,
-                    "type":x.type
+                    "type":x.type,
+                    "price":price
                 })
             elif x.type=='course':
                 course=Course.objects.get(id=x.buyID)
+                final_price=course.price1
+                if course.price2!=None:
+                    final_price=course.price2
+                
                 ans.append({
                     "id":x.id,
                     "name":course.name,
                     "buy_id":course.id,
-                    "type":x.type
+                    "type":x.type,
+                    "price":final_price
+
                 })
         return Response(ans,status.HTTP_200_OK)   
     def post(self,request):
