@@ -60,7 +60,7 @@ def verify(request):
         req_header = {"accept": "application/json",
                       "content-type": "application/json'"}
         buys=get_object_or_404(buy,authority=t_authority)
-        redirects=buy.url
+        redirects=buys.url
         req_data = {
             "merchant_id": MERCHANT,
             "amount": buys.amount,
