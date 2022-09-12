@@ -69,7 +69,6 @@ def getmeetings():
     if(len(ans["meetings"])>=1):
         if(type(ans["meetings"]["meeting"]) is list):
             for i in ans["meetings"]["meeting"]:
-                print(i)
                 new_data={}
                 new_data["name"]=i["meetingName"]["$"]
                 new_data["id"]=i["meetingID"]["$"]-10
