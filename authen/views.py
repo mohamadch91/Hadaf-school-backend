@@ -71,7 +71,7 @@ class UpdateProfileView(APIView):
     def put (self,request):
         if('phone' not in request.data):
             return Response("neeed phone ",status=status.HTTP_400_BAD_REQUEST)
-        if('type' not in request.data ):
+        if('type' not in request.data or 'type' =='' ):
             return Response("neeed type",status=status.HTTP_400_BAD_REQUEST)
         type=request.data["type"]
         phone=request.data["phone"]
@@ -96,6 +96,7 @@ class UpdateProfileView(APIView):
                 ser.save()
                 return Response(ser.data,status=status.HTTP_202_ACCEPTED)
             return Response(ser.errors,status=status.HTTP_400_BAD_REQUEST)        
+        return Response("type not found",status=status.HTTP_400_BAD_REQUEST)
 
 
 
