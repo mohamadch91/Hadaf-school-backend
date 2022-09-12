@@ -120,8 +120,8 @@ class buyWalletView(APIView):
             amount=amount-buy_mount
             wallets.amount=amount
             wallets.save()
-            for basket in baskets:
-                basket.delete()
+            for basketi in baskets:
+                basketi.delete()
             return Response({'message':'your amount is enough'},status=status.HTTP_200_OK)
 
 
