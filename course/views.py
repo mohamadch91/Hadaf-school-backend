@@ -173,6 +173,10 @@ class studentCourseView(APIView):
         block=BlocedStudent.objects.filter(studentID=item['studentID'],courseID=item['courseID'])
         if(block.count()!=0):
             return Response('student is blocked', status=status.HTTP_400_BAD_REQUEST)
+        #check if student is in course
+        student_course=StudetCourse.objects.filter(studentID=item['studentID'],courseID=item['courseID'])
+        if(student_course.count()!=0):
+            return Response('student is in course', status=status.HTTP_400_BAD_REQUEST)
         ser = studentCourseSerializer(data=item)
         if ser.is_valid():
             ser.save()
