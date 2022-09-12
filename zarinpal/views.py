@@ -129,7 +129,7 @@ class buyWalletView(APIView):
                         course=normalPackageCourse.objects.filter(packageID=normal.id)
                         #calculate price
                         for z in course:
-                            s_c=StudetCourse.objects.create(studentID=user.id,courseID=z.courseID)
+                            s_c=StudetCourse.objects.create(studentID=user,courseID=z.courseID)
                             s_c.save()
                     elif x.type=='timing':
                         timing=timingPackage.objects.get(id=x.buyID)
@@ -137,7 +137,7 @@ class buyWalletView(APIView):
                         #calculate price
                         price=0
                         for z in course:
-                            s_c=StudetCourse.objects.create(studentID=user.id,courseID=z.courseID)
+                            s_c=StudetCourse.objects.create(studentID=user,courseID=z.courseID)
                             s_c.save()
                             
                        
@@ -148,14 +148,14 @@ class buyWalletView(APIView):
                         price=0
                         count_course=course.count()
                         for z in course:
-                            s_c=StudetCourse.objects.create(studentID=user.id,courseID=z.courseID)
+                            s_c=StudetCourse.objects.create(studentID=user,courseID=z.courseID)
                             s_c.save()
 
 
                        
                     elif x.type=='course':
                         course=Course.objects.get(id=x.buyID)
-                        s_c=StudetCourse.objects.create(studentID=user.id,courseID=course.id)
+                        s_c=StudetCourse.objects.create(studentID=user,courseID=course.id)
                         s_c.save()
                    
                     basketi.delete()
@@ -165,3 +165,4 @@ class buyWalletView(APIView):
 
 
 
+class addTowallet(APIView)
