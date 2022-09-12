@@ -205,8 +205,7 @@ class report(APIView):
             student=get_object_or_404(Student,id=i['student'])
             ser=StudentSerializer(student)
             i['student_phone']=ser.data["phone"]
-            i['student_name']=ser.data["first_name"]
-            i['student_last_name']=ser.data["last_name"]
+            i['student_name']=ser.data["first_name"]+" "+ser.data["last_name"]
         return Response(new_data,status=status.HTTP_200_OK)
         
 
