@@ -115,7 +115,7 @@ class buyWalletView(APIView):
         wallets=get_object_or_404(wallet,studentID=user.id)
         baskets=basket.objects.filter(studentID=user.id)
         amount=wallets.amount
-        if(amount <buy_mount):
+        if(amount <int(buy_mount)):
             return Response({'message':'your amount is not enough'},status=status.HTTP_400_BAD_REQUEST)
         else:
             amount=amount-buy_mount
@@ -164,4 +164,3 @@ class buyWalletView(APIView):
 
 
 
-        
