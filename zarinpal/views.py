@@ -206,6 +206,7 @@ class report(APIView):
             ser=StudentSerializer(student)
             i['student_phone']=ser.data["phone"]
             i['student_name']=ser.data["first_name"]+" "+ser.data["last_name"]
+            i["student_national_code"]=ser.data["national_code"]
         return Response(new_data,status=status.HTTP_200_OK)
         
 
