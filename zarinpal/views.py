@@ -112,10 +112,11 @@ class buyWalletView(APIView):
         if buy_mount is None:
             return Response({'message':'amount is required'},status=status.HTTP_400_BAD_REQUEST)
         user=request.user
+        buy_mount=int(buy_mount)
         wallets=get_object_or_404(wallet,studentID=user.id)
         baskets=basket.objects.filter(studentID=user.id)
         amount=wallets.amount
-        if(amount <int(buy_mount)):
+        if(amount <buy_mount):
             return Response({'message':'your amount is not enough'},status=status.HTTP_400_BAD_REQUEST)
         else:
             amount=amount-buy_mount
