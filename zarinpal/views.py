@@ -16,13 +16,13 @@ from django.shortcuts import render
 # Create your views here.
 from re import I
 from django.shortcuts import render
-
+from authen.serializers import *
 # Create your views here.
 import json
 from os import stat
 from urllib import response
 from django.shortcuts import render
-
+import copy
 # Create your views here.
 from rest_framework.permissions import IsAuthenticated
 
@@ -44,7 +44,6 @@ MERCHANT = '18cd0405-b44b-4c21-858b-c834f7a035f8'
 ZP_API_REQUEST = "https://api.zarinpal.com/pg/v4/payment/request.json"
 ZP_API_VERIFY = "https://api.zarinpal.com/pg/v4/payment/verify.json"
 ZP_API_STARTPAY = "https://www.zarinpal.com/pg/StartPay/{authority}"
-Amount = 10001  # Rial / Required
 description = "backend test"  # Required
 # Important: need to edit for realy server.
 CallbackURL = 'https://api.srvschool.ir/zarinpal/verify/'
@@ -158,12 +157,13 @@ class addTowallet(APIView):
     permission_classes = (IsAuthenticated,)
     def post(self,request):
         amount=request.data["amount"]
+        amount=int(amount)*10
         url=request.data["url"]
         user=request.user
         user=get_object_or_404(Student,pk=user.id)
         req_data = {
         "merchant_id": MERCHANT,
-        "amount": Amount,
+        "amount": amount,
         "callback_url": CallbackURL,
         "description": description,
         
@@ -176,11 +176,41 @@ class addTowallet(APIView):
         if len(req.json()['errors']) == 0:
             authority = req.json()['data']['authority']
             #create new buy model
-            buys=buy.objects.create(student=user,amount=Amount,authority=authority,url=url)
+            buys=buy.objects.create(student=user,amount=amount,authority=authority,url=url)
             buys.save()
             return Response(ZP_API_STARTPAY.format(authority=authority))
         else:
             e_code = req.json()['errors']['code']
             e_message = req.json()['errors']['message']
             return Response(f"Error code: {e_code}, Error Message: {e_message}")
-    
+
+class report(APIView):
+    permission_classes=(IsAuthenticated,)
+    def get(self,request):
+        s_id=request.query_params.get('s_id',None)
+        price_from=request.query_params.get('price_from',None)
+        price_to=request.query_params.get('price_to',None)
+        date_from=request.query_params.get('date_from',None)
+        date_to=request.query_params.get('date_to',None)
+        buys_basket=buy.objects.all()
+        if s_id is not None:
+            student=get_object_or_404(Student,phone=s_id)
+            buys_basket=buy.objects.filter(student=student.pk)
+        if price_from is not None:
+            buys_basket=buy.objects.filter(amount__gte=price_from)
+        if price_to is not None:
+            buys_basket=buy.objects.filter(amount__lte=price_to)
+        if date_from is not None:
+            buys_basket=buy.objects.filter(created_at__gte=date_from)
+        if date_to is not None:
+            buys_basket=buy.objects.filter(updated_at__lte=date_to)
+        serializer=buySerializer(buys_basket,many=True)
+        new_data=copy.deepcopy(serializer.data)
+        for i in new_data:
+            student=get_object_or_404(Student,id=i['student'])
+            ser=StudentSerializer(student)
+            i['student']=ser.data
+        return Response(new_data,status=status.HTTP_200_OK)
+        
+
+        
