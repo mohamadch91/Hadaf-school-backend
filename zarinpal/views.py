@@ -60,7 +60,7 @@ def verify(request):
         req_header = {"accept": "application/json",
                       "content-type": "application/json'"}
         buys=get_object_or_404(buy,authority=t_authority)
-        redirect=buy.url
+        redirects=buy.url
         req_data = {
             "merchant_id": MERCHANT,
             "amount": buys.amount,
@@ -73,11 +73,11 @@ def verify(request):
                 wallets=get_object_or_404(wallet,studentID=buys.student.id)
                 wallets.amount=wallets.amount+buys.amount
                 wallets.save()
-                return redirect(redirect)
+                return redirect(redirects)
 
                 
             elif t_status == 101:
-                return redirect(redirect)
+                return redirect(redirects)
 
             else:
                 return HttpResponse('Transaction failed.\nStatus: ' + str(
