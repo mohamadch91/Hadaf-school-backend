@@ -38,38 +38,19 @@ from rest_framework.response import Response
 from rest_framework import status
 from course.models import *
 from django.shortcuts import get_object_or_404
+from .models import *
+from .serializers import *
 MERCHANT = '18cd0405-b44b-4c21-858b-c834f7a035f8'
 ZP_API_REQUEST = "https://api.zarinpal.com/pg/v4/payment/request.json"
 ZP_API_VERIFY = "https://api.zarinpal.com/pg/v4/payment/verify.json"
 ZP_API_STARTPAY = "https://www.zarinpal.com/pg/StartPay/{authority}"
-amount = 10001  # Rial / Required
+Amount = 10001  # Rial / Required
 description = "backend test"  # Required
-email = 'email@example.com'  # Optional
-mobile = '09123456789'  # Optional
 # Important: need to edit for realy server.
 CallbackURL = 'http://localhost:8000/zarinpal/verify/'
+student_array = {}
 
 
-def send_request(request):
-    req_data = {
-        "merchant_id": MERCHANT,
-        "amount": amount,
-        "callback_url": CallbackURL,
-        "description": description,
-        
-    }
-    req_header = {"accept": "application/json",
-                  "content-type": "application/json'"}
-    req = requests.post(url=ZP_API_REQUEST, data=json.dumps(
-        req_data), headers=req_header)
-    print(req.json())    
-    if len(req.json()['errors']) == 0:
-        authority = req.json()['data']['authority']
-        return redirect(ZP_API_STARTPAY.format(authority=authority))
-    else:
-        e_code = req.json()['errors']['code']
-        e_message = req.json()['errors']['message']
-        return HttpResponse(f"Error code: {e_code}, Error Message: {e_message}")
 
 
 def verify(request):
@@ -78,9 +59,10 @@ def verify(request):
     if request.GET.get('Status') == 'OK':
         req_header = {"accept": "application/json",
                       "content-type": "application/json'"}
+        buys=get_object_or_404(buy,authority=t_authority)
         req_data = {
             "merchant_id": MERCHANT,
-            "amount": amount,
+            "amount": buys.amount,
             "authority": t_authority
         }
         req = requests.post(url=ZP_API_VERIFY, data=json.dumps(req_data), headers=req_header)
@@ -169,4 +151,34 @@ class buyWalletView(APIView):
 
 
 
-# class addTowallet(APIView)
+class addTowallet(APIView):
+    permission_classes = (IsAuthenticated,)
+    def post(self,request):
+        amount=request.data["amount"]
+        url=request.data["url"]
+
+        user=request.user
+        user=get_object_or_404(Student,pk=user.id)
+        req_data = {
+        "merchant_id": MERCHANT,
+        "amount": Amount,
+        "callback_url": CallbackURL,
+        "description": description,
+        
+        }
+        req_header = {"accept": "application/json",
+                    "content-type": "application/json'"}
+        req = requests.post(url=ZP_API_REQUEST, data=json.dumps(
+            req_data), headers=req_header)
+        print(req.json())    
+        if len(req.json()['errors']) == 0:
+            authority = req.json()['data']['authority']
+            #create new buy model
+            buys=buy.objects.create(student=user,amount=amount,authority=authority,url=url)
+            buys.save()
+            return Response(ZP_API_STARTPAY.format(authority=authority))
+        else:
+            e_code = req.json()['errors']['code']
+            e_message = req.json()['errors']['message']
+            return Response(f"Error code: {e_code}, Error Message: {e_message}")
+    
