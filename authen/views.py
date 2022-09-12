@@ -268,7 +268,7 @@ class OTPViewRegister(APIView):
                 s=get_object_or_404(Teacher,phone=otp['receiver'])
                 return Response("phone already exists",status=status.HTTP_400_BAD_REQUEST)
             except:    
-                user =  Teacher.objects.create(phone=otp['receiver'] )
+                user =  Teacher.objects.create(phone=otp['receiver']) #in badan ok she
                 created = True
                 refresh = RefreshToken.for_user(user)
     

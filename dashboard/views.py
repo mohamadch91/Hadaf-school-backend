@@ -90,7 +90,7 @@ class basketView(APIView):
         for x in baskets:
             if x.type=='normal':
                 normal=normalPackage.objects.get(id=x.buyID)
-                course=normalPackageCourse.objects.filter(packageID=student.id)
+                course=normalPackageCourse.objects.filter(packageID=normal.id)
                 #calculate price
                 price=0
                 for z in course:
@@ -110,7 +110,7 @@ class basketView(APIView):
                 })
             elif x.type=='timing':
                 timing=timingPackage.objects.get(id=x.buyID)
-                course=timingPackageCourse.objects.filter(packageID=student.id)
+                course=timingPackageCourse.objects.filter(packageID=normal.id)
                 #calculate price
                 price=0
                 for z in course:
@@ -133,7 +133,7 @@ class basketView(APIView):
                 })
             elif x.type=='student':
                 student=studentPackage.objects.get(id=x.buyID)
-                course=studentPackageCourse.objects.filter(packageID=student.id)
+                course=studentPackageCourse.objects.filter(packageID=normal.id)
                 #calculate price
                 price=0
                 count_course=course.count()
