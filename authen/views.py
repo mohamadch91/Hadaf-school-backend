@@ -69,28 +69,28 @@ class UpdateProfileView(APIView):
     # permission_classes=(IsAuthenticated,)
    
     def put (self,request):
-        if('phone' not in request.data):
-            return Response("neeed phone ",status=status.HTTP_400_BAD_REQUEST)
+        if('pk' not in request.data or request.data['pk'] == ''):
+            return Response({'message': 'pk is required'}, status=status.HTTP_400_BAD_REQUEST)
         if('type' not in request.data or 'type' =='' ):
             return Response("neeed type",status=status.HTTP_400_BAD_REQUEST)
         type=request.data["type"]
-        phone=request.data["phone"]
+        pk=request.data["pk"]
         if(type=="user"):
-            user=get_object_or_404(User,phone=phone)
+            user=get_object_or_404(User,pk=pk)
             ser=updateUserSerilizer(user,data=request.data)
             if(ser.is_valid()):
                 ser.save()
                 return Response(ser.data,status=status.HTTP_202_ACCEPTED)
             return Response(ser.errors,status=status.HTTP_400_BAD_REQUEST)
         if(type=="student"):
-            user=get_object_or_404(Student,phone=phone)
+            user=get_object_or_404(Student,pk=pk)
             ser=updateStudentSerializer(user,data=request.data)
             if(ser.is_valid()):
                 ser.save()
                 return Response(ser.data,status=status.HTTP_202_ACCEPTED)
             return Response(ser.errors,status=status.HTTP_400_BAD_REQUEST)
         if(type=="teacher"):
-            user=get_object_or_404(Teacher,phone=phone)
+            user=get_object_or_404(Teacher,pk=pk)
             ser=updateTeacherSerializer(user,data=request.data)
             if(ser.is_valid()):
                 ser.save()
