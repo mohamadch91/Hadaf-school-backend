@@ -185,20 +185,20 @@ class report(APIView):
         s_id=request.query_params.get('s_id',None)
         price_from=request.query_params.get('price_from',None)
         price_to=request.query_params.get('price_to',None)
-        date_from=request.query_params.get('date_from',None)
-        date_to=request.query_params.get('date_to',None)
+        # date_from=request.query_params.get('date_from',None)
+        # date_to=request.query_params.get('date_to',None)
         buys_basket=buy.objects.all()
-        if s_id is not None:
-            student=get_object_or_404(Student,phone=s_id)
-            buys_basket=buy.objects.filter(student=student.pk)
-        if price_from is not None:
-            buys_basket=buy.objects.filter(amount__gte=price_from)
-        if price_to is not None:
-            buys_basket=buy.objects.filter(amount__lte=price_to)
-        # if date_from is not None:
-        #     buys_basket=buy.objects.filter(created_at__gte=date_from)
-        # if date_to is not None:
-        #     buys_basket=buy.objects.filter(updated_at__lte=date_to)
+        # if s_id is not None:
+        #     student=get_object_or_404(Student,phone=s_id)
+        #     buys_basket=buy.objects.filter(student=student.pk)
+        # if price_from is not None:
+        #     buys_basket=buy.objects.filter(amount__gte=price_from)
+        # if price_to is not None:
+        #     buys_basket=buy.objects.filter(amount__lte=price_to)
+        # # if date_from is not None:
+        # #     buys_basket=buy.objects.filter(created_at__gte=date_from)
+        # # if date_to is not None:
+        # #     buys_basket=buy.objects.filter(updated_at__lte=date_to)
         serializer=buySerializer(buys_basket,many=True)
         new_data=copy.deepcopy(serializer.data)
         for i in new_data:
