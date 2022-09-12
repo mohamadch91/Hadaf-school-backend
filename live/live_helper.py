@@ -66,8 +66,7 @@ def getmeetings():
     ans=json.loads(ans)
     data=[]
     ans=ans["response"]
-    print(ans["meetings"])
-    if(len(ans["meetings"])>1):
+    if(len(ans["meetings"])>=1):
         if(type(ans["meetings"]["meeting"]) is list):
             for i in ans["meetings"]["meeting"]:
                 print(i)
