@@ -30,12 +30,13 @@ from dashboard.models import wallet,basket
 
 # from authen.models import User
 from .models import *
-
+from package.models import *
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from course.models import *
 from django.shortcuts import get_object_or_404
 MERCHANT = '18cd0405-b44b-4c21-858b-c834f7a035f8'
 ZP_API_REQUEST = "https://api.zarinpal.com/pg/v4/payment/request.json"
@@ -121,6 +122,41 @@ class buyWalletView(APIView):
             wallets.amount=amount
             wallets.save()
             for basketi in baskets:
+                for x in baskets:
+                    if x.type=='normal':
+                        normal=normalPackage.objects.get(id=x.buyID)
+                        course=normalPackageCourse.objects.filter(packageID=normal.id)
+                        #calculate price
+                        for z in course:
+                            s_c=StudetCourse.objects.create(studentID=user.id,courseID=z.courseID)
+                            s_c.save()
+                    elif x.type=='timing':
+                        timing=timingPackage.objects.get(id=x.buyID)
+                        course=timingPackageCourse.objects.filter(packageID=normal.id)
+                        #calculate price
+                        price=0
+                        for z in course:
+                            s_c=StudetCourse.objects.create(studentID=user.id,courseID=z.courseID)
+                            s_c.save()
+                            
+                       
+                    elif x.type=='student':
+                        student=studentPackage.objects.get(id=x.buyID)
+                        course=studentPackageCourse.objects.filter(packageID=normal.id)
+                        #calculate price
+                        price=0
+                        count_course=course.count()
+                        for z in course:
+                            s_c=StudetCourse.objects.create(studentID=user.id,courseID=z.courseID)
+                            s_c.save()
+
+
+                       
+                    elif x.type=='course':
+                        course=Course.objects.get(id=x.buyID)
+                        s_c=StudetCourse.objects.create(studentID=user.id,courseID=course.id)
+                        s_c.save()
+                   
                 basketi.delete()
             return Response({'message':'your amount is enough'},status=status.HTTP_200_OK)
 
