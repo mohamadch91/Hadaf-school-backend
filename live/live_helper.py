@@ -66,16 +66,15 @@ def getmeetings():
     ans=json.loads(ans)
     data=[]
     ans=ans["response"]
-    # print(ans["meetings"])
-    if(len(ans["meetings"])>1):
+    if(type(ans["meetings"]["meeting"]) is list):
         for i in ans["meetings"]["meeting"]:
             print(i)
             new_data={}
             new_data["name"]=i["meetingName"]["$"]
             new_data["id"]=i["meetingID"]["$"]-10
-            new_data["url"]=join("admin",i["meetingID"]["$"]-10)
+            new_data["url"]=join("main admin",i["meetingID"]["$"]-10)
             data.append(new_data)              
-    elif(len(ans["meetings"])==1):
+    elif(type(ans["meetings"]["meeting"]) is dict):
         i=ans["meetings"]["meeting"]
         new_data={}
         new_data["name"]=i["meetingName"]["$"]
