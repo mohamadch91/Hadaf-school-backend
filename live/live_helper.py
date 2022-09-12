@@ -27,9 +27,12 @@ def create(name,id):
 
 def join(name,id):
     id=str(id+10)
-    # name=name.replace(" ","_")
-    name=urllib.parse.quote(name)
-    join_query='fullName='+name+'&meetingID='+id+'&password=hadafadmin&redirect=true'
+    name=name.split(" ")
+    name1=name[0]
+    name2=name[1]
+    name1=urllib.parse.quote(name1)
+    name2=urllib.parse.quote(name2)
+    join_query='fullName='+name1+'+'+name2+'&meetingID='+id+'&password=hadafadmin&redirect=true'
     string='join'+join_query+SECRET_KEY
     result = hashlib.sha1(string.encode())
     checksum=result.hexdigest()
@@ -38,9 +41,13 @@ def join(name,id):
 
 def student_join(name,id):
     id=str(id+10)
-    name=urllib.parse.quote(name)
+    name=name.split(" ")
+    name1=name[0]
+    name2=name[1]
+    name1=urllib.parse.quote(name1)
+    name2=urllib.parse.quote(name2)
+    join_query='fullName='+name1+'+'+name2+'&meetingID='+id+'&password=hadafadmin&redirect=true'
 
-    join_query='fullName='+name+'&meetingID='+id+'&password=hadafuser&redirect=true'
     string='join'+join_query+SECRET_KEY
     result = hashlib.sha1(string.encode())
     checksum=result.hexdigest()
