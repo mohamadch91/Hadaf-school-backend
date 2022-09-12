@@ -106,13 +106,14 @@ def verify(request):
         return HttpResponse('Transaction failed or canceled by user')
 
 class buyWalletView(APIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = [IsAuthenticated,]
     def get(self,request):
-        buy_mount=request.GET.get('amount')
+        print("salam")
+        buy_mount=request.query_params.get('amount')
         if buy_mount is None:
             return Response({'message':'amount is required'},status=status.HTTP_400_BAD_REQUEST)
         user=request.user
-        wallets=get_object_or_404(wallet,studentID=user.id)
+        wallets=wallet.objects.filter(studentID=user.id)[0]
         baskets=basket.objects.filter(studentID=user.id)
         amount=wallets.amount
         if(amount <buy_mount):
@@ -124,15 +125,15 @@ class buyWalletView(APIView):
             for basketi in baskets:
                 for x in baskets:
                     if x.type=='normal':
-                        normal=normalPackage.objects.get(id=x.buyID)
+                        normal=normalPackage.objects.filter(id=x.buyID)
                         course=normalPackageCourse.objects.filter(packageID=normal.id)
                         #calculate price
                         for z in course:
                             s_c=StudetCourse.objects.create(studentID=user.id,courseID=z.courseID)
                             s_c.save()
                     elif x.type=='timing':
-                        timing=timingPackage.objects.get(id=x.buyID)
-                        course=timingPackageCourse.objects.filter(packageID=normal.id)
+                        timing=timingPackage.objects.filter(id=x.buyID)
+                        course=timingPackageCourse.objects.filter(packageID=timing.id)
                         #calculate price
                         price=0
                         for z in course:
@@ -141,8 +142,8 @@ class buyWalletView(APIView):
                             
                        
                     elif x.type=='student':
-                        student=studentPackage.objects.get(id=x.buyID)
-                        course=studentPackageCourse.objects.filter(packageID=normal.id)
+                        student=studentPackage.objects.filter(id=x.buyID)
+                        course=studentPackageCourse.objects.filter(packageID=student.id)
                         #calculate price
                         price=0
                         count_course=course.count()

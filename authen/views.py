@@ -261,6 +261,7 @@ class OTPViewRegister(APIView):
                 user = Student.objects.create(phone=otp['receiver'] )
                 #create wallet for students
                 Wallet=wallet.objects.create(studentID=user,amount=0)
+                Wallet.save()
                 created = True
                 refresh = RefreshToken.for_user(user)
         elif(type=="teacher"):
