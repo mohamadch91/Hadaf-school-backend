@@ -81,7 +81,7 @@ def getmeetings():
         new_data["name"]=i["meetingName"]["$"]
         new_data["id"]=i["meetingID"]["$"]-10
         # print(getpastmeeting(i["meetingID"]["$"]-10))
-        new_data["url"]=join("admin",i["meetingID"]["$"]-10)
+        new_data["url"]=join("main admin",i["meetingID"]["$"]-10)
         data.append(new_data)
     return data
 
