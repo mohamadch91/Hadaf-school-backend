@@ -26,6 +26,7 @@ def create(name,id):
     return ans
 
 def join(name,id):
+    id=int(id)
     id=str(id+10)
     name=name.split(" ")
     name1=name[0]
