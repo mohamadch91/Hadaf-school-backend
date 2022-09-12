@@ -26,6 +26,8 @@ from django.shortcuts import render
 # Create your views here.
 from rest_framework.permissions import IsAuthenticated
 
+from dashboard.models import wallet,basket
+
 # from authen.models import User
 from .models import *
 
@@ -102,7 +104,28 @@ def verify(request):
     else:
         return HttpResponse('Transaction failed or canceled by user')
 
-class buyView(APIView):
+class buyWalletView(APIView):
+    permission_classes = (IsAuthenticated,)
     def get(self,request):
-        url=request.data['url'
-        ]
+        buy_mount=request.GET.get('amount')
+        if buy_mount is None:
+            return Response({'message':'amount is required'},status=status.HTTP_400_BAD_REQUEST)
+        user=request.user
+        wallets=get_object_or_404(wallet,studentID=user.id)
+        baskets=basket.objects.filter(studentID=user.id)
+        amount=wallets.amount
+        if(amount <buy_mount):
+            return Response({'message':'your amount is not enough'},status=status.HTTP_400_BAD_REQUEST)
+        else:
+            amount=amount-buy_mount
+            wallets.amount=amount
+            wallets.save()
+            for basket in baskets:
+                basket.delete()
+            return Response({'message':'your amount is enough'},status=status.HTTP_200_OK)
+
+
+
+
+
+        
