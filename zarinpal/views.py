@@ -106,14 +106,13 @@ def verify(request):
         return HttpResponse('Transaction failed or canceled by user')
 
 class buyWalletView(APIView):
-    permission_classes = [IsAuthenticated,]
+    permission_classes = (IsAuthenticated,)
     def get(self,request):
-        print("salam")
-        buy_mount=request.query_params.get('amount')
+        buy_mount=request.GET.get('amount')
         if buy_mount is None:
             return Response({'message':'amount is required'},status=status.HTTP_400_BAD_REQUEST)
         user=request.user
-        wallets=wallet.objects.filter(studentID=user.id)[0]
+        wallets=get_object_or_404(wallet,studentID=user.id)
         baskets=basket.objects.filter(studentID=user.id)
         amount=wallets.amount
         if(amount <buy_mount):
@@ -125,14 +124,14 @@ class buyWalletView(APIView):
             for basketi in baskets:
                 for x in baskets:
                     if x.type=='normal':
-                        normal=normalPackage.objects.filter(id=x.buyID)
+                        normal=normalPackage.objects.get(id=x.buyID)
                         course=normalPackageCourse.objects.filter(packageID=normal.id)
                         #calculate price
                         for z in course:
                             s_c=StudetCourse.objects.create(studentID=user.id,courseID=z.courseID)
                             s_c.save()
                     elif x.type=='timing':
-                        timing=timingPackage.objects.filter(id=x.buyID)
+                        timing=timingPackage.objects.get(id=x.buyID)
                         course=timingPackageCourse.objects.filter(packageID=timing.id)
                         #calculate price
                         price=0
@@ -142,7 +141,7 @@ class buyWalletView(APIView):
                             
                        
                     elif x.type=='student':
-                        student=studentPackage.objects.filter(id=x.buyID)
+                        student=studentPackage.objects.get(id=x.buyID)
                         course=studentPackageCourse.objects.filter(packageID=student.id)
                         #calculate price
                         price=0
@@ -158,7 +157,7 @@ class buyWalletView(APIView):
                         s_c=StudetCourse.objects.create(studentID=user.id,courseID=course.id)
                         s_c.save()
                    
-                basketi.delete()
+                    basketi.delete()
             return Response({'message':'your amount is enough'},status=status.HTTP_200_OK)
 
 
