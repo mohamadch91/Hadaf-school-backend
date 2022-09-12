@@ -8,7 +8,7 @@ from authen.models import *
 
 class Course(models.Model):
     id = models.AutoField(primary_key=True)
-    code = models.IntegerField(blank=True, null=True)
+    code = models.CharField(max_length=50,blank=True, null=True)
     name = models.CharField(max_length=100,null=True)
     picture1 = models.ImageField(upload_to='course_pictures/',blank=True,null=True)
     picture2 = models.ImageField(upload_to='course_pictures/',blank=True,null=True)

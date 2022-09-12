@@ -9,7 +9,7 @@ import json, xmljson
 from lxml.etree import fromstring, tostring
 import urllib.parse
 def create(name,id):
-    welcome='به کلاس '+name+' خوش آمدید'
+    welcome='به کلاس'+name+'خوش آمدید'
     welcome=urllib.parse.quote(welcome)
     name=urllib.parse.quote(name)
     voice_bridge=str(id+10000)
