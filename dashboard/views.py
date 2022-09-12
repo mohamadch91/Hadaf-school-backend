@@ -258,6 +258,11 @@ class discountView(APIView):
         discount=get_object_or_404(Discount,code=code)
         if discount.active==False:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+        if(discount.count>0):
+            discount.count-=1
+            discount.save()
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
         amount=request.data["amount"]
         if(discount.isPercent):
             amount=amount*((100-discount.amount)/100)

@@ -99,9 +99,7 @@ class buyWalletView(APIView):
         if(amount <buy_mount):
             return Response({'message':'your amount is not enough'},status=status.HTTP_400_BAD_REQUEST)
         else:
-            amount=amount-buy_mount
-            wallets.amount=amount
-            wallets.save()
+           
             for basketi in baskets:
                 for x in baskets:
                     if x.type=='normal':
@@ -110,8 +108,13 @@ class buyWalletView(APIView):
                         #calculate price
                         for z in course:
                             course=get_object_or_404(Course,id=z.courseID)
-                            s_c=StudetCourse.objects.create(studentID=user,courseID=course)
-                            s_c.save()
+                            try:
+                                test=get_object_or_404(StudetCourse,studentID=user.id,courseID=course.id)
+                                return Response({'message':'you have this course'},status=status.HTTP_400_BAD_REQUEST)
+
+                            except:
+                                s_c=StudetCourse.objects.create(studentID=user,courseID=course)
+                                s_c.save()
                     elif x.type=='timing':
                         timing=timingPackage.objects.get(id=x.buyID)
                         course=timingPackageCourse.objects.filter(packageID=timing.id)
@@ -119,9 +122,13 @@ class buyWalletView(APIView):
                         price=0
                         for z in course:
                             course=get_object_or_404(Course,id=z.courseID)
-                            s_c=StudetCourse.objects.create(studentID=user,courseID=course)
-                            s_c.save()
-                            
+                            try:
+                                test=get_object_or_404(StudetCourse,studentID=user.id,courseID=course.id)
+                                return Response({'message':'you have this course'},status=status.HTTP_400_BAD_REQUEST)
+
+                            except:
+                                s_c=StudetCourse.objects.create(studentID=user,courseID=course)
+                                s_c.save()
                        
                     elif x.type=='student':
                         student=studentPackage.objects.get(id=x.buyID)
@@ -131,17 +138,28 @@ class buyWalletView(APIView):
                         count_course=course.count()
                         for z in course:
                             course=get_object_or_404(Course,id=z.courseID)
-                            s_c=StudetCourse.objects.create(studentID=user,courseID=course)
-                            s_c.save()
+                            try:
+                                test=get_object_or_404(StudetCourse,studentID=user.id,courseID=course.id)
+                                return Response({'message':'you have this course'},status=status.HTTP_400_BAD_REQUEST)
 
+                            except:
+                                s_c=StudetCourse.objects.create(studentID=user,courseID=course)
+                                s_c.save()
 
                        
                     elif x.type=='course':
                         course=Course.objects.get(id=x.buyID)
-                        s_c=StudetCourse.objects.create(studentID=user,courseID=course)
-                        s_c.save()
-                   
+                        try:
+                            test=get_object_or_404(StudetCourse,studentID=user.id,courseID=course.id)
+                            return Response({'message':'you have this course'},status=status.HTTP_400_BAD_REQUEST)
+                        except:
+                            s_c=StudetCourse.objects.create(studentID=user,courseID=course)
+                            s_c.save()
                     basketi.delete()
+            amount=amount-buy_mount
+            wallets.amount=amount
+            wallets.save()        
+            
             return Response({'message':'your amount is enough'},status=status.HTTP_200_OK)
 
 
