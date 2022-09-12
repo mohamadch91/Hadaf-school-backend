@@ -70,7 +70,7 @@ def verify(request):
             t_status = req.json()['data']['code']
             if t_status == 100:
                 wallets=get_object_or_404(wallet,studentID=buys.student.id)
-                wallets.amount=wallets.amount+buys.amount
+                wallets.amount=wallets.amount+(buys.amount/10)
                 wallets.save()
                 return redirect(redirects)
 
