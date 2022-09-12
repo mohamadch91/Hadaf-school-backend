@@ -449,7 +449,7 @@ class specificCoourseSes(APIView):
                 grade=x.studentID.grade.name
             data={
                 "id":x.studentID.pk,
-                'name':x.studentID.username,
+                'name':x.studentID.first_name,
                 'phone':x.studentID.phone,
                 'l_name':x.studentID.last_name,
                 'grade':grade
