@@ -47,7 +47,7 @@ ZP_API_STARTPAY = "https://www.zarinpal.com/pg/StartPay/{authority}"
 Amount = 10001  # Rial / Required
 description = "backend test"  # Required
 # Important: need to edit for realy server.
-CallbackURL = 'http://localhost:8000/zarinpal/verify/'
+CallbackURL = 'https://api.srvschool.ir/zarinpal/verify/'
 student_array = {}
 
 
@@ -60,6 +60,7 @@ def verify(request):
         req_header = {"accept": "application/json",
                       "content-type": "application/json'"}
         buys=get_object_or_404(buy,authority=t_authority)
+        redirect=buy.url
         req_data = {
             "merchant_id": MERCHANT,
             "amount": buys.amount,
@@ -69,13 +70,15 @@ def verify(request):
         if len(req.json()['errors']) == 0:
             t_status = req.json()['data']['code']
             if t_status == 100:
-                return HttpResponse('Transaction success.\nRefID: ' + str(
-                    req.json()['data']['ref_id']
-                ))
+                wallets=get_object_or_404(wallet,studentID=buys.student.id)
+                wallets.amount=wallets.amount+buys.amount
+                wallets.save()
+                return redirect(redirect)
+
+                
             elif t_status == 101:
-                return HttpResponse('Transaction submitted : ' + str(
-                    req.json()['data']['message']
-                ))
+                return redirect(redirect)
+
             else:
                 return HttpResponse('Transaction failed.\nStatus: ' + str(
                     req.json()['data']['message']
@@ -156,7 +159,6 @@ class addTowallet(APIView):
     def post(self,request):
         amount=request.data["amount"]
         url=request.data["url"]
-
         user=request.user
         user=get_object_or_404(Student,pk=user.id)
         req_data = {
@@ -174,7 +176,7 @@ class addTowallet(APIView):
         if len(req.json()['errors']) == 0:
             authority = req.json()['data']['authority']
             #create new buy model
-            buys=buy.objects.create(student=user,amount=amount,authority=authority,url=url)
+            buys=buy.objects.create(student=user,amount=Amount,authority=authority,url=url)
             buys.save()
             return Response(ZP_API_STARTPAY.format(authority=authority))
         else:
