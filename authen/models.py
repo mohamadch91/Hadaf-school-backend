@@ -50,7 +50,7 @@ class User(AbstractUser):
     password =None
     phone = models.CharField( max_length = 13, unique = True)
     birth = models.DateField(blank=True,null=True)
-    national_code=models.IntegerField(blank=True,null=True,unique=True)
+    national_code=models.CharField(max_length=10,blank=True,null=True,unique=True)
     role=models.CharField(max_length=10,blank=True,null=True)
     first_name =models.CharField(max_length=20,blank=True,null=True)
     last_name =models.CharField(max_length=20,blank=True,null=True)
