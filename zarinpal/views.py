@@ -165,4 +165,4 @@ class buyWalletView(APIView):
 
 
 
-class addTowallet(APIView)
+# class addTowallet(APIView)
