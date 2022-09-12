@@ -79,16 +79,11 @@ def verify(request):
                 return redirect(redirects)
 
             else:
-                return HttpResponse('Transaction failed.\nStatus: ' + str(
-                    req.json()['data']['message']
-                ))
+                return redirect(redirects)
         else:
-            e_code = req.json()['errors']['code']
-            e_message = req.json()['errors']['message']
-            return HttpResponse(f"Error code: {e_code}, Error Message: {e_message}")
+            return redirect(redirects)
     else:
-        return HttpResponse('Transaction failed or canceled by user')
-
+        return redirect(redirects)
 class buyWalletView(APIView):
     permission_classes = (IsAuthenticated,)
     def get(self,request):
@@ -200,10 +195,10 @@ class report(APIView):
             buys_basket=buy.objects.filter(amount__gte=price_from)
         if price_to is not None:
             buys_basket=buy.objects.filter(amount__lte=price_to)
-        if date_from is not None:
-            buys_basket=buy.objects.filter(created_at__gte=date_from)
-        if date_to is not None:
-            buys_basket=buy.objects.filter(updated_at__lte=date_to)
+        # if date_from is not None:
+        #     buys_basket=buy.objects.filter(created_at__gte=date_from)
+        # if date_to is not None:
+        #     buys_basket=buy.objects.filter(updated_at__lte=date_to)
         serializer=buySerializer(buys_basket,many=True)
         new_data=copy.deepcopy(serializer.data)
         for i in new_data:
