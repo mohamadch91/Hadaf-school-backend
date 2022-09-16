@@ -208,6 +208,7 @@ class report(APIView):
     permission_classes=(IsAuthenticated,)
     def get(self,request):
         s_id=request.query_params.get('s_id',None)
+        id=request.query_params.get('id',None)
         price_from=request.query_params.get('price_from',None)
         price_to=request.query_params.get('price_to',None)
         date_from=request.query_params.get('date_from',None)
@@ -216,6 +217,8 @@ class report(APIView):
         if s_id is not None:
             student=get_object_or_404(Student,phone=s_id)
             buys_basket=buy.objects.filter(student=student.pk)
+        if id is not None:
+            buys_basket=buy.objects.filter(student=id)
         if price_from is not None:
             buys_basket=buy.objects.filter(amount__gte=price_from)
         if price_to is not None:
