@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # Github.com/Rasooll
 from logging.config import fileConfig
+from operator import ge
 from django.http import HttpResponse
 from django.shortcuts import redirect
 import requests
@@ -249,13 +250,15 @@ class addbuy(APIView):
         return Response(ser.errors,status=status.HTTP_400_BAD_REQUEST)
     def put (self,request):
         new_data=copy.deepcopy(request.data)
+        ans=[]
         for i in new_data:
             student=get_object_or_404(Student,phone=i["student"])
             i["student"]=student.pk
-        ser=buySerializer(data=new_data,many=True)
-        if ser.is_valid():
-            ser.save()
-            return Response(ser.data,status=status.HTTP_200_OK)
+            x=get_object_or_404(buy,id=i["id"])
+            ser=buySerializer(x,data=i)
+            if ser.is_valid():
+                ser.save()
+                ans.append(ser.data)
         return Response(ser.errors,status=status.HTTP_400_BAD_REQUEST)
     def delete(self,request):
         id=request.data["id"]
