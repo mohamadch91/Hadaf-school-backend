@@ -70,7 +70,7 @@ class Student(User):
     disipcline=models.FloatField(blank=True,null=True)
     school=models.CharField(max_length=50,blank=True,null=True)
     parentName=models.CharField(max_length=50,blank=True,null=True)
-    parentNationalCode=models.IntegerField(blank=True,null=True)
+    parentNationalCode=models.CharField(blank=True,null=True)
     pbirthday=models.DateField(blank=True,null=True)
     peducation=models.CharField(max_length=50,blank=True,null=True)
     pjob=models.CharField(max_length=50,blank=True,null=True)
