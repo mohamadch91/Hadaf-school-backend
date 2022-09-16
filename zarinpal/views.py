@@ -259,7 +259,9 @@ class addbuy(APIView):
             if ser.is_valid():
                 ser.save()
                 ans.append(ser.data)
-        return Response(ser.errors,status=status.HTTP_400_BAD_REQUEST)
+            else:
+                ans.append(ser.errors)
+        return Response(ans,status=status.HTTP_202_ACCEPTED)
     def delete(self,request):
         id=request.data["id"]
         buyi=get_object_or_404(buy,pk=id)
