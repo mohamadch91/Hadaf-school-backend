@@ -252,7 +252,7 @@ class addbuy(APIView):
         for i in new_data:
             student=get_object_or_404(Student,phone=i["student"])
             i["student"]=student.pk
-        ser=buySerializer(data=request.data,many=True)
+        ser=buySerializer(data=new_data,many=True)
         if ser.is_valid():
             ser.save()
             return Response(ser.data,status=status.HTTP_200_OK)
