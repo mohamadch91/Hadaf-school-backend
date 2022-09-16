@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # Github.com/Rasooll
+from logging.config import fileConfig
 from django.http import HttpResponse
 from django.shortcuts import redirect
 import requests
@@ -236,12 +237,21 @@ class report(APIView):
 class addbuy(APIView):
     permission_classes=(IsAuthenticated,)
     def post(self,request):
-        ser=buySerializer(data=request.data,many=True)
+        new_data=copy.deepcopy(request.data)
+        for i in new_data:
+            student=get_object_or_404(Student,phone=i["student"])
+            i["student"]=student.pk
+
+        ser=buySerializer(data=new_data,many=True)
         if ser.is_valid():
             ser.save()
             return Response(ser.data,status=status.HTTP_200_OK)
         return Response(ser.errors,status=status.HTTP_400_BAD_REQUEST)
     def put (self,request):
+        new_data=copy.deepcopy(request.data)
+        for i in new_data:
+            student=get_object_or_404(Student,phone=i["student"])
+            i["student"]=student.pk
         ser=buySerializer(data=request.data,many=True)
         if ser.is_valid():
             ser.save()
