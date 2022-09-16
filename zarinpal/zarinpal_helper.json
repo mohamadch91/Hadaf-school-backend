@@ -1,0 +1,31 @@
+http://127.0.0.1:8000/zarinpal/add/
+
+getesh ge to hamon reporte inja nist
+
+addesh in sheklie:
+
+    [
+{
+"student" :14,
+"amount":10000,
+"authority" :"jhkjhkhjlhjk", in codee tarakonesheeee
+"type" :2
+}
+]
+
+put
+[
+    {
+        "id": 11,
+        "amount": 10000,
+        "authority": "hhhhh",
+        "url": null,
+        "type": "2",
+        "student": 14
+    }
+]
+delete
+{
+
+    "id":11
+}

@@ -55,10 +55,11 @@ student_array = {}
 def verify(request):
     t_status = request.GET.get('Status')
     t_authority = request.GET['Authority']
+    buys=get_object_or_404(buy,authority=t_authority)
+
     if request.GET.get('Status') == 'OK':
         req_header = {"accept": "application/json",
                       "content-type": "application/json'"}
-        buys=get_object_or_404(buy,authority=t_authority)
         redirects=buys.url
         req_data = {
             "merchant_id": MERCHANT,
@@ -79,10 +80,14 @@ def verify(request):
                 return redirect(redirects)
 
             else:
+                buys.delete()
                 return redirect(redirects)
         else:
+            buys.delete()
+
             return redirect(redirects)
     else:
+        buys.delete()
         return redirect(redirects)
 class buyWalletView(APIView):
     permission_classes = (IsAuthenticated,)
@@ -189,7 +194,7 @@ class addTowallet(APIView):
         if len(req.json()['errors']) == 0:
             authority = req.json()['data']['authority']
             #create new buy model
-            buys=buy.objects.create(student=user,amount=amount,authority=authority,url=url)
+            buys=buy.objects.create(student=user,amount=amount,authority=authority,url=url,type=1)
             buys.save()
             return Response(ZP_API_STARTPAY.format(authority=authority))
         else:
@@ -203,20 +208,20 @@ class report(APIView):
         s_id=request.query_params.get('s_id',None)
         price_from=request.query_params.get('price_from',None)
         price_to=request.query_params.get('price_to',None)
-        # date_from=request.query_params.get('date_from',None)
-        # date_to=request.query_params.get('date_to',None)
+        date_from=request.query_params.get('date_from',None)
+        date_to=request.query_params.get('date_to',None)
         buys_basket=buy.objects.all()
-        # if s_id is not None:
-        #     student=get_object_or_404(Student,phone=s_id)
-        #     buys_basket=buy.objects.filter(student=student.pk)
-        # if price_from is not None:
-        #     buys_basket=buy.objects.filter(amount__gte=price_from)
-        # if price_to is not None:
-        #     buys_basket=buy.objects.filter(amount__lte=price_to)
-        # # if date_from is not None:
-        # #     buys_basket=buy.objects.filter(created_at__gte=date_from)
-        # # if date_to is not None:
-        # #     buys_basket=buy.objects.filter(updated_at__lte=date_to)
+        if s_id is not None:
+            student=get_object_or_404(Student,phone=s_id)
+            buys_basket=buy.objects.filter(student=student.pk)
+        if price_from is not None:
+            buys_basket=buy.objects.filter(amount__gte=price_from)
+        if price_to is not None:
+            buys_basket=buy.objects.filter(amount__lte=price_to)
+        if date_from is not None:
+            buys_basket=buy.objects.filter(created_at__gte=date_from)
+        if date_to is not None:
+            buys_basket=buy.objects.filter(updated_at__lte=date_to)
         serializer=buySerializer(buys_basket,many=True)
         new_data=copy.deepcopy(serializer.data)
         for i in new_data:
@@ -228,4 +233,22 @@ class report(APIView):
         return Response(new_data,status=status.HTTP_200_OK)
         
 
-        
+class addbuy(APIView):
+    permission_classes=(IsAuthenticated,)
+    def post(self,request):
+        ser=buySerializer(data=request.data,many=True)
+        if ser.is_valid():
+            ser.save()
+            return Response(ser.data,status=status.HTTP_200_OK)
+        return Response(ser.errors,status=status.HTTP_400_BAD_REQUEST)
+    def put (self,request):
+        ser=buySerializer(data=request.data,many=True)
+        if ser.is_valid():
+            ser.save()
+            return Response(ser.data,status=status.HTTP_200_OK)
+        return Response(ser.errors,status=status.HTTP_400_BAD_REQUEST)
+    def delete(self,request):
+        id=request.data["id"]
+        buyi=get_object_or_404(buy,pk=id)
+        buyi.delete()
+        return Response({'message':'delete success'},status=status.HTTP_200_OK)
