@@ -139,19 +139,20 @@ WSGI_APPLICATION = 'hadaf.wsgi.application'
 # DATABASES = {
 #   'default': {
 #      'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'inventorpft_db',
-#         'USER': 'postgres',
-#         'PASSWORD': 'tie9at9kpiue8de',
-#         'HOST': 'inventorydb-huj-service',
-#         'PORT': '',
+#         'NAME': 'hadaf',
+#         'USER': 'hadaf',
+#         'PASSWORD': '77nZcM3onVFVrV5L*s7hex#!3XKYQ5oz',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
 # }
 # }
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# 77nZcM3onVFVrV5L*s7hex#!3XKYQ5oz
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
