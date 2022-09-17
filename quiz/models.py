@@ -22,6 +22,7 @@ class quizHeader(models.Model):
 
 class quizQuestion(models.Model):
     id=models.AutoField(primary_key=True)
+    header_id=models.ForeignKey(quizHeader,on_delete=models.CASCADE,blank=True,null=True)
     question=models.ImageField(upload_to='q_question/',blank=True,null=True)
     has_negative=models.BooleanField(blank=True,null=True,default=False)
     result=models.IntegerField(blank=True,null=True)

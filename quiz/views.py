@@ -79,11 +79,24 @@ class quizQuestionView(APIView):
 
     def post(self, request):
         ans=[]
-        for i in request.data:
-            ser = quizQuestionSerializer(data=i)
+        lens=len(request.data)/4
+        counter=1
+        while counter<=lens:
+            strs=","+str(counter)
+            data={
+                "header_id":request.data["header_id"+strs],
+                "question":request.data["question"+strs],
+                "has_negative":request.data["has_negative"+strs],
+                "result":request.data["result"+strs],
+
+            }
+            ser = quizQuestionSerializer(data=data)
             if ser.is_valid():
                 ser.save()
                 ans.append(ser.data)
+                counter+=1
+            else:
+                return Response(ser. errors, status=status.HTTP_400_BAD_REQUEST)
         return Response(ans, status=status.HTTP_200_OK)
     
     def put(self, request):
@@ -199,6 +212,9 @@ class studentResult(APIView):
             for i in studentQueezs:
                 if i.result==i.question.result:
                     correct_count+=1
+                else:
+                    if(i.question.has_negative):
+                        correct_count-=0.33
             return Response({'correct_count':correct_count,'q_count':q_count},status.HTTP_200_OK)
         else:
             return Response('need query param',status.HTTP_400_BAD_REQUEST)
@@ -282,13 +298,28 @@ class totalquizQuestionsView(APIView):
             else:
                 return Response('need query param',status.HTTP_400_BAD_REQUEST)
         def post(self,request):
-            for i in request.data:
-                ser=totalquizQuestionSerializer(data=i)
+            lens=len(request.data)/4
+            counter=1
+            ans=[]
+            while counter<=lens:
+                strs=","+str(counter)
+                data={
+                    "header_id":request.data["header_id"+strs],
+                    "question":request.data["question"+strs],
+                    "subject":request.data["subject"+strs],
+                    "has_negative":request.data["has_negative"+strs],
+                    "result":request.data["result"+strs],
+
+                }
+                ser=totalquizQuestionSerializer(data=data)
                 if ser.is_valid():
                     ser.save()
+                    ans.append(ser.data)
+                    counter+=1
                 else:
                     return Response(ser.errors,status.HTTP_400_BAD_REQUEST)
-            return Response(status.HTTP_201_CREATED)
+            return Response(ans,status.HTTP_201_CREATED)
+            
         def put(self,request):
             id=request.data['id']
             total=get_object_or_404(totalquizQuestion,id=id)
@@ -336,3 +367,23 @@ class totalstudentQueezView(APIView):
         total=get_object_or_404(totalstudentQueez,id=id)
         total.delete()
         return Response(status.HTTP_201_CREATED)
+
+class totalStudentResult(APIView):
+    def get(self,request):
+        s_id=request.query_params.get('s_id',None)
+        h_id=request.query_params.get('h_id',None)
+        if s_id is not None and h_id is not None:
+            student=get_object_or_404(Student,pk=s_id)
+            quizHeaders=get_object_or_404(totalquizHeader,id=h_id)
+            studentQueezs=studentQueez.objects.filter(student=student,quizheader=quizHeaders)
+            q_count=quizHeaders.question_count
+            correct_count=0
+            for i in studentQueezs:
+                if i.result==i.question.result:
+                    correct_count+=1
+                else:
+                    if(i.question.has_negative):
+                        correct_count-=0.33
+            return Response({'correct_count':correct_count,'q_count':q_count},status.HTTP_200_OK)
+        else:
+            return Response('need query param',status.HTTP_400_BAD_REQUEST)
