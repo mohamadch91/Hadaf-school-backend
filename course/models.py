@@ -32,6 +32,7 @@ class Course(models.Model):
     end = models.BooleanField(default=True,null=True)
     endDateTime = models.DateField(null=True)
     active = models.BooleanField(default=True,null=True)
+    has_quiz = models.BooleanField(default=False,null=True)
     userID = models.ForeignKey(User,on_delete=models.CASCADE,null=True, related_name='User')
 
 
