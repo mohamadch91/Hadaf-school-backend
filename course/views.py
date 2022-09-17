@@ -78,6 +78,10 @@ class courseView(APIView):
                 grade=course.gradeID.name
             if course.courseTypeID:
                 course_tye=course.courseTypeID.name
+            if course.lessonID:
+                lesson=course.lessonID.name
+            if course.yearID:
+                year=course.yearID.name
             if course.userID:
                 if(course.userID.last_name and course.userID.first_name):
                     user=course.userID.last_name+" "+course.userID.first_name
@@ -102,6 +106,7 @@ class courseView(APIView):
             grade=request.query_params.get('grade',None)
             course_type=request.query_params.get('course_type',None)
             lesson=request.query_params.get('lesson',None)
+            year=request.query_params.get('year',None)
             courses=Course.objects.all()
             if dep:
                 courses=courses.filter(departmentID=dep)
@@ -114,6 +119,8 @@ class courseView(APIView):
             if(page):
                 page=int(page)-1
                 courses=courses[page*9:page*9+9]
+            if(year):
+                courses=courses.filter(year=year)
             if(courses.count()==0):
                 return Response(status.HTTP_404_NOT_FOUND)    
             ser = courseSerializer(courses, many=True)
@@ -395,7 +402,10 @@ class specifiecStudentcourse(APIView):
         ser=studentCourseSerializer(courses,many=True)
         new_data=copy.deepcopy(ser.data)
         for i in new_data:
-            i["course_name"]=Course.objects.get(id=i["courseID"]).name
+            c=Course.objects.get(id=i["courseID"])
+            i["course_name"]=c.name
+            i["course_price"]=c.price1
+
         return Response(new_data,status=status.HTTP_200_OK)
         
 class blockstudents(APIView):

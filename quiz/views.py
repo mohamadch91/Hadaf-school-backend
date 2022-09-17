@@ -203,6 +203,7 @@ class studentResult(APIView):
     def get(self,request):
         s_id=request.query_params.get('s_id',None)
         h_id=request.query_params.get('h_id',None)
+        accepted=False
         if s_id is not None and h_id is not None:
             student=get_object_or_404(Student,pk=s_id)
             quizHeaders=get_object_or_404(quizHeader,id=h_id)
@@ -215,7 +216,10 @@ class studentResult(APIView):
                 else:
                     if(i.question.has_negative):
                         correct_count-=0.33
-            return Response({'correct_count':correct_count,'q_count':q_count},status.HTTP_200_OK)
+            min=quizHeaders.min_range/100
+            if(correct_count/q_count>=min):
+                accepted=True
+            return Response({'correct_count':correct_count,'q_count':q_count,'accepted':accepted},status.HTTP_200_OK)
         else:
             return Response('need query param',status.HTTP_400_BAD_REQUEST)
 
@@ -375,14 +379,14 @@ class totalStudentResult(APIView):
         if s_id is not None and h_id is not None:
             student=get_object_or_404(Student,pk=s_id)
             quizHeaders=get_object_or_404(totalquizHeader,id=h_id)
-            studentQueezs=studentQueez.objects.filter(student=student,quizheader=quizHeaders)
+            studentQueezs=totalstudentQueez.objects.filter(student=student,quizheader=quizHeaders)
             q_count=quizHeaders.question_count
             correct_count=0
             for i in studentQueezs:
-                if i.result==i.question.result:
-                    correct_count+=1
+                if i.result==i.quizQuestion.result:
+                    correct_count+=i.quizQuestion.subject.ratio
                 else:
-                    if(i.question.has_negative):
+                    if(i.quizQuestion.has_negative):
                         correct_count-=0.33
             return Response({'correct_count':correct_count,'q_count':q_count},status.HTTP_200_OK)
         else:
