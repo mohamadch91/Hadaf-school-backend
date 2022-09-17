@@ -119,7 +119,7 @@ def generate_otp():
 class OTPRequest(models.Model):
 
     request_id = models.UUIDField(primary_key=True, editable=False, default=uuid4)
-    receiver = models.IntegerField()
+    receiver = models.CharField(max_length=7,blank=True,null=True)
     password = models.CharField(max_length=7, default=generate_otp)
     created = models.DateTimeField(auto_now_add=True, editable=False)
 
