@@ -22,12 +22,8 @@ class quizHeader(models.Model):
 
 class quizQuestion(models.Model):
     id=models.AutoField(primary_key=True)
-    header_id=models.ForeignKey(quizHeader,on_delete=models.CASCADE,blank=True,null=True)
-    title=models.TextField(max_length=350,blank=True,null=True)
-    answer1=models.TextField(max_length=400,blank=True,null=True)
-    answer2=models.TextField(max_length=400,blank=True,null=True)
-    answer3=models.TextField(max_length=400,blank=True,null=True)
-    answer4=models.TextField(max_length=400,blank=True,null=True)
+    question=models.ImageField(upload_to='q_question/',blank=True,null=True)
+    has_negative=models.BooleanField(blank=True,null=True,default=False)
     result=models.IntegerField(blank=True,null=True)
 
 class studentQueez(models.Model):
@@ -61,11 +57,8 @@ class totalquizQuestion(models.Model):
     header_id=models.ForeignKey(totalquizHeader,on_delete=models.CASCADE,blank=True,null=True)
     #quiz subject
     subject=models.ForeignKey(totalquizSubjects,on_delete=models.CASCADE,blank=True,null=True)
-    title=models.TextField(max_length=350,blank=True,null=True)
-    answer1=models.TextField(max_length=400,blank=True,null=True)
-    answer2=models.TextField(max_length=400,blank=True,null=True)
-    answer3=models.TextField(max_length=400,blank=True,null=True)
-    answer4=models.TextField(max_length=400,blank=True,null=True)
+    question=models.ImageField(upload_to='q_question/',blank=True,null=True)
+    has_negative=models.BooleanField(blank=True,null=True,default=False)
     result=models.IntegerField(blank=True,null=True)
 
 class totalstudentQueez(models.Model):

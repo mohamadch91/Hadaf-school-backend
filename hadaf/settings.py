@@ -136,7 +136,16 @@ WSGI_APPLICATION = 'hadaf.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
+# DATABASES = {
+#   'default': {
+#      'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'inventorpft_db',
+#         'USER': 'postgres',
+#         'PASSWORD': 'tie9at9kpiue8de',
+#         'HOST': 'inventorydb-huj-service',
+#         'PORT': '',
+# }
+# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
