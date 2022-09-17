@@ -395,7 +395,12 @@ class UseripView(APIView):
             if(i["user"] is not None):
                 user=get_object_or_404(User,id=i["user"])
                 i["user_phone"]=user.phone
-                i["user_name"]=user.first_name+" "+user.last_name
+                i["user_name"]=user.phone
+                if(user.first_name is not None):
+                    i["user_name"]=user.first_name
+                if (user.last_name is not None):
+                    i["user_name"]+=user.last_name
+                
         return Response(data=new_data,status=status.HTTP_200_OK)
     def post(self,request):
         serializer = userIpSerializer(data=request.data)

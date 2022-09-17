@@ -1,0 +1,20 @@
+http://127.0.0.1:8000/authen/user_ip/
+
+get dar va post
+
+age baraye hame user haro bekhay
+hmintori get mizani
+
+age bare ye usero bekhay
+http://127.0.0.1:8000/authen/user_ip/?id=1
+
+
+postesham in sheklie
+
+{
+     
+        "ip": "192.168.1.1",
+        "device": "iphone",
+        "user": 2
+ 
+    }
