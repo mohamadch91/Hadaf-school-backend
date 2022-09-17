@@ -32,7 +32,14 @@ class normalPackageView(APIView):
     def get(self, request):
         normalPackageList = normalPackage.objects.all()
         serializer = normalPackageSerializer(normalPackageList, many=True)
-        return Response(serializer.data)
+        new_data=copy.deepcopy(serializer.data)
+        for i in new_data:
+            courses=normalPackageCourse.objects.filter(packageID=i['id'])
+            price=0
+            for j in courses:
+                price+=j.courseID.price1
+            i['price']=price
+        return Response(new_data, status=status.HTTP_200_OK)
     def post(self, request):
         serializer = normalPackageSerializer(data=request.data,many=True)
         if serializer.is_valid():
@@ -102,7 +109,14 @@ class timingPackageView(APIView):
     def get(self, request):
         timingPackageList = timingPackage.objects.all()
         serializer = timingPackageSerializer(timingPackageList, many=True)
-        return Response(serializer.data)
+        new_data=copy.deepcopy(serializer.data)
+        for i in new_data:
+            courses=timingPackageCourse.objects.filter(packageID=i['id'])
+            price=0
+            for j in courses:
+                price+=j.courseID.price1
+            i['price']=price
+        return Response(new_data, status=status.HTTP_200_OK)
     def post(self, request):
         serializer = timingPackageSerializer(data=request.data,many=True)
         if serializer.is_valid():
@@ -184,6 +198,12 @@ class studentPackageView(APIView):
             new_data=copy.deepcopy(ser.data)
             student=get_object_or_404(Student, id=new_data['student'])
             new_data['student_name']=student.first_name+student.last_name
+            courses=studentPackageCourse.objects.filter(packageID=new_data['id'])
+            price=0
+            for j in courses:
+                price+=j.courseID.price1
+            new_data['price']=price
+            
             ans.append(new_data)
         return Response(ans)
     def post(self, request):

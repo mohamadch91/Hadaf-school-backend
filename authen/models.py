@@ -124,3 +124,10 @@ class OTPRequest(models.Model):
     created = models.DateTimeField(auto_now_add=True, editable=False)
 
     objects = OTPManager()
+
+class userIp(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    ip=models.CharField(max_length=50,blank=True,null=True)
+    device=models.CharField(max_length=50,blank=True,null=True)
+    def __str__(self):
+        return "{}".format(self.user+":"+self.ip+":"+self.device)

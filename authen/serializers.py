@@ -126,3 +126,8 @@ class ObtainTokenSerializer(serializers.Serializer):
     refresh = serializers.CharField( allow_null=False)
     created = serializers.BooleanField()
 
+class userIpSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = userIp
+        fields = '__all__'
+

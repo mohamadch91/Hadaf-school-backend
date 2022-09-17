@@ -22,6 +22,8 @@ urlpatterns = [
     path('user/', UserView.as_view(), name='admin_login'),
     path('currupted/', CurruptedView.as_view(), name='currupted'),
     path('login_to_user/', loginUserView.as_view(), name='l user'),
+    path('user_ip/', UseripView.as_view(), name='l user'),
+
 
     
     

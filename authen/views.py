@@ -381,3 +381,25 @@ class loginUserView(APIView):
         }).data
         return Response(ser,status=status.HTTP_202_ACCEPTED)
         
+class UseripView(APIView):
+    permission_classes=(IsAuthenticated,)
+    def get(self,request):
+        id=request.query_params.get('id')
+        if(id is None):
+            ip=userIp.objects.all()
+        else:
+            ip=userIp.objects.filter(user=id)
+        serializer = userIpSerializer(ip,many=True)
+        new_data=copy.deepcopy(serializer.data)
+        for i in new_data:
+            if(i["user"] is not None):
+                user=get_object_or_404(User,id=i["user"])
+                i["user_phone"]=user.phone
+                i["user_name"]=user.first_name+" "+user.last_name
+        return Response(data=new_data,status=status.HTTP_200_OK)
+    def post(self,request):
+        serializer = userIpSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
