@@ -211,10 +211,10 @@ class studentResult(APIView):
             q_count=quizHeaders.question_count
             correct_count=0
             for i in studentQueezs:
-                if i.result==i.question.result:
+                if i.result==i.quizQuestion.result:
                     correct_count+=1
                 else:
-                    if(i.question.has_negative):
+                    if(i.quizQuestion.has_negative):
                         correct_count-=0.33
             min=quizHeaders.min_range/100
             if(correct_count/q_count>=min):
