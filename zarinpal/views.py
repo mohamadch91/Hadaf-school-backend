@@ -242,7 +242,7 @@ class report(APIView):
             i['student_name']=ser.data["first_name"]+" "+ser.data["last_name"]
             i["student_national_code"]=ser.data["national_code"]
         df = pd.DataFrame(new_data)
-        df.to_excel('./media/'+'reports')
+        df.to_excel('./media/'+'reports.xlsx')
         ans={
             'excel':'/media/'+'reports',
             'data':new_data
