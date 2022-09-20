@@ -19,6 +19,9 @@ from django.shortcuts import get_object_or_404
 from .models import *
 from forum.models import *
 from forum.serializers import *
+from quiz.models import *
+from quiz.serializers import *
+from dashboard.models import *
 import copy
 class courseView(APIView):
 
@@ -169,6 +172,7 @@ class courseView(APIView):
         id = request.data['id']
         course = get_object_or_404(Course, id=id)
         course.delete()
+        baskets=basket.objects.filter(type='course',buyID=id).delete()
         return Response(status=status.HTTP_201_CREATED)
 
 
@@ -405,7 +409,23 @@ class specifiecStudentcourse(APIView):
             c=Course.objects.get(id=i["courseID"])
             i["course_name"]=c.name
             i["course_price"]=c.price1
-
+            quizHeaders=get_object_or_404(quizHeader,course=c.id)
+            i["quiz_min_range"]=quizHeaders.min_range
+            accepted=False
+            
+            studentQueezs=studentQueez.objects.filter(student=student,quizheader=quizHeaders)
+            q_count=quizHeaders.question_count
+            correct_count=0
+            for i in studentQueezs:
+                if i.result==i.quizQuestion.result:
+                    correct_count+=1
+                else:
+                    if(i.quizQuestion.has_negative):
+                        correct_count-=0.33
+            min=quizHeaders.min_range/100
+            if(correct_count/q_count>=min):
+                accepted=True
+            i["accepted"]=False
         return Response(new_data,status=status.HTTP_200_OK)
         
 class blockstudents(APIView):

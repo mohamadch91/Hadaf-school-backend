@@ -27,6 +27,7 @@ from django.shortcuts import render
 import copy
 # Create your views here.
 from rest_framework.permissions import IsAuthenticated
+import pandas as pd
 
 from dashboard.models import wallet,basket
 
@@ -213,6 +214,7 @@ class report(APIView):
         price_to=request.query_params.get('price_to',None)
         date_from=request.query_params.get('date_from',None)
         date_to=request.query_params.get('date_to',None)
+        t_id=request.query_params.get('t_id',None)
         buys_basket=buy.objects.all()
         if s_id is not None:
             student=get_object_or_404(Student,phone=s_id)
@@ -227,6 +229,10 @@ class report(APIView):
             buys_basket=buy.objects.filter(created_at__gte=date_from)
         if date_to is not None:
             buys_basket=buy.objects.filter(updated_at__lte=date_to)
+        if t_id is not None:
+            courses=Course.objects.filter(teacherID=t_id)
+            student_c=StudetCourse.objects.filter(courseID__in=courses).values('studentID')
+            buys_basket=buys_basket.filter(student__in=student_c)
         serializer=buySerializer(buys_basket,many=True)
         new_data=copy.deepcopy(serializer.data)
         for i in new_data:
@@ -235,7 +241,13 @@ class report(APIView):
             i['student_phone']=ser.data["phone"]
             i['student_name']=ser.data["first_name"]+" "+ser.data["last_name"]
             i["student_national_code"]=ser.data["national_code"]
-        return Response(new_data,status=status.HTTP_200_OK)
+        df = pd.DataFrame(new_data)
+        df.to_excel('./media/'+'reports')
+        ans={
+            'excel':'/media/'+'reports',
+            'data':new_data
+        }
+        return Response(ans,status=status.HTTP_200_OK)
         
 
 class addbuy(APIView):

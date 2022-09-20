@@ -26,6 +26,8 @@ import copy
 class quizHeaderView(APIView):
 
     def post(self, request):
+        course_id=request.data["course"]
+        quizHeader.objects.filter(course=course_id).delete()
         ser = quizHeaderSerializer(data=request.data)
         if ser.is_valid():
             ser.save()

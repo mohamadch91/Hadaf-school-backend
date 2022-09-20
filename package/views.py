@@ -26,6 +26,7 @@ from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken, Ou
 from django.shortcuts import get_object_or_404
 from .models import *
 from .serializers import *
+from dashboard.models import *
 import copy
 
 class normalPackageView(APIView):
@@ -59,6 +60,8 @@ class normalPackageView(APIView):
             id=i['id']
             normalPackageList = get_object_or_404(normalPackage, id=id)
             normalPackageList.delete()
+            baskets=basket.objects.filter(type='normal',buyID=id).delete()
+
         return Response(status=status.HTTP_204_NO_CONTENT)    
 
 class  normalPackageCourseView(APIView):
@@ -103,6 +106,7 @@ class  normalPackageCourseView(APIView):
             id=i["id"] 
             cpackage_cours=get_object_or_404(normalPackageCourse, id=id)
             cpackage_cours.delete()
+
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 class timingPackageView(APIView):
@@ -138,6 +142,8 @@ class timingPackageView(APIView):
             id=i["id"] 
             cpackage_cours=get_object_or_404(timingPackage, id=id)
             cpackage_cours.delete()
+            baskets=basket.objects.filter(type='timing',buyID=id).delete()
+            
         return Response(status=status.HTTP_204_NO_CONTENT)
        
 
@@ -184,6 +190,7 @@ class timingPackageCourseView(APIView):
             id=i["id"] 
             cpackage_cours=get_object_or_404(timingPackageCourse, id=id)
             cpackage_cours.delete()
+
         return Response(status=status.HTTP_201_CREATED)
 
 
@@ -227,6 +234,8 @@ class studentPackageView(APIView):
             id=i["id"] 
             cpackage_cours=get_object_or_404(studentPackage, id=id)
             cpackage_cours.delete()
+            baskets=basket.objects.filter(type='student',buyID=id).delete()
+
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
