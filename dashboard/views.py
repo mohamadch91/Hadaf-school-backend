@@ -187,6 +187,38 @@ class basketView(APIView):
                 "type":i['type'],
                 "buyID":i['buyID']
             }
+            if(i['type']=='course'):
+                x=StudetCourse.objects.filter(studentID=id,id=i['buyID'])
+                if(x.count>0):
+                    return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+            if(i['type']=='normal'):
+                student=studentPackage.objects.get(id=i['buyID'])
+                course=studentPackageCourse.objects.filter(packageID=student.id)
+                for z in course:
+                 x=StudetCourse.objects.filter(studentID=id,id=z.id)
+                if(x.count>0):
+                    return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+                
+            if(i['type']=='timing'):
+                timing=timingPackage.objects.get(id=i['buyID'])
+                course=timingPackageCourse.objects.filter(packageID=timing.id)
+                
+                for z in course:
+                 x=StudetCourse.objects.filter(studentID=id,id=z.id)
+                if(x.count>0):
+                    return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+            if(i['type']=='normal'):
+                normal=normalPackage.objects.get(id=i['buyID'])
+                course=normalPackageCourse.objects.filter(packageID=normal.id)
+                
+                for z in course:
+                 x=StudetCourse.objects.filter(studentID=id,id=z.id)
+                if(x.count>0):
+                    return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+                    
+        
+
+            
             serializer=basketSerializer(data=new_data)
             if serializer.is_valid():
                 serializer.save()
