@@ -189,14 +189,14 @@ class basketView(APIView):
             }
             if(i['type']=='course'):
                 x=StudetCourse.objects.filter(studentID=id,id=i['buyID'])
-                if(x.count>0):
+                if(x.count()>0):
                     return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
             if(i['type']=='normal'):
                 student=studentPackage.objects.get(id=i['buyID'])
                 course=studentPackageCourse.objects.filter(packageID=student.id)
                 for z in course:
                  x=StudetCourse.objects.filter(studentID=id,id=z.id)
-                if(x.count>0):
+                if(x.count()>0):
                     return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
                 
             if(i['type']=='timing'):
@@ -205,7 +205,7 @@ class basketView(APIView):
                 
                 for z in course:
                  x=StudetCourse.objects.filter(studentID=id,id=z.id)
-                if(x.count>0):
+                if(x.count()>0):
                     return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
             if(i['type']=='normal'):
                 normal=normalPackage.objects.get(id=i['buyID'])
@@ -213,7 +213,7 @@ class basketView(APIView):
                 
                 for z in course:
                  x=StudetCourse.objects.filter(studentID=id,id=z.id)
-                if(x.count>0):
+                if(x.count()>0):
                     return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
                     
         
