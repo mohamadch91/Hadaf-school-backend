@@ -158,6 +158,8 @@ class UserListView(generics.ListAPIView):
             users=Student.objects.all()
             if(id is not None):
                 users=users.filter(pk=id)
+                ser=StudentSerializer(users,many=True)
+                return Response(ser.data,status=status.HTTP_200_OK)
             if(grade is not None):
                 users=users.filter(grade=grade)
             if(department is not None):
