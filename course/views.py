@@ -605,7 +605,7 @@ class courseHWansView(APIView):
                     "studentID":x.studentID.id,
                     "student_name":username,
                     "courseHWID":x.courseHWID.id,
-                    "file_course":x.files,
+                    "file_course":x.files.path,
                     "homework_name":x.courseHWID.title,
                 }
                 print("salamm")
