@@ -577,14 +577,14 @@ class courseHWansView(APIView):
                 username=x.studentID.phone
                 if(x.studentID.first_name is not None and x.studentID.last_name is not None):
                     username=x.studentID.first_name+" "+x.studentID.last_name
-
+                print(x.file)
                 data={
                     "id":x.id,
                     "studentID":x.studentID.id,
                     "student_name":username,
                     "courseHWID":x.courseHWID.pk,
                     "homework_name":x.courseHWID.title,
-                        "file_course":x.file,
+                    "file_course":x.file,
 
                 }
                 final_ans.append(data)

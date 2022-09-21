@@ -409,6 +409,7 @@ class UseripView(APIView):
                 
         return Response(data=new_data,status=status.HTTP_200_OK)
     def post(self,request):
+        x=userIp.objects.filter(user=request.data["user"],ip=request.data["ip"]).delete()
         serializer = userIpSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
