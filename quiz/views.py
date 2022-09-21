@@ -133,7 +133,7 @@ class studentQueezView(APIView):
 
     def post(self, request):
         ans=[]
-        studentQueez.objects.filter(student=request.data["student"],quizheader=request.data["quizheader"]).delete()
+        studentQueez.objects.filter(student=request.data[0]["student"],quizheader=request.data[0]["quizheader"]).delete()
         for i in request.data:    
             ser = studentQueezSerializer(data=i)
             if ser.is_valid():
@@ -354,7 +354,7 @@ class totalstudentQueezView(APIView):
         else:
             return Response('need query param',status.HTTP_400_BAD_REQUEST)
     def post(self,request):
-        totalstudentQueez.objects.filter(student=request.data["student"],quizheader=request.data["quizheader"]).delete()
+        totalstudentQueez.objects.filter(student=request.data[0]["student"],quizheader=request.data[0]["quizheader"]).delete()
 
         for i in request.data:
             ser=totalstudentQueezSerializer(data=i)
