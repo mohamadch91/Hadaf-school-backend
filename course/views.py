@@ -572,6 +572,7 @@ class courseHWansView(APIView):
                 return Response('need query param',status.HTTP_400_BAD_REQUEST)
         if(s_id is None and h_id is not None):
             ans=Homeworkanswer.objects.filter(courseHWID=h_id)
+            print("salam")
             final_ans=[]
             for x in ans:
                 username=x.studentID.phone
@@ -596,7 +597,7 @@ class courseHWansView(APIView):
                 username=x.studentID.phone
                 if(x.studentID.first_name is not None and x.studentID.last_name is not None):
                     username=x.studentID.first_name+" "+x.studentID.last_name
-
+                print(x.file)
                 data={
                     "id":x.id,
                     "studentID":x.studentID.id,
