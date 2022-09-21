@@ -608,7 +608,7 @@ class courseHWansView(APIView):
                     "file_course":x.file,
                     "homework_name":x.courseHWID.title,
                 }
-                print(data)
+                print("salamm")
                 final_ans.append(data)
                 
         return Response(final_ans,status.HTTP_200_OK)
