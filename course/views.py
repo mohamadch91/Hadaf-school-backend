@@ -560,7 +560,7 @@ class courseHWansView(APIView):
                         "id":x.id,
                         "studentID":x.studentID.id,
                         "student_name":username,
-                        "courseHWID":x.courseHWID.pk,
+                        "courseHWID":x.courseHWID.id,
                         "homework_name":x.courseHWID.title,
                         "file_course":x.file,
                     }
@@ -583,7 +583,7 @@ class courseHWansView(APIView):
                     "id":x.id,
                     "studentID":x.studentID.id,
                     "student_name":username,
-                    "courseHWID":x.courseHWID.pk,
+                    "courseHWID":x.courseHWID.id,
                     "homework_name":x.courseHWID.title,
                     "file_course":x.file,
 
@@ -602,7 +602,7 @@ class courseHWansView(APIView):
                     "id":x.id,
                     "studentID":x.studentID.id,
                     "student_name":username,
-                    "courseHWID":x.courseHWID.pk,
+                    "courseHWID":x.courseHWID.id,
                     "file_course":x.file,
                     "homework_name":x.courseHWID.title,
                 }
