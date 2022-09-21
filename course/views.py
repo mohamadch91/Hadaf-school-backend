@@ -562,7 +562,7 @@ class courseHWansView(APIView):
                         "student_name":username,
                         "courseHWID":x.courseHWID.id,
                         "homework_name":x.courseHWID.title,
-                        "file_course":x.file,
+                        "file_course":'/media/'+str(x.file),
                     }
                     final_ans.append(data)
                     
@@ -586,7 +586,7 @@ class courseHWansView(APIView):
                     "student_name":username,
                     "courseHWID":x.courseHWID.id,
                     "homework_name":x.courseHWID.title,
-                    "file_course":x.file,
+                    "file_course":'/media/'+str(x.file),
 
                 }
                 final_ans.append(data)
@@ -604,7 +604,7 @@ class courseHWansView(APIView):
                     "studentID":x.studentID.id,
                     "student_name":username,
                     "courseHWID":x.courseHWID.id,
-                    "file_course":str(x.files),
+                    "file_course":'/media/'+str(x.file),
                     "homework_name":x.courseHWID.title,
                 }
                 print("salamm")

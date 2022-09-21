@@ -68,7 +68,7 @@ class CourseHomeWork(models.Model):
 class Homeworkanswer(models.Model):
     id=models.AutoField(primary_key=True)
     courseHWID=models.ForeignKey(CourseHomeWork,on_delete=models.CASCADE,null=True)
-    files=models.FileField(upload_to ='hw_answer/', max_length=100, null=True,blank=True)
+    file=models.FileField(upload_to ='hw_answer/', max_length=100, null=True,blank=True)
     studentID=models.ForeignKey(Student,on_delete=models.CASCADE,null=True)
     created_at=models.DateTimeField(auto_now_add=True,null=True)
     updated_at=models.DateTimeField(auto_now=True,null=True)
