@@ -611,7 +611,7 @@ class courseHWansView(APIView):
                 print("salamm")
                 final_ans.append(data)
                 
-        return Response([],status=status.HTTP_200_OK)
+        return Response(str(final_ans),status=status.HTTP_200_OK)
     def post(self,request):
         ser=homeworkanswerSerializer(data=request.data)
         if ser.is_valid():
