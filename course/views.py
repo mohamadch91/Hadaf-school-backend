@@ -409,23 +409,25 @@ class specifiecStudentcourse(APIView):
             c=Course.objects.get(id=i["courseID"])
             i["course_name"]=c.name
             i["course_price"]=c.price1
-            quizHeaders=get_object_or_404(quizHeader,course=c.id)
-            i["quiz_min_range"]=quizHeaders.min_range
-            accepted=False
+            if(c.has_quiz):
+                quizHeaders=get_object_or_404(quizHeader,course=c.id)
+                i["quiz_min_range"]=quizHeaders.min_range
+                accepted=False
+                
+                studentQueezs=studentQueez.objects.filter(student=student,quizheader=quizHeaders)
+                q_count=quizHeaders.question_count
+                correct_count=0
+                for i in studentQueezs:
+                    if i.result==i.quizQuestion.result:
+                        correct_count+=1
+                    else:
+                        if(i.quizQuestion.has_negative):
+                            correct_count-=0.33
+                min=quizHeaders.min_range/100
+                if(correct_count/q_count>=min):
+                    accepted=True
+                i["accepted"]=accepted
             
-            studentQueezs=studentQueez.objects.filter(student=student,quizheader=quizHeaders)
-            q_count=quizHeaders.question_count
-            correct_count=0
-            for i in studentQueezs:
-                if i.result==i.quizQuestion.result:
-                    correct_count+=1
-                else:
-                    if(i.quizQuestion.has_negative):
-                        correct_count-=0.33
-            min=quizHeaders.min_range/100
-            if(correct_count/q_count>=min):
-                accepted=True
-            i["accepted"]=False
         return Response(new_data,status=status.HTTP_200_OK)
         
 class blockstudents(APIView):
