@@ -119,7 +119,7 @@ class basketView(APIView):
                     else:
                         if z.courseID.price1 != None:
                             price=price+z.courseID.price1
-                price=price*((100-normal.percent)/100) 
+                price=price*((100-timing.percent)/100) 
                       
                 ans.append({
                     "id":x.id,
