@@ -17,7 +17,7 @@ class CustomUserManager(BaseUserManager):
     Custom user model manager
     """
 
-    def create_user(self, phone, **extra_fields):
+    def create_user(self, phone, password, **extra_fields):
         # print("debug")
         print(phone)
         if not phone:
@@ -26,10 +26,11 @@ class CustomUserManager(BaseUserManager):
         # password=make_password(password)       
         # return self.create_user(username, password, **extra_fields)
         user = self.model(phone=phone, **extra_fields)
+        user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, phone ,**extra_fields):
+    def create_superuser(self, phone, password ,**extra_fields):
         """
         Create and save a SuperUser with the given email and password.
         """
@@ -41,12 +42,12 @@ class CustomUserManager(BaseUserManager):
             raise ValueError('Superuser must have is_staff=True.')
         if extra_fields.get('is_superuser') is not True:
             raise ValueError('Superuser must have is_superuser=True.')
-        return self.create_user(phone, **extra_fields)
+        return self.create_user(phone, password, **extra_fields)
 
 
 class User(AbstractUser):
     username = None
-    password =None
+    password = models.CharField(_('password'), max_length=128,default='123456')
     phone = models.CharField( max_length = 13, unique = True)
     birth = models.DateField(blank=True,null=True)
     national_code=models.CharField(max_length=10,blank=True,null=True,unique=True)
