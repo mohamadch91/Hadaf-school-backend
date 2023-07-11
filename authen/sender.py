@@ -4,7 +4,7 @@ def send_otp(otp):
     print("otp password")
     print(otp.password)
     try:
-        api = KavenegarAPI("7241662B7842714F6432733071565837556433563863394D3543716E7973346679515745415343386F78453D")
+        api = KavenegarAPI("38395854544B596663304931486958384B454168554568446F4D4D4374344F2F446F71362B5A55694B33453D")
         params = {
             'sender': '0018018949161',
             'receptor': otp.receiver,

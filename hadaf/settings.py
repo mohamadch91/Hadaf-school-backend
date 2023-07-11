@@ -193,9 +193,9 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:3001'
 ]
 
-CSRF_TRUSTED_ORIGINS = [
-   'https://api.srvschool.ir'
-]
+# CSRF_TRUSTED_ORIGINS = [
+#    '*'
+# ]
 #  saalaaam
 lo = True
 REST_FRAMEWORK = {
@@ -206,3 +206,4 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
 }
+
