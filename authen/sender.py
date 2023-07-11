@@ -8,7 +8,7 @@ def send_otp(otp):
         params = {
             'sender': '0018018949161',
             'receptor': otp.receiver,
-             'template': 'OTP',
+             'template': 'newlogin',
             'token': otp.password,
             'type': 'sms'
         }   
