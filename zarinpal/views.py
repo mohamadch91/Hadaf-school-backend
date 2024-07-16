@@ -43,13 +43,13 @@ from course.models import *
 from django.shortcuts import get_object_or_404
 from .models import *
 from .serializers import *
-MERCHANT = '18cd0405-b44b-4c21-858b-c834f7a035f8'
+# MERCHANT = '18cd0405-b44b-4c21-858b-c834f7a035f8'
 ZP_API_REQUEST = "https://api.zarinpal.com/pg/v4/payment/request.json"
 ZP_API_VERIFY = "https://api.zarinpal.com/pg/v4/payment/verify.json"
 ZP_API_STARTPAY = "https://www.zarinpal.com/pg/StartPay/{authority}"
 description = "backend test"  # Required
 # Important: need to edit for realy server.
-CallbackURL = 'https://api.srvschool.ir/zarinpal/verify/'
+CallbackURL = 'https://api.hiisun.ir/zarinpal/verify/'
 student_array = {}
 
 

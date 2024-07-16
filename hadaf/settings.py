@@ -86,7 +86,7 @@ INSTALLED_APPS = [
     'discount',
     'package',
     'sms',
-    'live',
+    # 'live',
     'dashboard',
     'zarinpal',
     'notification',
@@ -189,8 +189,8 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOWED_ORIGINS = [
-    "https://www.test-cors.org",'http://localhost:3000','http://212.33.202.49','http://212.33.202.49:3000','http://212.33.202.49:3001','https://srvschool.ir','https://adm.srvschool.ir',
-    'http://localhost:3001','http://94.101.187.240:3001','http://94.101.187.240:3000'
+    "https://www.test-cors.org",'http://localhost:3000','http://64.3.42.252','http://64.3.42.252:3000','http://64.3.42.252:3001','https://hiisun.ir','https://admin.hiisun.ir',
+    'http://localhost:3001','http://64.3.42.252:3001','http://64.3.42.252:3000'
 ]
 
 # CSRF_TRUSTED_ORIGINS = [
