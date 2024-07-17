@@ -17,7 +17,6 @@ backcall==0.2.0
 beautifulsoup4==4.12.2
 bleach==6.0.0
 blinker==1.4
-Brlapi==0.8.3
 certifi==2024.2.2
 cffi==1.16.0
 chardet==4.0.0
