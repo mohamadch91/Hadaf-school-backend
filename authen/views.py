@@ -34,7 +34,8 @@ class StudentRegisterView(generics.CreateAPIView):
         ser=StudentSerializer(data=request.data)
         if ser.is_valid():
             ser.save()
-            Wallet=wallet.objects.create(studentID=ser.data["pk"],amount=0)
+            user = get_object_or_404(Student,pk= ser.data["pk"])
+            Wallet=wallet.objects.create(studentID=user,amount=0)
             Wallet.save()
             return Response(ser.data,status=status.HTTP_201_CREATED)
         return Response (ser.errors,status=status.HTTP_400_BAD_REQUEST)    
