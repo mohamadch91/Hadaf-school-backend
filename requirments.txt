@@ -19,7 +19,6 @@ bleach==6.0.0
 blinker==1.4
 certifi==2024.2.2
 cffi==1.16.0
-chardet==4.0.0
 charset-normalizer==3.3.2
 chrome-gnome-shell==0.0.0
 click==8.0.3
